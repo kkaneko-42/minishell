@@ -14,6 +14,7 @@
 
 int	main(void)
 {
+	printf("www");
 	printf("Hello, world!\n");
 	return (0);
 }
