@@ -6,37 +6,39 @@
 /*   By: kkaneko </var/mail/kkaneko>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/20 17:14:07 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/20 19:33:24 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	get_str_until_quote_ended(
-		const char *input, char **res, size_t *col, size_t *row);
-static void	metachar_to_res(
-		const char *input, char **res, size_t *col, size_t *row);
+static void	get_str_in_quote(
+		const char *input, t_list *dst, size_t *input_i);
+static void	get_metachar(
+		const char *input, t_list **dst, size_t *input_i);
 static void	skip_whitespace(
-		const char *input, size_t *checking_i);
+		const char *input, size_t *input_i);
 
 t_list	*lexer(const char *input)
 {
-	size_t	i;
-	size_t	j;
 	t_list	*res;
+	t_list	*now;
+	size_t	i;
 
 	if (input == NULL)
 		return (NULL);
-	res = NULL;
+	res = ft_lstnew(ft_strdup(input));
+	if (res == NULL)
+		return (NULL);
 	i = 0;
-	j = 0;
 	while (input[i] != 0x00)
 	{
-		skip_whitespace(input, &i);
+		if (input[i] == ' ')
+			skip_whitespace(input, &i);
 		if (input[i] == '"' || input[i] == ''')
-			get_str_until_quote_ended(input, res, &i, &j);
+			get_str_in_quote(input, res, now, &i);
 		else if (ft_strchr(META_CHAR, input[i]) != NOT_FOUND)
-			metachar_to_res(input, res, &i, &j);
+			get_metachar(input, res, &now, &i);
 		else
 			res[i] = input[i++];
 	}
@@ -44,21 +46,26 @@ t_list	*lexer(const char *input)
 }
 
 static void	skip_whitespace(
-		const char *input, size_t *checking_i)
+		const char *input, size_t *input_i)
 {
-	while (input[checking_i] != ' ')
-		++(*checking_i);
+	while (input[input_i] != ' ')
+		++(*input_i);
 }
 
-static void	get_str_until_quote_ended(
-		const char *input, char **res, size_t *col, size_t *row)
+static void	get_str_in_quote(
+		const char *input, t_list *dst, size_t *input_i)
 {
-	size_t		input_i;
-	size_t		res_i;
-	const char	quote_start = input[*col];
+	const char		quote = input[input_i];
+	unsigned int	start_i;
+	size_t			dst_len;
 
-	i = *col;
-	while (input[i] != 0x00 && input[i] != quote_start)
+	start_i = *input_i;
+	*input_i += 1;
+	dst_len = 0;
+	while (input[*input_i] != quote)
 	{
+		++dst_len;
+		++(*input_i);
 	}
+	*(dst)->content = ft_substr(input, start_i, dst_len);
 }
