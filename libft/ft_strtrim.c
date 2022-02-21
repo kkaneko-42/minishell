@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:26:49 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/02 22:46:37 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/02/21 13:58:33 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static char		*make_onesize_str(void);
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*str;
-	size_t	i;
 	size_t	last;
 
 	if (s1 == 0 || set == 0)
@@ -36,7 +35,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	str = (char *)malloc(sizeof(char) * (last + 2));
 	if (str == 0)
 		return (NULL);
-	i = 0;
 	ft_memmove(str, s1, last + 1);
 	str[last + 1] = '\0';
 	return (str);
@@ -64,7 +62,7 @@ static size_t	trim_last_index(char const *s1, char const *set)
 
 	s1_len = ft_strlen(s1);
 	i = s1_len - 1;
-	while (i >= 0)
+	while (1)
 	{
 		j = 0;
 		while (set[j] != '\0')
