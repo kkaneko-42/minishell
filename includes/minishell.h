@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/21 14:29:50 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/21 17:32:28 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# define META_CHAR "><|"
 # define NOT_FOUND NULL
 
 typedef struct s_cmd
