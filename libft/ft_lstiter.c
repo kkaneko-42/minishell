@@ -6,13 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:53:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/01/25 16:05:46 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/02/20 17:46:01 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(char *))
 {
 	if (lst == 0 || f == 0)
 		return ;

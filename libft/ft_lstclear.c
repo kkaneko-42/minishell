@@ -6,13 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:23:06 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/01 18:19:49 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/02/20 17:47:37 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+void	ft_lstclear(t_list **lst, void (*del)(char*))
 {
 	t_list	*tmp;
 
