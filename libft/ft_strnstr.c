@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 16:46:31 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/02 10:20:08 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/02/21 13:56:38 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,8 @@ static char	*find_needle(const char *haystack, const char *needle,
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	i;
-	size_t	j;
 	size_t	needle_len;
 
-	i = 0;
-	j = 0;
 	needle_len = ft_strlen(needle);
 	if (needle[0] == 0)
 		return ((char *)haystack);

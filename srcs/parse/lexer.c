@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko </var/mail/kkaneko>                +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/20 19:33:24 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/21 13:50:08 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_list	*lexer(const char *input)
 	{
 		if (input[i] == ' ')
 			skip_whitespace(input, &i);
-		if (input[i] == '"' || input[i] == ''')
-			get_str_in_quote(input, res, now, &i);
+		if (input[i] == '"' || input[i] == '\'')
+			get_str_in_quote(input, now, &i);
 		else if (ft_strchr(META_CHAR, input[i]) != NOT_FOUND)
 			get_metachar(input, res, &now, &i);
 		else
