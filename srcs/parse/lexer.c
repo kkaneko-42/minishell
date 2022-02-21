@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/21 18:41:29 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/21 21:39:21 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_list	*lexer(const char *input)
 	t_list	*now;
 	size_t	i;
 
+	if (input == NULL)
+		return (NULL);
 	res = ft_lstnew(ft_strdup("\0"));
 	if (res == NULL)
 		return (NULL);
@@ -35,7 +37,6 @@ t_list	*lexer(const char *input)
 	i = 0;
 	while (input[i] != 0x00)
 	{
-		//printf("check:-%c-\n", input[i]);
 		if (input[i] == ' ')
 			skip_whitespace(input, &now, &i);
 		else if (input[i] == '\"' || input[i] == '\'')
@@ -69,7 +70,6 @@ static void	get_str_in_quote(
 	unsigned int	start_i;
 	char			*src_str;
 
-	printf("quote:%c\n", quote);
 	start_i = (unsigned int)(*input_i);
 	(*input_i) += 1;
 	while (input[(*input_i)] != quote)
@@ -100,7 +100,6 @@ static void	metachar_to_list(
 	*input_i += ft_strlen(metachar);
 }
 
-//should be refacted
 static void	get_metachar(
 		const char *input, t_list **now, size_t *input_i)
 {

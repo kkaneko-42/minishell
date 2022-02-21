@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/21 19:52:12 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/21 21:29:49 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # define NOT_FOUND NULL
+# define INIT NULL
 # define PARSE_ERR "parse error\n"
 
 typedef struct s_cmd
@@ -30,4 +31,6 @@ typedef struct s_cmd
     struct s_cmd    *next;
 }                   t_cmd;
 
+t_list	*lexer(const char *input);
+t_cmd	*parser(const char *input);
 #endif
