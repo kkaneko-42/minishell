@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/23 00:02:57 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/23 01:09:29 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ static void	input_file_specify(t_cmd *cmd, t_list **token)
 	if (input_fd == -1)
 		; //open err
 	file_content = get_file_content_all(input_fd);
+	//printf("file_content:%s\n", file_content);
 	ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(file_content)));
 	free(file_content);
 }
@@ -103,19 +104,21 @@ static void	heredoc(t_cmd *cmd, t_list **token)
 	*token = (*token)->next;
 	end_text = (*token)->content;
 	cmd_arg = NULL;
-	line = get_next_line(STDIN_FILENO);
+	line = readline(HEREDOC_PROMPT);
 	while (line != NULL && ft_strncmp(line, end_text, ft_strlen(end_text)) != 0)
 	{
 		cmd_arg = ft_stradd(&cmd_arg, line);
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = readline(HEREDOC_PROMPT);
 	}
 	free(line);
 }
 
 static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 {
-	int	fd_out;
+	const mode_t	out_file_rights = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	const int		open_flags = O_RDWR | O_CREAT | fg_append;
+	int				fd_out;
 
 	*token = (*token)->next;
 	if (fg_append != O_APPEND)
@@ -124,7 +127,7 @@ static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 			; //unlink err
 	}
 	//other flags(eg:O_CLOEXEC) may be needed
-	fd_out = open((*token)->content, O_RDWR | O_CREAT | fg_append);
+	fd_out = open((*token)->content, open_flags, out_file_rights);
 	//open err
 	cmd->fd_out = fd_out;
 }
@@ -134,14 +137,11 @@ static char	*get_file_content_all(int fd)
 	char	*res;
 	char	*tmp;
 
-	res = INIT;
+	res = NULL;
 	tmp = get_next_line(fd);
 	while (tmp != NULL) //EOF?error?
 	{
-		if (res = INIT)
-			res = ft_strdup(tmp);
-		else
-			res = ft_stradd(&res, tmp);
+		res = ft_stradd(&res, tmp);
 		free(tmp);
 		tmp = get_next_line(fd);
 	}
@@ -177,8 +177,8 @@ static void	cmdadd_back(t_cmd **lst, t_cmd *new)
 
 static int	metachar_isin_token(const t_list *token)
 {
-	const char		metachar[4] = "><|";
-	size_t			i;
+	const char	metachar[4] = "><|";
+	size_t		i;
 
 	i = 0;
 	while (i < ft_strlen(metachar))
@@ -196,7 +196,7 @@ static void	validate_token(const t_list *token)
 	if (token == NULL)
 		exit(1);
 }
-/*
+
 //debug
 int main(int ac, char **av, char **envp)
 {
@@ -213,4 +213,4 @@ int main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-*/
+

@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/22 21:14:58 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/23 00:43:02 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # include "../libft/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# define NOT_FOUND NULL
+# define HEREDOC_PROMPT "heredoc> "
 # define INIT NULL
+# define NOT_FOUND NULL
 # define PARSE_ERR "parse error\n"
 # define APPEND 1
 
