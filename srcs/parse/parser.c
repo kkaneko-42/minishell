@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/22 23:20:44 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/23 00:02:57 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_cmd	*cmd_new(char *name);
 static void	cmdadd_back(t_cmd **lst, t_cmd *new);
 static void	get_cmd_args(t_cmd *cmd, t_list **token);
 static void	parse_metachar(t_cmd *cmd, t_list **token);
-static char	*get_all_file_content(int fd);
+static char	*get_file_content_all(int fd);
 static void	input_file_specify(t_cmd *cmd, t_list **token);
 static void	heredoc(t_cmd *cmd, t_list **token);
 static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append);
@@ -38,19 +38,13 @@ t_cmd	*parser(const char *input)
 		cmdadd_back(&res, cmd_new(token->content));
 		if (now_cmd == INIT)
 			now_cmd = res;
+		else
+			now_cmd = now_cmd->next;
 		token = token->next;
 		get_cmd_args(now_cmd, &token);
 		parse_metachar(now_cmd, &token);
-		now_cmd = now_cmd->next;
 	}
 	return (res);
-}
-
-static void	validate_token(const t_list *token)
-{
-	//if tokens have an error, exit
-	if (token == NULL)
-		exit(1);
 }
 
 static void	get_cmd_args(t_cmd *cmd, t_list **token)
@@ -66,6 +60,7 @@ static void	get_cmd_args(t_cmd *cmd, t_list **token)
 
 static void	parse_metachar(t_cmd *cmd, t_list **token)
 {
+	
 	while ((*token) != NULL && metachar_isin_token(*token))
 	{
 		if (ft_strncmp((*token)->content, "<", 1) == 0)
@@ -94,7 +89,7 @@ static void	input_file_specify(t_cmd *cmd, t_list **token)
 	input_fd = open((*token)->content, O_RDONLY);
 	if (input_fd == -1)
 		; //open err
-	file_content = get_all_file_content(input_fd);
+	file_content = get_file_content_all(input_fd);
 	ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(file_content)));
 	free(file_content);
 }
@@ -134,7 +129,7 @@ static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 	cmd->fd_out = fd_out;
 }
 
-static char	*get_all_file_content(int fd)
+static char	*get_file_content_all(int fd)
 {
 	char	*res;
 	char	*tmp;
@@ -182,21 +177,33 @@ static void	cmdadd_back(t_cmd **lst, t_cmd *new)
 
 static int	metachar_isin_token(const t_list *token)
 {
-	const size_t	search_len = ft_strlen(token->content);
+	const char		metachar[4] = "><|";
+	size_t			i;
 
-	if (ft_strnstr(token->content, "><|", search_len) != NOT_FOUND)
-		return (1);
-	else
-		return (0);
+	i = 0;
+	while (i < ft_strlen(metachar))
+	{
+		if (ft_strchr(token->content, metachar[i]) != NOT_FOUND)
+			return (1);
+		++i;
+	}
+	return (0);
 }
 
+static void	validate_token(const t_list *token)
+{
+	//if tokens have an error, exit
+	if (token == NULL)
+		exit(1);
+}
 /*
 //debug
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
+	char	*input = av[1];
 
-	res = parser(av[1]);
+	res = parser(input);
 	for (t_cmd *now = res; now != NULL; now = now->next)
 	{
 		printf("cmd name:@%s@\n", now->name);
