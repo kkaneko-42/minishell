@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:48:33 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/21 14:12:33 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/23 00:38:57 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ char	*ft_stradd(char **s1, char const *s2)
 	size_t	s1_len;
 	size_t	s2_len;
 
-	if (s1 == 0 || *s1 == 0 || s2 == 0)
+	if (s1 == 0)
 		return (NULL);
+	if (*s1 == NULL)
+		return (ft_strdup((char *)s2));
+	if (s2 == NULL)
+		return (ft_strdup(*s1));
 	s1_len = ft_strlen(*s1);
 	s2_len = ft_strlen(s2);
 	str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));

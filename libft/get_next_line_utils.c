@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 19:26:57 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/22 20:14:24 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/02/22 23:38:20 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+/*
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;
@@ -113,3 +113,4 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
+*/
