@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/23 16:48:48 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/02/23 20:03:54 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,16 @@ void	cd(t_cmd *input)
 
 static char	*make_new_path_argc_0_or_1(t_cmd *input)
 {
-	if (input->args == NULL || is_all_empty(input->args->content)
+	char	*new_path;
+
+	if (input->args == NULL || is_empty(input->args->content)
 		|| ft_strncmp(input->args->content, "~", 2) == 0)
 		return (ft_strdup(getenv("HOME")));
-	return (ft_strdup(input->args->content));
+	if (input->args->content[0] == '~')
+		new_path = ft_strjoin(getenv("HOME"), &(input->args->content)[1]);
+	else
+		new_path = ft_strdup(input->args->content);
+	return (new_path);
 }
 
 static char	*make_new_path_argc_2(t_cmd *input)
