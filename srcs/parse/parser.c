@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/23 13:28:13 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/23 19:50:31 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ static void	parse_metachar(t_cmd *cmd, t_list **token)
 {
 	while ((*token) != NULL && metachar_isin_token(*token))
 	{
-		if (ft_strncmp((*token)->content, "<", 1) == 0)
+		if (ft_strncmp((*token)->content, "<", 2) == 0) //ft_strncmp usage!!
 			input_file_specify(cmd, token);
-		else if (ft_strncmp((*token)->content, "<<", 2) == 0)
+		else if (ft_strncmp((*token)->content, "<<", 3) == 0)
 			heredoc(cmd, token);
-		else if (ft_strncmp((*token)->content, ">>", 2) == 0)
+		else if (ft_strncmp((*token)->content, ">>", 3) == 0)
 			output_file_specify(cmd, token, O_APPEND);
 		else if (ft_strncmp((*token)->content, ">", 2) == 0)
 			output_file_specify(cmd, token, !O_APPEND);
-		else if (ft_strncmp((*token)->content, "|", 1) == 0)
+		else if (ft_strncmp((*token)->content, "|", 2) == 0)
 		{
 			*token = (*token)->next;
 			break ;
