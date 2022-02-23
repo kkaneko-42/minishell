@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/23 01:09:29 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/23 13:28:13 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,13 @@ static void	get_cmd_args(t_cmd *cmd, t_list **token)
 
 static void	parse_metachar(t_cmd *cmd, t_list **token)
 {
-	
 	while ((*token) != NULL && metachar_isin_token(*token))
 	{
 		if (ft_strncmp((*token)->content, "<", 1) == 0)
 			input_file_specify(cmd, token);
 		else if (ft_strncmp((*token)->content, "<<", 2) == 0)
 			heredoc(cmd, token);
-		else if (ft_strncmp((*token)->content, ">>", 1) == 0)
+		else if (ft_strncmp((*token)->content, ">>", 2) == 0)
 			output_file_specify(cmd, token, O_APPEND);
 		else if (ft_strncmp((*token)->content, ">", 2) == 0)
 			output_file_specify(cmd, token, !O_APPEND);
@@ -90,7 +89,6 @@ static void	input_file_specify(t_cmd *cmd, t_list **token)
 	if (input_fd == -1)
 		; //open err
 	file_content = get_file_content_all(input_fd);
-	//printf("file_content:%s\n", file_content);
 	ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(file_content)));
 	free(file_content);
 }
@@ -108,10 +106,13 @@ static void	heredoc(t_cmd *cmd, t_list **token)
 	while (line != NULL && ft_strncmp(line, end_text, ft_strlen(end_text)) != 0)
 	{
 		cmd_arg = ft_stradd(&cmd_arg, line);
+		cmd_arg = ft_stradd(&cmd_arg, ft_strdup("\n"));
 		free(line);
 		line = readline(HEREDOC_PROMPT);
 	}
 	free(line);
+	ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(cmd_arg)));
+	free(cmd_arg);
 }
 
 static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
@@ -196,7 +197,7 @@ static void	validate_token(const t_list *token)
 	if (token == NULL)
 		exit(1);
 }
-
+/*
 //debug
 int main(int ac, char **av, char **envp)
 {
@@ -213,4 +214,4 @@ int main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-
+*/

@@ -24,12 +24,12 @@ ifdef WITH_BONUS
 	OBJS += $(BONUS_OBJS)
 endif
 
-all:		$(NAME) bonus
+all:		$(NAME)
 
 .c.o:
 			$(CC) $(CFLAG) -I $(INC_DIR) -c $< -o $@
 
-$(NAME):	$(OBJS) bonus
+$(NAME):	$(OBJS)
 			$(AR) $(NAME) $(OBJS)
 
 clean:
