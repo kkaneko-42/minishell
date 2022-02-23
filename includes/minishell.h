@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/21 21:29:49 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/23 16:57:37 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@ typedef struct s_cmd
 
 t_list	*lexer(const char *input);
 t_cmd	*parser(const char *input);
+void	exec(t_cmd *input);
+void	cd(t_cmd *input);
 #endif
