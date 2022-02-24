@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/23 12:10:38 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/24 17:56:46 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	skip_whitespace(
 
 	while (input[*input_i] == ' ')
 		++(*input_i);
-	if (!fg_no_content)
+	if (!fg_no_content && input[*input_i] != 0x00)
 	{
 		ft_lstadd_back(now, ft_lstnew(ft_strdup("\0")));
 		*now = (*now)->next;
