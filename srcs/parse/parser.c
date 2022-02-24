@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/23 19:50:31 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/02/24 17:53:34 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	heredoc(t_cmd *cmd, t_list **token)
 	end_text = (*token)->content;
 	cmd_arg = NULL;
 	line = readline(HEREDOC_PROMPT);
-	while (line != NULL && ft_strncmp(line, end_text, ft_strlen(end_text)) != 0)
+	while (line != NULL && ft_strncmp(line, end_text, ft_strlen(end_text) + 1) != 0)
 	{
 		cmd_arg = ft_stradd(&cmd_arg, line);
 		cmd_arg = ft_stradd(&cmd_arg, ft_strdup("\n"));
