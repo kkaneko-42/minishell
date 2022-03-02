@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/23 19:59:36 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/02 22:21:33 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define INIT NULL
 # define NOT_FOUND NULL
 # define PARSE_ERR "parse error\n"
+# define SHELL_NAME "minishell$ "
+# define EXIT_MSG "exit\n"
 # define APPEND 1
 
 typedef struct s_cmd
