@@ -1,29 +1,28 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	#-fsanitize=address -g
+CFLAGS	:=	-lreadline #-fsanitize=address -g
 INC_DIR := ./includes
-SRCS	:=	main.c
-SRC_DIR := ./srcs
-OBJ_DIR := ./objs
+SRCS	:=	./srcs/main.c \
+			./srcs/parse/parser.c \
+			./srcs/parse/lexer.c \
+			./srcs/exec/builtin/cd.c \
+			./srcs/exec/builtin/exec.c
 OBJS	:= $(SRCS:.c=.o)
 LIBFT_DIR := ./libft
 LIBFT := libft.a
 
-all:	$(OBJ_DIR) $(NAME)
+$(NAME):	$(OBJS)
+	make bonus -C $(LIBFT_DIR)
+	$(CC) -I $(INC_DIR) $^ $(LIBFT_DIR)/$(LIBFT) -o $@ $(CFLAGS)
 
-$(OBJ_DIR):
-	mkdir -p $@
+.c.o:
+	$(CC) -I $(INC_DIR) -c $^ -o $@ $(CFLAGS)
 
-$(NAME):	$(addprefix $(OBJ_DIR)/, $(OBJS))
-	make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) -o $(NAME) $(LIBFT_DIR)/$(LIBFT) $^ -I $(INC_DIR)
-
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c	
-	$(CC) $(CFLAGS) -I $(INC_DIR) -c $^ -o $@
+all:	$(NAME)
 
 clean:
 	make clean -C $(LIBFT_DIR) 
-	rm -rf $(OBJ_DIR)
+	rm -f $(OBJS)
 
 fclean:		clean
 	rm -f $(NAME)
