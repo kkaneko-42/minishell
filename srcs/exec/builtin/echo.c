@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:47:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/03 22:44:02 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 16:22:44 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	echo(t_cmd *input)
 	argc = ft_lstsize(input->args);
 	p = input->args;
 	need_new_line = 1;
-	if (p != NULL && ft_strncmp(p->content, "-n", 2) == 0)
+	if (p != NULL && ft_strncmp(p->content, "-n", 3) == 0)
 	{
 		need_new_line = 0;
 		p = p->next;

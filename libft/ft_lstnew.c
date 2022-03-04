@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 21:25:50 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/20 17:45:13 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 15:57:53 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_list	*ft_lstnew(char *content)
 		return (NULL);
 	new->content = content;
 	new->next = 0;
+	new->prev = 0;
 	return (new);
 }
 /* 
