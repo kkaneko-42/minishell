@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/24 17:53:34 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/03 17:54:06 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	parse_metachar(t_cmd *cmd, t_list **token)
 {
 	while ((*token) != NULL && metachar_isin_token(*token))
 	{
-		if (ft_strncmp((*token)->content, "<", 2) == 0) //ft_strncmp usage!!
+		if (ft_strncmp((*token)->content, "<", 2) == 0)
 			input_file_specify(cmd, token);
 		else if (ft_strncmp((*token)->content, "<<", 3) == 0)
 			heredoc(cmd, token);
@@ -197,21 +197,24 @@ static void	validate_token(const t_list *token)
 	if (token == NULL)
 		exit(1);
 }
-/*
+
 //debug
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = av[1];
+	char	*input = "echo hogehoge > file1 > file2 > file3";
 
 	res = parser(input);
 	for (t_cmd *now = res; now != NULL; now = now->next)
 	{
 		printf("cmd name:@%s@\n", now->name);
+		printf("output fd:%d\n", now->fd_out);
 		printf("args:\n");
 		for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
+		{
 			printf("@%s@\n", arg_now->content);
+		}
 	}
 	return (0);
 }
-*/
+
