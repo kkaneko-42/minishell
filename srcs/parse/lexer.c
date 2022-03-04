@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/24 17:56:46 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/04 11:53:26 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ static char	*ft_stradd_char(char **str, const char c)
 int	main(int ac, char **av)
 {
 	t_list	*res;
-	char	*input = av[1];
+	char	*input = ft_strdup("cat \"<< end\"");
 
 	printf("input:@%s@\n", input);
 	res = lexer(input);

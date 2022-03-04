@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/03 17:54:06 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/04 11:56:25 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,13 +178,15 @@ static void	cmdadd_back(t_cmd **lst, t_cmd *new)
 
 static int	metachar_isin_token(const t_list *token)
 {
-	const char	metachar[4] = "><|";
-	size_t		i;
+	const char		metachar[4] = "><|";
+	const size_t	metachar_len = ft_strlen(metachar);
+	size_t			i;
 
 	i = 0;
-	while (i < ft_strlen(metachar))
+	while (i < metachar_len)
 	{
-		if (ft_strchr(token->content, metachar[i]) != NOT_FOUND)
+		if (ft_strchr(token->content, metachar[i]) != NOT_FOUND
+			&& token->content[0] != '\"' && token->content[0] != '\'')
 			return (1);
 		++i;
 	}
@@ -197,12 +199,12 @@ static void	validate_token(const t_list *token)
 	if (token == NULL)
 		exit(1);
 }
-
+/*
 //debug
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = "echo hogehoge > file1 > file2 > file3";
+	char	*input = ft_strdup("cat \"<< end\"");
 
 	res = parser(input);
 	for (t_cmd *now = res; now != NULL; now = now->next)
@@ -217,4 +219,4 @@ int main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-
+*/
