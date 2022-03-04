@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/04 11:56:25 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/04 12:30:32 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_cmd	*parser(const char *input)
 
 static void	get_cmd_args(t_cmd *cmd, t_list **token)
 {
-	int	input_fd;
+	int	input_fd; //use????
 
 	while ((*token) != NULL && !metachar_isin_token(*token))
 	{
@@ -179,11 +179,10 @@ static void	cmdadd_back(t_cmd **lst, t_cmd *new)
 static int	metachar_isin_token(const t_list *token)
 {
 	const char		metachar[4] = "><|";
-	const size_t	metachar_len = ft_strlen(metachar);
 	size_t			i;
 
 	i = 0;
-	while (i < metachar_len)
+	while (metachar[i] != 0x00)
 	{
 		if (ft_strchr(token->content, metachar[i]) != NOT_FOUND
 			&& token->content[0] != '\"' && token->content[0] != '\'')
