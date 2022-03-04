@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/02 22:21:33 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/04 11:50:33 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,27 @@ typedef struct s_cmd
     struct s_cmd    *next;
 }                   t_cmd;
 
+typedef struct s_envp
+{
+    struct s_envp	*next;
+	struct s_envp	*prev;
+	char			*content;
+	int				rank;
+}                   t_envp;
+
+
 t_list	*lexer(const char *input);
 t_cmd	*parser(const char *input);
-void	exec(t_cmd *input);
+void	exec(t_cmd *input, t_envp **envp);
+void	echo(t_cmd *input);
 void	cd(t_cmd *input);
+void	pwd(t_cmd *input);
+void	export(t_cmd *input, t_envp *envp);
+void	env(t_cmd *input, t_envp *envp);
+void	unset(t_cmd *input, t_envp **envp);
+t_envp	*get_envp_list(char **envp);
+int	    first_char_is_equal(char *s);
+int	    addback_envp_list(t_envp **envp_list, char *s);
+int	    ft_strcmp(char *s1, char *s2);
+int	    get_max_rank(t_envp *envp);
 #endif
