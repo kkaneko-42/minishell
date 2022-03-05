@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 14:59:35 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/05 15:28:50 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,7 @@ t_envp	*get_envp_list(char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (!addback_envp_list(&envp_list, envp[i])) //malloc err
-		{
-			//free
-			//exit
-			//return (NULL);
-		}
+		addback_envp_list(&envp_list, envp[i]);
 		++i;
 	}
 	return (envp_list);
@@ -57,9 +52,7 @@ int	addback_envp_list(t_envp **envp_list, char *s)
 	t_envp	*new_envp;
 	t_envp	*p;
 
-	new_envp = (t_envp *)malloc(sizeof(t_envp) * 1);
-	if (new_envp == NULL)
-		return (0);
+	new_envp = (t_envp *)ft_xmalloc(sizeof(t_envp) * 1);
 	new_envp->content = ft_strdup(s);
 	new_envp->rank = 0;
 	if (new_envp->content == NULL)

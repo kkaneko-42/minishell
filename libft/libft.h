@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:00:53 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 15:57:34 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/05 15:19:36 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# define MALLOC_ERR "Memory allocation error\n"
 # include <stdio.h>
 # include <string.h>
 # include <stddef.h>
@@ -72,4 +73,5 @@ t_list	*ft_lstmap(t_list *lst, char *(*f)(char *), void (*del)(char *));
 
 char	*ft_stradd(char **s1, char const *s2);
 int		ft_strcmp(char *s1, char *s2);
+void	*ft_xmalloc(size_t size);
 #endif

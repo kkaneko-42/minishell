@@ -18,7 +18,7 @@ static char	*make_save(int fd, char *save)
 	char	*tmp;
 	int		read_len;
 
-	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buf = (char *)ft_xmalloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buf == NULL)
 		return (NULL);
 	read_len = 1;
@@ -51,9 +51,9 @@ static char	*make_line(char *save)
 	while (save[line_len] != '\0' && save[line_len] != '\n')
 		line_len++;
 	if (save[line_len] == '\n')
-		line = (char *)malloc(sizeof(char) * (line_len + 2));
+		line = (char *)ft_xmalloc(sizeof(char) * (line_len + 2));
 	else
-		line = (char *)malloc(sizeof(char) * (line_len + 1));
+		line = (char *)ft_xmalloc(sizeof(char) * (line_len + 1));
 	if (line == NULL)
 		return (NULL);
 	if (save[line_len] == '\n')
@@ -85,7 +85,7 @@ static char	*trim_save(char *save, char *line)
 		free(save);
 		return (NULL);
 	}
-	save_new = (char *)malloc(sizeof(char) * (save_len - line_len + 1));
+	save_new = (char *)ft_xmalloc(sizeof(char) * (save_len - line_len + 1));
 	if (save_new == NULL)
 		return (NULL);
 	ft_memmove(save_new, &save[line_len], save_len - line_len);

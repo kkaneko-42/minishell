@@ -63,7 +63,7 @@ static char	**get_str(char const *s, char c, size_t s_len)
 		while (s[i] != c && s[i] != '\0')
 			i++;
 	}
-	str = (char **)malloc(sizeof(char *) * (str_len + 1));
+	str = (char **)ft_xmalloc(sizeof(char *) * (str_len + 1));
 	if (str == 0)
 		return (NULL);
 	i = 0;
@@ -114,7 +114,7 @@ static char	*get_s1(char const *s, char c)
 	i = 0;
 	while (&s[i] != end_p)
 		i++;
-	s1 = (char *)malloc(sizeof(char) * i + 1);
+	s1 = (char *)ft_xmalloc(sizeof(char) * i + 1);
 	if (s1 == 0)
 		return (NULL);
 	s1[i] = '\0';

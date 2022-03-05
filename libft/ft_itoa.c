@@ -32,9 +32,9 @@ char	*ft_itoa(int n)
 		num *= -1;
 	}
 	if (sign == '-' || n == 0)
-		str = (char *)malloc(sizeof(char) * (digit + 2));
+		str = (char *)ft_xmalloc(sizeof(char) * (digit + 2));
 	else
-		str = (char *)malloc(sizeof(char) * (digit + 1));
+		str = (char *)ft_xmalloc(sizeof(char) * (digit + 1));
 	if (str == 0)
 		return (NULL);
 	solve(num, str, digit, sign);

@@ -60,7 +60,7 @@ char	*ft_strdup(char *src)
 	i = 0;
 	while (src[i] != '\0')
 		i++;
-	p = (char *)malloc(sizeof(char) * (i + 1));
+	p = (char *)ft_xmalloc(sizeof(char) * (i + 1));
 	if (p == NULL)
 		return (NULL);
 	i = 0;
@@ -87,7 +87,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup((char *)s1));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	str = (char *)ft_xmalloc(sizeof(char) * (s1_len + s2_len + 1));
 	if (str == NULL)
 		return (NULL);
 	ft_memmove(str, s1, s1_len);
