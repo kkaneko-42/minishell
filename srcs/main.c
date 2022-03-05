@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/04 16:12:11 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/05 14:59:35 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void		prompt(t_envp *env_list);
 
 int	main(int ac, char **av, char **envp)
 {
-	//t_list	*env_list;
 	t_envp	*env_list;
 
 	validate_args(ac, av, envp);

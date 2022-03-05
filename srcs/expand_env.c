@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/04 16:06:30 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/05 14:41:20 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	expand_env(t_list *token)
 	}
 }
 
-static void	do_expand(char *str)
+static void	try_expand(char *str)
 {
 	size_t			i;
 	size_t			env_start_i;
