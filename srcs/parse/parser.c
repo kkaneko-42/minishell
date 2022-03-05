@@ -6,16 +6,17 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/04 16:08:38 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/05 17:12:18 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 static void	validate_token(const t_list *token);
 static int	metachar_isin_token(const t_list *token);
 static t_cmd	*cmd_new(char *name);
 static void	cmdadd_back(t_cmd **lst, t_cmd *new);
+static void	get_cmd_info(t_cmd *cmd, t_list **token);
 static void	get_cmd_args(t_cmd *cmd, t_list **token);
 static void	parse_metachar(t_cmd *cmd, t_list **token);
 static char	*get_file_content_all(int fd);
@@ -41,16 +42,31 @@ t_cmd	*parser(const char *input)
 		else
 			now_cmd = now_cmd->next;
 		token = token->next;
+		/*
 		get_cmd_args(now_cmd, &token);
 		parse_metachar(now_cmd, &token);
+		*/
+		get_cmd_info(now_cmd, &token);
 	}
 	return (res);
 }
 
+static void	get_cmd_info(t_cmd *cmd, t_list **token)
+{
+	while ((*token) != NULL)
+	{
+		if (ft_strncmp((*token)->content, "|", 2) == 0)
+		{
+			(*token) = (*token)->next;
+			break ;
+		}
+		get_cmd_args(cmd, token);
+		parse_metachar(cmd, token);
+	}
+}
+
 static void	get_cmd_args(t_cmd *cmd, t_list **token)
 {
-	int	input_fd; //use????
-
 	while ((*token) != NULL && !metachar_isin_token(*token))
 	{
 		ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup((*token)->content)));
@@ -62,7 +78,9 @@ static void	parse_metachar(t_cmd *cmd, t_list **token)
 {
 	while ((*token) != NULL && metachar_isin_token(*token))
 	{
-		if (ft_strncmp((*token)->content, "<", 2) == 0)
+		if (ft_strncmp((*token)->content, "|", 2) == 0)
+			break ;
+		else if (ft_strncmp((*token)->content, "<", 2) == 0)
 			input_file_specify(cmd, token);
 		else if (ft_strncmp((*token)->content, "<<", 3) == 0)
 			heredoc(cmd, token);
@@ -70,11 +88,6 @@ static void	parse_metachar(t_cmd *cmd, t_list **token)
 			output_file_specify(cmd, token, O_APPEND);
 		else if (ft_strncmp((*token)->content, ">", 2) == 0)
 			output_file_specify(cmd, token, !O_APPEND);
-		else if (ft_strncmp((*token)->content, "|", 2) == 0)
-		{
-			*token = (*token)->next;
-			break ;
-		}
 		*token = (*token)->next;
 	}
 }
@@ -129,6 +142,8 @@ static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 	}
 	//other flags(eg:O_CLOEXEC) may be needed
 	fd_out = open((*token)->content, open_flags, out_file_rights);
+	printf("filename: @%s@\n", (*token)->content);
+	printf("fd: %d\n", fd_out);
 	//open err
 	cmd->fd_out = fd_out;
 }
@@ -203,7 +218,7 @@ static void	validate_token(const t_list *token)
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = ft_strdup("cat \"<< end\"");
+	char	*input = av[1];
 
 	res = parser(input);
 	for (t_cmd *now = res; now != NULL; now = now->next)

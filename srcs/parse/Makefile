@@ -19,6 +19,7 @@ all:	$(NAME)
 clean:
 	make clean -C $(LIBFT_DIR) 
 	rm -f $(OBJS)
+	rm -f *.txt
 
 fclean:		clean
 	rm -f $(NAME)
