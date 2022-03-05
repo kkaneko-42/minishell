@@ -1,64 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/05 00:08:15 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/03/04 23:39:16 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+static void	delete_node(t_envp **envp, t_envp **p_envp);
 static void	delete_first_node(t_envp **envp, t_envp **p_envp);
 static void	delete_last_node(t_envp **envp, t_envp **p_envp);
 static void	delete_between_node(t_envp **envp, t_envp **p_envp);
-static void	delete_env_unset(t_envp **envp, t_list *p_args);
 
-void	unset(t_cmd *input, t_envp **envp)
-{
-	int		argc;
-	t_list	*p_args;
-	t_envp	*p_envp;
-	t_envp	*tmp;
-
-	argc = ft_lstsize(input->args);
-	if (argc == 0)
-		return ;
-	p_args = input->args;
-	while (p_args != NULL)
-	{
-		delete_env_unset(envp, p_args);
-		p_args = p_args->next;
-	}
-}
-
-static void	delete_env_unset(t_envp **envp, t_list *p_args)
+void	delete_env_export(t_envp **envp, char *old_env)
 {
 	t_envp	*p_envp;
-	size_t	args_len;
+	size_t	i;
 
 	p_envp = *envp;
 	while (p_envp != NULL)
 	{
-		args_len = ft_strlen(p_args->content);
-		if (ft_strncmp(p_args->content, p_envp->content, args_len) == 0
-			&& ((p_envp->content)[args_len] == '='
-			|| (p_envp->content)[args_len] == '\0'))
+		i = 0;
+		while (old_env[i] != '\0' && p_envp->content[i] != '\0')
 		{
-			if (p_envp->prev == NULL)
-				delete_first_node(envp, &p_envp);
-			else if (p_envp->next == NULL)
-				delete_last_node(envp, &p_envp);
-			else
-				delete_between_node(envp, &p_envp);
+			if (old_env[i] == '=' || p_envp->content[i] == '='
+				|| (old_env[i] != p_envp->content[i]))
+				break ;
+			++i;
+		}
+		if (old_env[i] == '=' && p_envp->content[i] == '='
+			|| old_env[i] == '\0' && p_envp->content[i] == '='
+			|| old_env[i] == '=' && p_envp->content[i] == '\0'
+			|| old_env[i] == '\0' && p_envp->content[i] == '\0')
+		{
+			delete_node(envp, &p_envp);
 			break ;
 		}
-		else
-			p_envp = p_envp->next;
+		p_envp = p_envp->next;
 	}
+}
+
+static void	delete_node(t_envp **envp, t_envp **p_envp)
+{
+	if ((*p_envp)->prev == NULL)
+		delete_first_node(envp, p_envp);
+	else if ((*p_envp)->next == NULL)
+		delete_last_node(envp, p_envp);
+	else
+		delete_between_node(envp, p_envp);
 }
 
 static void	delete_first_node(t_envp **envp, t_envp **p_envp)
@@ -99,19 +93,3 @@ static void	delete_between_node(t_envp **envp, t_envp **p_envp)
 	free(tmp);
 	tmp = NULL;
 }
-/* 
-//debug
-int main(int ac, char **av, char **envp)
-{
-	t_cmd	*res;
-	t_envp	*envp_list;
-	char	now_path[512];
-
-	res = parser(av[1]);
-	envp_list = get_envp_list(envp);
-	exec(res, envp_list);
-	//system("export");
-	//print_envp(envp_list);
-	//system("leaks -q a.out");
-	return (0);
-} */

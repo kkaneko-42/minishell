@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/04 12:14:10 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 16:12:11 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int ac, char **av, char **envp)
 	t_envp	*env_list;
 
 	validate_args(ac, av, envp);
-	//env_list = envp_to_list(envp);
 	env_list = get_envp_list(envp);
 	prompt(env_list);
 	return (0);
@@ -82,22 +81,6 @@ int	addback_envp_list(t_envp **envp_list, char *s)
 	return (1);
 }
 
-/* 
-static t_list	*envp_to_list(char **envp)
-{
-	size_t	i;
-	t_list	*res;
-
-	i = 0;
-	res = NULL;
-	while (envp[i] != NULL)
-	{
-		ft_lstadd_back(&res, ft_strdup(envp[i]));
-		++i;
-	}
-	return (res);
-}
- */
 static void	prompt(t_envp *env_list)
 {
 	char	*input;
@@ -114,7 +97,6 @@ static void	prompt(t_envp *env_list)
 		add_history(input);
 		cmd = parser(input);
 		//expand_var(cmd, envp);
-		//exec(cmd); //exec(cmd, envp);
 		exec(cmd, &env_list);
 		free(input);
 	}

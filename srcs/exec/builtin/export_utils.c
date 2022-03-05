@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 12:13:20 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 22:53:07 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,36 @@ int	first_char_is_equal(char *s)
 		return (1);
 	return (0);
 }
-/* 
-int	ft_strcmp(char *s1, char *s2)
+
+int	is_exist_env(t_envp *envp, char *new_env)
 {
-	while (*s1 == *s2)
+	t_envp	*p;
+	size_t	i;
+
+	p = envp;
+	while (p != NULL)
 	{
-		if (*s1 == '\0')
+		i = 0;
+		while (new_env[i] != '\0' && p->content[i] != '\0')
 		{
-			return (0);
+			if (new_env[i] == '=' || p->content[i] == '='
+				|| (new_env[i] != p->content[i]))
+				break ;
+			++i;
 		}
-		s1++;
-		s2++;
+		if (new_env[i] == '=' && p->content[i] == '=')
+			return (1);
+		else if (new_env[i] == '=' && p->content[i] == '\0')
+			return (1);
+		else if (new_env[i] == '\0' && p->content[i] == '\0')
+			return (1);
+		else if (new_env[i] == '\0' && p->content[i] == '=')
+			return (2);
+		p = p->next;
 	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
+	return (0);
 }
- */
+
 int	get_max_rank(t_envp *envp)
 {
 	t_envp	*p;

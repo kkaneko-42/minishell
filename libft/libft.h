@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:00:53 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 12:13:15 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 15:57:34 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_list
 {
 	char			*content;
 	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list;
 
 int		ft_isalpha(int c);

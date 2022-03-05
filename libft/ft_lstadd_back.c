@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 21:40:07 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/01/25 17:58:27 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 15:59:16 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	if (*lst == 0)
 		*lst = new;
 	else
+	{
+		new->prev = ft_lstlast(*lst);
 		ft_lstlast(*lst)->next = new;
+	}
 	new->next = 0;
 }
 

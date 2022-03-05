@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 12:05:20 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 23:41:55 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,30 @@ static void	print_envp_content(char *content);
 void	export(t_cmd *input, t_envp *envp)
 {
 	int		argc;
-	t_list	*p;
+	t_list	*p_args;
 
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		print_envp(envp);
 	else
 	{
-		p = input->args;
-		while (p != NULL)
+		p_args = input->args;
+		while (p_args != NULL)
 		{
-			if (first_char_is_equal(p->content))
+			if (first_char_is_equal(p_args->content))
 				printf("minishell: export: `%s': not a valid identifier\n",
-					p->content);
-			else
+					p_args->content);
+			else if (is_exist_env(envp, p_args->content) == 1)
 			{
-				if (!addback_envp_list(&envp, p->content)) //malloc err
-				{
-					//free
-					//exit
-				}
+				delete_env_export(&envp, p_args->content);
+				addback_envp_list(&envp, p_args->content);
 			}
-			p = p->next;
+			else if (is_exist_env(envp, p_args->content) != 2)
+			{
+				if (!addback_envp_list(&envp, p_args->content)) //malloc err
+					printf("exit?");//exit?
+			}
+			p_args = p_args->next;
 		}
 	}
 }

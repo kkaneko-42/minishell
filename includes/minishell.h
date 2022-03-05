@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/04 11:50:33 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/04 19:32:05 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_envp
 
 t_list	*lexer(const char *input);
 t_cmd	*parser(const char *input);
+
 void	exec(t_cmd *input, t_envp **envp);
 void	echo(t_cmd *input);
 void	cd(t_cmd *input);
@@ -58,6 +59,8 @@ void	pwd(t_cmd *input);
 void	export(t_cmd *input, t_envp *envp);
 void	env(t_cmd *input, t_envp *envp);
 void	unset(t_cmd *input, t_envp **envp);
+void	delete_env_export(t_envp **envp, char *p_args);
+int	    is_exist_env(t_envp *envp, char *new_env);
 t_envp	*get_envp_list(char **envp);
 int	    first_char_is_equal(char *s);
 int	    addback_envp_list(t_envp **envp_list, char *s);
