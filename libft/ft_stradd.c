@@ -26,7 +26,7 @@ char	*ft_stradd(char **s1, char const *s2)
 		return (ft_strdup(*s1));
 	s1_len = ft_strlen(*s1);
 	s2_len = ft_strlen(s2);
-	str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	str = (char *)ft_xmalloc(sizeof(char) * (s1_len + s2_len + 1));
 	if (str == 0)
 		return (NULL);
 	ft_memmove(str, *s1, s1_len);

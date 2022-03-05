@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/02/24 17:56:46 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/05 15:27:58 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_list	*lexer(const char *input)
 		else if (ft_strchr("><|", input[i]) != NOT_FOUND)
 			get_metachar(input, &now, &i);
 		else
-			now->content = ft_stradd_char(&(now->content), input[i++]); //malloc_err
+			now->content = ft_stradd_char(&(now->content), input[i++]);
 	}
 	return (res);
 }
@@ -92,11 +92,10 @@ static void	metachar_to_list(
 	}
 	else
 	{
-		(*now)->next = ft_lstnew(ft_strdup(metachar));//malloc err
+		(*now)->next = ft_lstnew(ft_strdup(metachar));
 		(*now)->next->next = ft_lstnew(ft_strdup("\0"));
 		*now = (*now)->next->next;
 	}
-	//malloc err
 	*input_i += ft_strlen(metachar);
 }
 
@@ -127,9 +126,7 @@ static char	*ft_stradd_char(char **str, const char c)
 	if (str == NULL || *str == NULL)
 		return (NULL);
 	str_len = ft_strlen(*str);
-	res = (char *)malloc(sizeof(char) * (str_len + 2));
-	if (res == NULL)
-		return (NULL);
+	res = (char *)ft_xmalloc(sizeof(char) * (str_len + 2));
 	ft_memmove(res, *str, sizeof(char) * str_len);
 	res[str_len] = c;
 	res[str_len + 1] = 0x00;
@@ -142,7 +139,7 @@ static char	*ft_stradd_char(char **str, const char c)
 int	main(int ac, char **av)
 {
 	t_list	*res;
-	char	*input = av[1];
+	char	*input = ft_strdup("cat \"<< end\"");
 
 	printf("input:@%s@\n", input);
 	res = lexer(input);

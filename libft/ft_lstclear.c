@@ -34,7 +34,7 @@ int main()
 	t_list *new;
 	t_list **lst;
 	
-	lst = (t_list **)malloc(sizeof(t_list*) * 5);
+	lst = (t_list **)ft_xmalloc(sizeof(t_list*) * 5);
 	lst[0] = ft_lstnew("0ban");
 	lst[1] = ft_lstnew("1ban");
 	lst[2] = ft_lstnew("2ban");
@@ -60,7 +60,7 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new;
 
-	new = (t_list *)malloc(sizeof(t_list) * 1);
+	new = (t_list *)ft_xmalloc(sizeof(t_list) * 1);
 	if (new == 0)
 		return (NULL);
 	new->content = content;

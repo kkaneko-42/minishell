@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_var.c                                       :+:      :+:    :+:   */
+/*   ft_xmalloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/02 22:34:17 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/02 23:51:34 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/05 15:15:55 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/05 15:16:30 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "libft.h"
 
-static void	expand_from_name(t_list *token, t_envp *env);
-static void	expand_from_args(t_list *token, t_envp *env);
-
-void	expand_var(t_cmd *token, t_envp *env)
+void	*ft_xmalloc(size_t size)
 {
-	t_list	*now_token;
+	void	*res;
 
-	now_token = token;
-	while (now_cmd != NULL)
+	res = malloc(size);
+	if (res == NULL)
 	{
-		expand_from_name(now_cmd, env);
-		expand_from_args(now_cmd, env);
-		now_cmd = now_cmd->next;
+		ft_putstr_fd(MALLOC_ERR, 2);
+		exit(1);
 	}
+	return (res);
 }
-

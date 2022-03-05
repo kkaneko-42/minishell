@@ -18,13 +18,13 @@ void	*ft_calloc(size_t count, size_t size)
 
 	if (count == 0 || size == 0)
 	{
-		s = (char *)malloc(sizeof(char) * 1);
+		s = (char *)ft_xmalloc(sizeof(char) * 1);
 		if (s == 0)
 			return (NULL);
 		s[0] = '\0';
 		return ((void *)s);
 	}
-	s = (char *)malloc(count * size);
+	s = (char *)ft_xmalloc(count * size);
 	if (s == 0)
 		return (NULL);
 	ft_bzero(s, count * size);

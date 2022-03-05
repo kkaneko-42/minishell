@@ -32,7 +32,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (s1[0] == '\0')
 		return (make_onesize_str());
 	last = trim_last_index(s1, set);
-	str = (char *)malloc(sizeof(char) * (last + 2));
+	str = (char *)ft_xmalloc(sizeof(char) * (last + 2));
 	if (str == 0)
 		return (NULL);
 	ft_memmove(str, s1, last + 1);
@@ -82,7 +82,7 @@ static char	*make_onesize_str(void)
 {
 	char	*str;
 
-	str = (char *)malloc(sizeof(char) * 1);
+	str = (char *)ft_xmalloc(sizeof(char) * 1);
 	if (str == 0)
 		return (NULL);
 	str[0] = '\0';
@@ -118,7 +118,7 @@ char	*ft_strdup(char *src)
 	i = 0;
 	while (src[i] != '\0')
 		i++;
-	p = (char *)malloc(sizeof(char) * i + 1);
+	p = (char *)ft_xmalloc(sizeof(char) * i + 1);
 	if (p == NULL)
 		return (p);
 	i = 0;

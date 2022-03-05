@@ -16,7 +16,7 @@ t_list	*ft_lstnew(char *content)
 {
 	t_list	*new;
 
-	new = (t_list *)malloc(sizeof(t_list) * 1);
+	new = (t_list *)ft_xmalloc(sizeof(t_list) * 1);
 	if (new == 0)
 		return (NULL);
 	new->content = content;
