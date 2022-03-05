@@ -6,11 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 22:55:41 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 22:55:44 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/06 00:25:04 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 static char	*get_result(char *env)
 {
@@ -22,6 +22,20 @@ static char	*get_result(char *env)
 	return (&env[i + 1]);
 }
 
+static int	is_exist(const char *name, char *env)
+{
+	const size_t	name_len = ft_strlen(name);
+	size_t			i;
+
+	i = 0;
+	while (name[i] != 0x00 && env[i] != 0x00)
+		++i;
+	if (name[i] == 0x00 && env[i] == '=')
+		return (1);
+	else
+		return (0);
+}
+
 char	*ft_getenv(const char *name, t_envp *env_list)
 {
 	const size_t	cmp_len = ft_strlen(name) + 1;
@@ -30,7 +44,7 @@ char	*ft_getenv(const char *name, t_envp *env_list)
 	now_env = env_list;
 	while (now_env != NULL)
 	{
-		if (ft_strncmp(now_env->content, name, cmp_len) == '=' - '\0')
+		if (is_exist(name, now_env->content))
 			return (get_result(now_env->content));
 		now_env = now_env->next;
 	}

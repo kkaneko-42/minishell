@@ -3,6 +3,7 @@ CC		:=	gcc
 CFLAGS	:=	-lreadline #-fsanitize=address -g
 INC_DIR := ./includes
 SRCS	:=	./srcs/main.c \
+			./srcs/utils.c \
 			./srcs/parse/parser.c \
 			./srcs/parse/lexer.c \
 			./srcs/exec/builtin/cd.c \
