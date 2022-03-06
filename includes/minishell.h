@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 22:52:47 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/06 16:13:17 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	delete_env_export(t_envp **envp, char *p_args);
 int	    is_exist_env(t_envp *envp, char *new_env);
 t_envp	*get_envp_list(char **envp);
 int	    first_char_is_equal(char *s);
+int	    forbidden_char_is_exist_in_envp(char *s);
 int	    addback_envp_list(t_envp **envp_list, char *s);
 int	    ft_strcmp(char *s1, char *s2);
 int	    get_max_rank(t_envp *envp);

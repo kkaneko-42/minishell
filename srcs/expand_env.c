@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 15:34:45 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/05 17:36:41 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ static char	*get_env_name_from_dollar(char *str)
 	env_start_i = 1;
 	env_len = 0;
 	//may need to support other space(tab for example)
-	while (str[env_len + 1] != ' ')
+	//while (str[env_len + 1] != ' ')
 }
