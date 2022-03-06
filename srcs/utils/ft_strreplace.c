@@ -17,14 +17,14 @@ static void	do_replace(char **res, const char *replace);
 //res init: ft_stradd_char returns NULL if first argument is null.
 //By initializing as \0, we are able to concatnate string whenever.
 char	*ft_strreplace(
-			const char *str, const char *replace, size_t start, size_t end)
+			char **str, const char *replace, size_t start, size_t end)
 {
 	size_t	i;
 	char	*res;
 
 	res = ft_strdup("\0");
 	i = 0;
-	while (str[i] != 0x00)
+	while (*str[i] != 0x00)
 	{
 		if (i == start)
 		{
@@ -32,7 +32,7 @@ char	*ft_strreplace(
 			i = end;
 		}
 		else
-			res = ft_stradd_char(&res, str[i]);
+			res = ft_stradd_char(&res, *str[i]);
 		++i;
 	}
 	return (res);
