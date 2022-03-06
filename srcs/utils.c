@@ -6,35 +6,15 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 22:55:41 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/06 00:25:04 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/06 17:45:17 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*get_result(char *env)
-{
-	size_t	i;
-
-	i = 0;
-	while (env[i] != '=')
-		++i;
-	return (&env[i + 1]);
-}
-
-static int	is_exist(const char *name, char *env)
-{
-	const size_t	name_len = ft_strlen(name);
-	size_t			i;
-
-	i = 0;
-	while (name[i] != 0x00 && env[i] != 0x00)
-		++i;
-	if (name[i] == 0x00 && env[i] == '=')
-		return (1);
-	else
-		return (0);
-}
+static void	free_strs(char **strs);
+static char	*get_env_value(char *env);
+static int	is_exist(const char *name, char *env);
 
 char	*ft_getenv(const char *name, t_envp *env_list)
 {
@@ -45,10 +25,50 @@ char	*ft_getenv(const char *name, t_envp *env_list)
 	while (now_env != NULL)
 	{
 		if (is_exist(name, now_env->content))
-			return (get_result(now_env->content));
+			return (get_env_value(now_env->content));
 		now_env = now_env->next;
 	}
 	return (NULL);
+}
+
+static void	free_strs(char **strs)
+{
+	size_t	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+	{
+		free(strs[i]);
+		strs[i] = NULL;
+		++i;
+	}
+	free(strs);
+}
+
+static char	*get_env_value(char *env)
+{
+	char	*res;
+
+	res = ft_strchr(env, '=');
+	if (res == NOT_FOUND)
+		return (ft_strchr(env, '\0'));
+	else
+		return (res + 1);
+}
+
+static int	is_exist(const char *name, char *env)
+{
+	const size_t	cmp_len = ft_strlen(name) + 1;
+	char			**name_and_value;
+	int				res;
+
+	name_and_value = ft_split(env, '=');
+	if (ft_strncmp(name_and_value[0], name, cmp_len) == 0)
+		res = 1;
+	else
+		res = 0;
+	free_strs(name_and_value);
+	return (res);
 }
 /*
 //debug
@@ -97,8 +117,11 @@ int main(int ac, char **av, char **envp)
 {
 	t_envp	*env = get_envp_list(envp);
 
-	printf("top of list:@%s@\n", env->content);
-	printf("res:@%s@\n", ft_getenv(av[1], env));
+	//printf("res:@%s@\n", ft_getenv(av[1], env));
+	for (t_envp *now = env; now != NULL; now = now->next)
+	{
+		printf("%s\n", now->content);
+	}
 	return (0);
 }
 */
