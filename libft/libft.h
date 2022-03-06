@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 16:00:53 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/05 22:54:43 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/07 00:05:53 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft_lstiter(t_list *lst, void (*f)(char *));
 t_list	*ft_lstmap(t_list *lst, char *(*f)(char *), void (*del)(char *));
 
 char	*ft_stradd(char **s1, char const *s2);
+char    *ft_stradd_char(char **str, const char c);
 int		ft_strcmp(char *s1, char *s2);
 void	*ft_xmalloc(size_t size);
 #endif

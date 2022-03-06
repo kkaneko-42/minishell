@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 17:12:18 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/06 18:18:24 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ t_cmd	*parser(const char *input)
 		else
 			now_cmd = now_cmd->next;
 		token = token->next;
-		/*
-		get_cmd_args(now_cmd, &token);
-		parse_metachar(now_cmd, &token);
-		*/
 		get_cmd_info(now_cmd, &token);
 	}
 	return (res);
@@ -142,8 +138,6 @@ static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 	}
 	//other flags(eg:O_CLOEXEC) may be needed
 	fd_out = open((*token)->content, open_flags, out_file_rights);
-	printf("filename: @%s@\n", (*token)->content);
-	printf("fd: %d\n", fd_out);
 	//open err
 	cmd->fd_out = fd_out;
 }
