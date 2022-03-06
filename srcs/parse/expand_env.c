@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 17:36:41 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/06 23:31:28 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-static void	try_expand(char *str);
-static char	*get_env_name_from_dollar(char *str);
+static void	try_expand(char **str, t_envp *env_list);
+static char	*get_env_name_from_token(char *str);
 
-void	expand_env(t_list *token)
+void	expand_env(t_list *token, t_envp *env_list)
 {
 	t_list	*now_token;
 
@@ -23,36 +23,38 @@ void	expand_env(t_list *token)
 	while (now_token != NULL)
 	{
 		if (now_token->content[0] != '\'')
-			try_expand(now_token->content);
+			try_expand(&(now_token->content), env_list);
 		now_token = now_token->next;
 	}
 }
 
-static void	try_expand(char *str)
+//str: call by reference of char pointer
+static void	try_expand(char **str, t_envp *env_list)
 {
-	size_t			i;
-	size_t			env_start_i;
-	size_t			env_end_i;
-	char			*env_name;
+	size_t	i;
+	char	*env_name; //allocated
+	char	*env_value;
 
 	i = 0;
 	while (str[i] != 0x00)
 	{
 		if (str[i] == '$')
-			env_name = get_env_name_from_dollar(&str[i]);
+		{
+			env_name = get_env_name_from_token(&str[i + 1]);
+			env_value = ft_getenv(env_name, env_list);
+		}
 		++i;
 	}
 }
 
-//str[0] is $
-static char	*get_env_name_from_dollar(char *str)
+static char	*get_env_name_from_token(char *str)
 {
-	char	*env_name;
-	size_t	env_start_i;
-	size_t	env_len;
+	size_t	i;
+	char	*res;
 
-	env_start_i = 1;
-	env_len = 0;
-	//may need to support other space(tab for example)
-	//while (str[env_len + 1] != ' ')
+	i = 0;
+	while (is_snakecase(str[i], i))
+		++i;
+	res = ft_substr(str, 0, i);
+	return (res);
 }
