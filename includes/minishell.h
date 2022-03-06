@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/06 16:13:17 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/06 23:14:16 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ int	    forbidden_char_is_exist_in_envp(char *s);
 int	    addback_envp_list(t_envp **envp_list, char *s);
 int	    ft_strcmp(char *s1, char *s2);
 int	    get_max_rank(t_envp *envp);
+char	*ft_getenv(const char *name, t_envp *env_list);
 #endif
