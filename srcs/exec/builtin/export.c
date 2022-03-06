@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 23:41:55 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/06 16:10:56 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	export(t_cmd *input, t_envp *envp)
 		p_args = input->args;
 		while (p_args != NULL)
 		{
-			if (first_char_is_equal(p_args->content))
+			if (forbidden_char_is_exist_in_envp(p_args->content))
 				printf("minishell: export: `%s': not a valid identifier\n",
 					p_args->content);
 			else if (is_exist_env(envp, p_args->content) == 1)

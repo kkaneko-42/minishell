@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 15:28:50 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/06 17:32:13 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ t_envp	*get_envp_list(char **envp)
 		addback_envp_list(&envp_list, envp[i]);
 		++i;
 	}
+	addback_envp_list(&envp_list, "?=0  ");
+	//ft_getenvで?の0の後ろを'\0'で埋める
 	return (envp_list);
 }
 
@@ -89,6 +91,12 @@ static void	prompt(t_envp *env_list)
 		add_history(input);
 		cmd = parser(input);
 		//expand_var(cmd, envp);
+
+
+		for (t_envp *now = env_list;now != NULL;now = now->next)
+			printf("%s\n",now->content);
+
+		
 		exec(cmd, &env_list);
 		free(input);
 	}

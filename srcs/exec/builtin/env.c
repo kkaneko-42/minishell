@@ -6,13 +6,14 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 11:30:28 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 10:53:14 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/06 16:20:05 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
 static void	print_env(t_envp *envp);
+static int	have_equal(char *s);
 
 void	env(t_cmd *input, t_envp *envp)
 {
@@ -32,9 +33,25 @@ static void	print_env(t_envp *envp)
 	p = envp;
 	while (p != NULL)
 	{
-		printf("%s\n", p->content);
+		if (have_equal(p->content)
+			&& !forbidden_char_is_exist_in_envp(p->content))
+			printf("%s\n", p->content);
 		p = p->next;
 	}
+}
+
+static int	have_equal(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '=')
+			return (1);
+		++i;
+	}
+	return (0);
 }
 /* 
 int	is_builtin(t_cmd *input)

@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/05 00:08:15 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/06 16:19:22 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ void	unset(t_cmd *input, t_envp **envp)
 	p_args = input->args;
 	while (p_args != NULL)
 	{
-		delete_env_unset(envp, p_args);
+		if (forbidden_char_is_exist_in_envp(p_args->content))
+			printf("minishell: unset: `%s': not a valid identifier\n",
+				p_args->content);
+		else
+			delete_env_unset(envp, p_args);
 		p_args = p_args->next;
 	}
 }
