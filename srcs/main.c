@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/06 17:32:13 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/06 17:35:45 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,6 @@ static void	prompt(t_envp *env_list)
 		add_history(input);
 		cmd = parser(input);
 		//expand_var(cmd, envp);
-
-
-		for (t_envp *now = env_list;now != NULL;now = now->next)
-			printf("%s\n",now->content);
-
-		
 		exec(cmd, &env_list);
 		free(input);
 	}
