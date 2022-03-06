@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:47:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 16:22:44 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/05 17:30:20 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	echo(t_cmd *input)
 	}
 	while (p != NULL)
 	{
-		printf("%s", p->content);
+		ft_putstr_fd(p->content, input->fd_out);
 		p = p->next;
 		if (p != NULL)
-			printf(" ");
+			ft_putstr_fd(" ", input->fd_out);
 	}
 	if (need_new_line)
-		printf("\n");
+		ft_putstr_fd("\n", input->fd_out);
 }
 /* 
 //debug
