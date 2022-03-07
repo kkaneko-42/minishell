@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/03/07 16:40:15 by okumurahyu       ###   ########.fr       */
+=======
 /*   Updated: 2022/03/07 00:18:22 by kkaneko          ###   ########.fr       */
+>>>>>>> 1b48657154f2ef4f1cdc892a3e213be00f1d8aaf
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +27,7 @@
 # include "../libft/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 # define HEREDOC_PROMPT "heredoc> "
 # define INIT NULL
 # define NOT_FOUND NULL
@@ -67,6 +72,8 @@ int	    forbidden_char_is_exist_in_envp(char *s);
 int	    addback_envp_list(t_envp **envp_list, char *s);
 int	    ft_strcmp(char *s1, char *s2);
 int	    get_max_rank(t_envp *envp);
+void	free_strs(char **strs);
+void	do_exexve(t_cmd *input, t_envp *envp);
 int	    is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
 
