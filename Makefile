@@ -7,7 +7,8 @@ SRCS	:=	./srcs/main.c \
 			./srcs/parse/parser.c \
 			./srcs/parse/lexer.c \
 			./srcs/exec/builtin/cd.c \
-			./srcs/exec/builtin/exec.c \
+			./srcs/exec/exec.c \
+			./srcs/exec/do_execve.c \
 			./srcs/exec/builtin/echo.c \
 			./srcs/exec/builtin/cd.c \
 			./srcs/exec/builtin/pwd.c \
