@@ -3,6 +3,7 @@ CC		:=	gcc
 CFLAGS	:=	-lreadline #-fsanitize=address -g
 INC_DIR := ./includes
 SRCS	:=	./srcs/main.c \
+			./srcs/signal.c \
 			./srcs/parse/parser.c \
 			./srcs/parse/lexer.c \
 			./srcs/exec/builtin/cd.c \
@@ -19,7 +20,10 @@ SRCS	:=	./srcs/main.c \
 			./srcs/utils/free_strs.c \
 			./srcs/utils/ft_getenv.c \
 			./srcs/utils/ft_strreplace.c \
-			./srcs/utils/is_snakecase.c
+			./srcs/utils/is_snakecase.c \
+			./srcs/utils/addback_envp_list.c \
+			./srcs/utils/free_strs.c \
+			./srcs/utils/get_envp_list.c
 
 OBJS	:= $(SRCS:.c=.o)
 LIBFT_DIR := ./libft
