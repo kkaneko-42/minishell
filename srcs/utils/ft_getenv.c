@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:08:09 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 17:21:32 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/07 17:24:01 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,6 @@ char	*ft_getenv(const char *name, t_envp *env_list)
 		now_env = now_env->next;
 	}
 	return (NULL);
-}
-
-void	free_strs(char **strs)
-{
-	size_t	i;
-
-	i = 0;
-	while (strs[i] != NULL)
-	{
-		free(strs[i]);
-		strs[i] = NULL;
-		++i;
-	}
-	free(strs);
-	strs = NULL;
 }
 
 static char	*get_env_value(char *env)
