@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 00:18:22 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/07 16:01:02 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ int	    ft_strcmp(char *s1, char *s2);
 int	    get_max_rank(t_envp *envp);
 int	    is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
+size_t  ft_strreplace(
+			char **str, const char *replace, size_t start, size_t end);
 
 #endif
