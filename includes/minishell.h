@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 17:34:58 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/07 17:59:41 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
@@ -72,5 +73,7 @@ void	free_strs(char **strs);
 void	do_exexve(t_cmd *input, t_envp *envp);
 int	    is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
+size_t  ft_strreplace(
+			char **str, const char *replace, size_t start, size_t end);
 
 #endif
