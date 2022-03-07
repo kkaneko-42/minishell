@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/07 16:50:44 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/07 17:08:21 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 		printf("minishell: %s: No such file or directory\n", input->name);
 		exit(1);
 	}
-	path_env = ft_split(&get_path(envp)[5], ':');
+	path_env = ft_split(get_path(envp), ':');
 	i = 0;
 	while (path_env[i] != NULL)
 	{

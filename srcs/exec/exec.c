@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/07 16:49:06 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/07 17:34:23 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	do_cmd(t_cmd *input, t_envp *envp);
 
 void	exec(t_cmd *input, t_envp **envp)
 {
+	if (input->name[0] == '\n')
+		return ;
 	if (!ft_strncmp(input->name, "echo", 5))
 		echo(input);
 	else if (!ft_strncmp(input->name, "cd", 3))
