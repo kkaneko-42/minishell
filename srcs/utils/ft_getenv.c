@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 22:55:41 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 17:03:05 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/06 23:08:09 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/07 17:24:01 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static char	*get_env_value(char *env);
 static int	is_exist(const char *name, char *env);
@@ -28,21 +28,6 @@ char	*ft_getenv(const char *name, t_envp *env_list)
 		now_env = now_env->next;
 	}
 	return (NULL);
-}
-
-void	free_strs(char **strs)
-{
-	size_t	i;
-
-	i = 0;
-	while (strs[i] != NULL)
-	{
-		free(strs[i]);
-		strs[i] = NULL;
-		++i;
-	}
-	free(strs);
-	strs = NULL;
 }
 
 static char	*get_env_value(char *env)

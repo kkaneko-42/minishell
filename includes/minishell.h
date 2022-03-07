@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/03/07 16:40:15 by okumurahyu       ###   ########.fr       */
-=======
-/*   Updated: 2022/03/07 00:18:22 by kkaneko          ###   ########.fr       */
->>>>>>> 1b48657154f2ef4f1cdc892a3e213be00f1d8aaf
+/*   Updated: 2022/03/07 17:27:14 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +18,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
@@ -76,5 +73,7 @@ void	free_strs(char **strs);
 void	do_exexve(t_cmd *input, t_envp *envp);
 int	    is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
+size_t  ft_strreplace(
+			char **str, const char *replace, size_t start, size_t end);
 
 #endif
