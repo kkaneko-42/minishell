@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/05 15:27:58 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/07 00:26:29 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	get_metachar(
 		const char *input, t_list **now, size_t *input_i);
 static void	skip_whitespace(
 		const char *input, t_list **now, size_t *input_i);
-static char *ft_stradd_char(char **str, const char c);
 static void	metachar_to_list(
 		char *metachar, t_list **now, size_t *input_i);
 
@@ -31,8 +30,6 @@ t_list	*lexer(const char *input)
 	if (input == NULL)
 		return (NULL);
 	res = ft_lstnew(ft_strdup("\0"));
-	if (res == NULL)
-		return (NULL);
 	now = res;
 	i = 0;
 	while (input[i] != 0x00)
@@ -115,24 +112,6 @@ static void	get_metachar(
 		metachar_to_list("<", now, input_i);
 	else if (now_c == '|')
 		metachar_to_list("|", now, input_i);
-}
-
-static char	*ft_stradd_char(char **str, const char c)
-{
-	size_t	i;
-	size_t	str_len;
-	char	*res;
-
-	if (str == NULL || *str == NULL)
-		return (NULL);
-	str_len = ft_strlen(*str);
-	res = (char *)ft_xmalloc(sizeof(char) * (str_len + 2));
-	ft_memmove(res, *str, sizeof(char) * str_len);
-	res[str_len] = c;
-	res[str_len + 1] = 0x00;
-	free(*str);
-	*str = NULL;
-	return (res);
 }
 /*
 //debug
