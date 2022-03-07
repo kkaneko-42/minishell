@@ -6,11 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:32:16 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 16:46:36 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/07 16:55:12 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
+
+static void	do_replace(char **res, const char *replace);
 
 //res init: ft_stradd_char returns NULL if first argument is null.
 //By initializing as \0, we are able to concatnate string whenever.
@@ -26,7 +28,7 @@ size_t	ft_strreplace(
 	{
 		if (i == start)
 		{
-			res = ft_stradd(&res, replace);
+			do_replace(&res, replace); //do_replace
 			i = end;
 		}
 		else
@@ -37,21 +39,34 @@ size_t	ft_strreplace(
 	*str = res;
 	return (start + ft_strlen(replace) - 1);
 }
+
+static void	do_replace(char **res, const char *replace)
+{
+	size_t	replace_i;
+
+	replace_i = 0;
+	if (replace = NULL)
+		return ;
+	while (replace[replace_i] != 0x00)
+	{
+		*res = ft_stradd_char(res, replace[replace_i]);
+		++replace_i;
+	}
+}
 /*
 //debug
 #include <stdlib.h>
 #include <stdio.h>
 int main(int ac, char **av)
 {
-	char	*src = ft_strdup("01$HOGE456789"); // => 0123456789
-	char	*replace = "23";
-	size_t	start = 2;
-	size_t	end = 6;
+	char	*src = "0123$HOGE6789";
+	char	*replace = "45";
+	size_t	start = 4;
+	size_t	end = 8;
 
-	printf("src:%s\n", src);
-	ft_strreplace(&src, replace, start, end);
-	printf("res:%s\n", src);
-	free(src);
+	printf("src len:%zu\n", ft_strlen(src));
+	printf("end:%zu\n", end);
+	printf("res:%s\n", ft_strreplace(src, replace, start, end));
 	return (0);
 }
 */
