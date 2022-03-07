@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/07 23:44:24 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/07 23:56:36 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,15 @@ static void	do_cmd(t_cmd *input, t_envp *envp)
 	}
 }
 
-
 static void	do_pipe(t_cmd *input, t_envp *envp, int n)
 {
 	pid_t	pid;
 	int		fd[2];
 	int		i;
 	t_cmd	*now;
-	
+
 	if (n == cmd_lstsize(input))
-	{
 		do_exexve(input, envp);
-	}
 	else
 	{
 		pipe(fd);

@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 16:39:21 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/07 18:30:17 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,47 +88,6 @@ static size_t	get_envname_head_index(char *str)
 }
 
 //debug
-int	addback_envp_list(t_envp **envp_list, char *s)
-{
-	t_envp	*new_envp;
-	t_envp	*p;
-
-	new_envp = (t_envp *)ft_xmalloc(sizeof(t_envp) * 1);
-	new_envp->content = ft_strdup(s);
-	new_envp->rank = 0;
-	if (new_envp->content == NULL)
-		return (0);
-	if (*envp_list == NULL)
-	{
-		new_envp->next = NULL;
-		new_envp->prev = NULL;
-		*envp_list = new_envp;
-		return (1);
-	}
-	p = *envp_list;
-	while (p->next != NULL)
-		p = p->next;
-	p->next = new_envp;
-	new_envp->next = NULL;
-	new_envp->prev = p;
-	return (1);
-}
-
-t_envp	*get_envp_list(char **envp)
-{
-	t_envp	*envp_list;
-	size_t	i;
-
-	envp_list = NULL;
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		addback_envp_list(&envp_list, envp[i]);
-		++i;
-	}
-	return (envp_list);
-}
-
 int main(int ac, char **av, char **envp)
 {
 	t_envp	*env_list = get_envp_list(envp);

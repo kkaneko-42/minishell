@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 17:59:41 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/07 23:58:37 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# define SIG_CTRL_C SIGUSR1
+# define SIG_BACKSLASH SIGUSR2
 # define HEREDOC_PROMPT "heredoc> "
 # define INIT NULL
 # define NOT_FOUND NULL
 # define PARSE_ERR "parse error\n"
+# define INIT_ERR "Initalization error\n"
 # define SHELL_NAME "minishell$ "
 # define EXIT_MSG "exit\n"
 # define APPEND 1
@@ -75,5 +78,6 @@ int	    is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
 size_t  ft_strreplace(
 			char **str, const char *replace, size_t start, size_t end);
+void	receiver(void (*handler)(sig_atomic_t));
 
 #endif
