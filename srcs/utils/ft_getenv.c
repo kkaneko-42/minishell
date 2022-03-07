@@ -6,13 +6,12 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:08:09 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 16:29:14 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/07 17:21:32 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	free_strs(char **strs);
 static char	*get_env_value(char *env);
 static int	is_exist(const char *name, char *env);
 
@@ -31,7 +30,7 @@ char	*ft_getenv(const char *name, t_envp *env_list)
 	return (NULL);
 }
 
-static void	free_strs(char **strs)
+void	free_strs(char **strs)
 {
 	size_t	i;
 
@@ -43,6 +42,7 @@ static void	free_strs(char **strs)
 		++i;
 	}
 	free(strs);
+	strs = NULL;
 }
 
 static char	*get_env_value(char *env)
