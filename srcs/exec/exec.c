@@ -6,13 +6,15 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/07 17:34:23 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/07 23:44:24 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void	do_cmd(t_cmd *input, t_envp *envp);
+static void	do_pipe(t_cmd *input, t_envp *envp, int n);
+static int	cmd_lstsize(t_cmd *input);
 
 void	exec(t_cmd *input, t_envp **envp)
 {
@@ -49,11 +51,83 @@ static void	do_cmd(t_cmd *input, t_envp *envp)
 	}
 	if (pid == 0)
 	{
-		do_exexve(input, envp);
+		do_pipe(input, envp, 1);
 		printf("minishell: %s: command not found\n", input->name);
 		exit(1);
 	}
 }
+
+
+static void	do_pipe(t_cmd *input, t_envp *envp, int n)
+{
+	pid_t	pid;
+	int		fd[2];
+	int		i;
+	t_cmd	*now;
+	
+	if (n == cmd_lstsize(input))
+	{
+		do_exexve(input, envp);
+	}
+	else
+	{
+		pipe(fd);
+		pid = fork();
+		wait(NULL);
+		if (pid == 0)
+		{
+			close(fd[0]);
+			dup2(fd[1], 1);
+			close(fd[1]);
+			do_pipe(input, envp, n + 1);
+		}
+		else
+		{
+			close(fd[1]);
+			dup2(fd[0], 0);
+			close(fd[0]);
+			i = 0;
+			now = input;
+			while (i < cmd_lstsize(input) - n)
+			{
+				now = now->next;
+				++i;
+			}
+			do_exexve(now, envp);
+		}
+	}
+	/* pid = fork();
+	wait(NULL);
+	if (pid < 0)
+	{
+		perror("fork failed");
+		return ;
+	}
+	if (pid == 0)
+	{
+		do_(input, envp, 0);
+		printf("minishell: %s: command not found\n", input->name);
+		exit(1);
+	}*/
+}
+
+//static void	do_pipe(t_cmd *input, t_envp *envp, int n)
+
+static int	cmd_lstsize(t_cmd *input)
+{
+	int		i;
+	t_cmd	*now;
+
+	i = 0;
+	now = input;
+	while (now != NULL)
+	{
+		++i;
+		now = now->next;
+	}
+	return (i);
+}
+
 /* 
 static void	do_exexve(t_cmd *input, t_envp *envp)
 {
