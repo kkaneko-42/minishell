@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 21:38:28 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 23:16:11 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	free_content(char *content)
 void	re_lexer(t_list **src)
 {
 	t_list	*new_tokens;
+	t_list	*add_tokens;
 	t_list	*now;
 
 	new_tokens = NULL;

@@ -2,7 +2,14 @@ NAME	:=	a.out
 CC		:=	gcc
 CFLAGS	:=	-lreadline #-fsanitize=address -g
 INC_DIR := ../../includes
-SRCS	:=	./parser.c ./lexer.c ./expand_env.c
+SRCS	:=	./parser.c ./lexer.c \
+			./re_lexer.c ./refact_token.c \
+			./expand_env.c ../utils/lstdel_head.c \
+			../utils/lstdel_tail.c ../utils/lstdel_mid.c \
+			../utils/ft_lstjoin.c ../utils/ft_getenv.c \
+			../utils/ft_strreplace.c ../utils/is_snakecase.c \
+			../utils/get_envp_list.c ../utils/free_strs.c \
+			../utils/addback_envp_list.c
 OBJS	:= $(SRCS:.c=.o)
 LIBFT_DIR := ../../libft
 LIBFT := libft.a

@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 21:36:39 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 23:38:27 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ static void	metachar_to_list(
 	if (fg_no_content)
 	{
 		(*now)->content = ft_stradd(&((*now)->content), metachar);
-		(*now)->next = ft_lstnew(ft_strdup("\0"));
+		ft_lstadd_back(now, ft_lstnew(ft_strdup("\0")));
 		*now = (*now)->next;
 	}
 	else
 	{
-		(*now)->next = ft_lstnew(ft_strdup(metachar));
-		(*now)->next->next = ft_lstnew(ft_strdup("\0"));
+		ft_lstadd_back(now, ft_lstnew(ft_strdup(metachar)));
+		ft_lstadd_back(now, ft_lstnew(ft_strdup("\0")));
 		*now = (*now)->next->next;
 	}
 	*input_i += ft_strlen(metachar);

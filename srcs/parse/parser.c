@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 21:40:18 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 23:39:08 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char	*get_file_content_all(int fd);
 static void	input_file_specify(t_cmd *cmd, t_list **token);
 static void	heredoc(t_cmd *cmd, t_list **token);
 static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append);
+
 /*
 //debug
 void	put_all_tokens(t_list *tokens);
@@ -34,6 +35,7 @@ t_cmd	*parser(const char *input, t_envp *env_list)
 	t_cmd	*res;
 	t_cmd	*now_cmd;
 
+	
 	token = lexer(input);
 	expand_env(token, env_list);
 	re_lexer(&token);

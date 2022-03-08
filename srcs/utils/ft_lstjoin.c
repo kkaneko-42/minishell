@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 21:34:42 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 21:38:18 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 22:41:26 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	ft_lstjoin(t_list **lst1, t_list *lst2)
 	{
 		eol = ft_lstlast(*lst1);
 		eol->next = lst2;
+		lst2->prev = eol;
 	}
 }
