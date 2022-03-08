@@ -24,7 +24,8 @@ SRCS	:=	main.c \
 			ft_strreplace.c \
 			is_snakecase.c \
 			addback_envp_list.c \
-			get_envp_list.c
+			get_envp_list.c \
+			expand_env.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft

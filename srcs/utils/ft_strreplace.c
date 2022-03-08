@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:32:16 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 16:55:12 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 13:01:40 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ size_t	ft_strreplace(
 	{
 		if (i == start)
 		{
-			do_replace(&res, replace); //do_replace
+			res = ft_stradd(&res, replace);
 			i = end;
 		}
 		else
@@ -39,7 +39,7 @@ size_t	ft_strreplace(
 	*str = res;
 	return (start + ft_strlen(replace) - 1);
 }
-
+/*
 static void	do_replace(char **res, const char *replace)
 {
 	size_t	replace_i;
@@ -53,6 +53,7 @@ static void	do_replace(char **res, const char *replace)
 		++replace_i;
 	}
 }
+*/
 /*
 //debug
 #include <stdlib.h>

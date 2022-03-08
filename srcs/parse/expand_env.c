@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 18:30:17 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 13:06:58 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ static char	*get_env_name_from_token(char *str)
 static size_t	get_envname_tail_index(char *str)
 {
 	size_t	i;
+	size_t	j;
 
 	i = get_envname_head_index(str);
-	while (is_snakecase(str[i], i))
-		++i;
-	return (i - 1);
+	j = 0;
+	while (is_snakecase(str[i + j], j))
+		++j;
+	return (i + j - 1);
 }
 
 static size_t	get_envname_head_index(char *str)
@@ -86,7 +88,7 @@ static size_t	get_envname_head_index(char *str)
 		++i;
 	return (i + 1);
 }
-
+/*
 //debug
 int main(int ac, char **av, char **envp)
 {
@@ -103,3 +105,4 @@ int main(int ac, char **av, char **envp)
 		printf("%s\n", now_token->content);
 	return (0);
 }
+*/
