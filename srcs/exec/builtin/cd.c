@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/23 16:48:48 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/08 12:14:36 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-void		cd(t_cmd *input);
 
 static char	*make_new_path_argc_0_or_1(t_cmd *input);
 
