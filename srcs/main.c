@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 19:09:08 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 13:09:04 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	prompt(t_envp *env_list)
 		if (ft_strlen(input) > 0)
 		{
 			add_history(input);
-			cmd = parser(input);
+			cmd = parser(input, env_list);
 			exec(cmd, &env_list);
 			//free cmd;
 		}
