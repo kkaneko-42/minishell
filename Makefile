@@ -31,7 +31,7 @@ DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
 LIBFT := libft.a
 
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): set_inputrc $(OBJ_DIR) $(OBJS)
 	make bonus -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ -I $(INC_DIR) $(WITH_RL)
 
@@ -40,6 +40,9 @@ $(OBJ_DIR)/%.o: %.c
 
 $(OBJ_DIR):
 	mkdir -p $@
+
+set_inputrc:
+	echo "set echo-control-characters off" >> ~/.inputrc
 
 all: $(NAME)
 
@@ -55,4 +58,4 @@ re:			fclean all
 
 -include $(DEPS)
 
-.PHONY:     all clean fclean re
+.PHONY:     all clean fclean re set_inputrc
