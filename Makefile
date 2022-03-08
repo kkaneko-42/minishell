@@ -2,6 +2,7 @@ NAME	:=	minishell
 CC		:=	gcc
 CFLAGS	:=	-MMD -MP #-fsanitize=address -g
 WITH_RL :=	-lreadline
+RL_CONF	:=	~/.inputrc
 INC_DIR := ./includes
 OBJ_DIR	:= ./objs
 VPATH	:=	srcs:srcs/utils:srcs/parse:srcs/exec:srcs/exec/builtin
@@ -37,6 +38,8 @@ DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
 LIBFT := libft.a
 
+
+
 $(NAME): set_inputrc $(OBJ_DIR) $(OBJS)
 	make bonus -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ -I $(INC_DIR) $(WITH_RL)
@@ -48,7 +51,7 @@ $(OBJ_DIR):
 	mkdir -p $@
 
 set_inputrc:
-	echo "set echo-control-characters off" >> ~/.inputrc
+	echo "set echo-control-characters off" >> $(RL_CONF)
 
 all: $(NAME)
 

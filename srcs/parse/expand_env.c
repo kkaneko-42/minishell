@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 13:06:58 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/09 01:27:13 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	expand_env(t_list *token, t_envp *env_list)
 	now_token = token;
 	while (now_token != NULL)
 	{
-		if (now_token->content[0] != '\''
-			&& ft_strchr(now_token->content, '$') != NOT_FOUND)
+		if (ft_strnstr(now_token->content, "\'$", ft_strlen(now_token->content)) == NOT_FOUND)
 		{
 			do_expand(&(now_token->content), env_list);
 		}
