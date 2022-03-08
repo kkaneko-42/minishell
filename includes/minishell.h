@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 13:08:19 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 13:16:04 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_envp
 
 t_list	*lexer(const char *input);
 t_cmd	*parser(const char *input, t_envp *env_list);
+void	expand_env(t_list *token, t_envp *env_list);
 
 void	exec(t_cmd *input, t_envp **envp);
 void	echo(t_cmd *input);
