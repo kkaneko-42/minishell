@@ -25,7 +25,13 @@ SRCS	:=	main.c \
 			is_snakecase.c \
 			addback_envp_list.c \
 			get_envp_list.c \
-			expand_env.c
+			expand_env.c \
+			lstdel_head.c \
+			lstdel_tail.c \
+			lstdel_mid.c \
+			re_lexer.c \
+			refact_token.c \
+			ft_lstjoin.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
