@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:22:45 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/02/22 23:36:16 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/08 23:29:50 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t			i;
 
-	if (dst == NULL && src == NULL)
+	if (dst == NULL || src == NULL)
 		return (NULL);
 	i = 0;
 	if (dst > src)

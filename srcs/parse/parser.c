@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 18:17:26 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/09 00:24:57 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ t_cmd	*parser(const char *input, t_envp *env_list)
 	t_cmd	*res;
 	t_cmd	*now_cmd;
 
+	
 	token = lexer(input);
 	expand_env(token, env_list);
+	re_lexer(&token);
+	refact_token(&token);
 	validate_token(token);
 	res = NULL;
 	now_cmd = INIT;
@@ -211,12 +214,25 @@ static void	validate_token(const t_list *token)
 }
 /*
 //debug
+void	put_all_tokens(t_list *tokens)
+{
+	for (t_list *now = tokens; now != NULL; now = now->next)
+	{
+		printf("===============================\n");
+		printf("content:%s\n", now->content);
+		printf("prev:%p\n", now->prev);
+		printf("now:%p\n", now);
+		printf("next:%p\n", now->next);
+	}
+}
+
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = av[1];
+	char	*input = "echo hoge\"fuga\"piyo";
+	t_envp	*env_list = get_envp_list(envp);
 
-	res = parser(input);
+	res = parser(input, env_list);
 	for (t_cmd *now = res; now != NULL; now = now->next)
 	{
 		printf("cmd name:@%s@\n", now->name);

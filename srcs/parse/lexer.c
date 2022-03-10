@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 00:26:29 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/09 00:25:23 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	get_str_in_quote(
 	(*input_i) += 1;
 	while (input[(*input_i)] != quote)
 		++(*input_i);
-	src_str = ft_substr(input, start_i, *input_i - (size_t)start_i + 2);
+	src_str = ft_substr(input, start_i, *input_i - (size_t)start_i + 1);
 	(*input_i) += 1;
 	dst->content = ft_stradd(&(dst->content), src_str);
 }
@@ -84,13 +84,13 @@ static void	metachar_to_list(
 	if (fg_no_content)
 	{
 		(*now)->content = ft_stradd(&((*now)->content), metachar);
-		(*now)->next = ft_lstnew(ft_strdup("\0"));
+		ft_lstadd_back(now, ft_lstnew(ft_strdup("\0")));
 		*now = (*now)->next;
 	}
 	else
 	{
-		(*now)->next = ft_lstnew(ft_strdup(metachar));
-		(*now)->next->next = ft_lstnew(ft_strdup("\0"));
+		ft_lstadd_back(now, ft_lstnew(ft_strdup(metachar)));
+		ft_lstadd_back(now, ft_lstnew(ft_strdup("\0")));
 		*now = (*now)->next->next;
 	}
 	*input_i += ft_strlen(metachar);

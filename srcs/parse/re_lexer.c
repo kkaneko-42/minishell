@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stradd_char.c                                   :+:      :+:    :+:   */
+/*   re_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 00:05:16 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 23:30:25 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/08 23:16:11 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-char	*ft_stradd_char(char **str, const char c)
+static void	free_content(char *content)
 {
-	size_t	str_len;
-	char	*res;
+	free(content);
+}
 
-	if (str == NULL)
-		return (NULL);
-	str_len = ft_strlen(*str);
-	res = (char *)ft_xmalloc(sizeof(char) * (str_len + 2));
-	ft_memmove(res, *str, sizeof(char) * str_len);
-	res[str_len] = c;
-	res[str_len + 1] = 0x00;
-	free(*str);
-	*str = NULL;
-	return (res);
+void	re_lexer(t_list **src)
+{
+	t_list	*new_tokens;
+	t_list	*add_tokens;
+	t_list	*now;
+
+	new_tokens = NULL;
+	now = *src;
+	while (now != NULL)
+	{
+		ft_lstjoin(&new_tokens, lexer(now->content));
+		now = now->next;
+	}
+	ft_lstclear(src, free_content);
+	*src = new_tokens;
 }
