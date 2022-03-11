@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   exec_honmono.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/11 15:57:03 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/10 22:13:11 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,7 @@ static void	do_cmd(t_cmd *input, t_envp *envp);
 static void	do_pipe(t_cmd *input, t_envp *envp, int n);
 static int	cmd_lstsize(t_cmd *input);
 
-int status;
-
-void exec(t_cmd *input, t_envp **envp)
-{
-	pid_t	pid;
-	int		fd[2];
-	
-	pid = fork();
-	waitpid(-1, &status, 0);
-	if (pid < 0)
-	{
-		perror("fork failed");
-		return ;
-	}
-	else if (pid == 0)
-	{
-		//do_cmd(input, *envp);
-		pid_t	pid2;
-		int		fd[2];
-		t_cmd	*now;
-
-		pipe(fd);
-		pid2 = fork();
-		waitpid(-1, &status, 0);
-		if (pid2 == 0)
-		{
-			close(fd[0]);
-			now = input;
-			while (now->next != NULL)
-				now = now->next;
-			if (now->fd_out != 1)
-				dup2(now->fd_out, 1);
-			do_pipe(input, *envp, 1);
-			exit(1);
-		}
-	}
-}
-
-static void	exec2(t_cmd *input, t_envp **envp)
+void	exec(t_cmd *input, t_envp **envp)
 {
 	if (input->name[0] == '\n')
 		return ;
@@ -81,7 +43,7 @@ static void	do_cmd(t_cmd *input, t_envp *envp)
 	pid_t	pid;
 
 	pid = fork();
-	waitpid(-1, &status, 0);
+	wait(NULL);
 	if (pid < 0)
 	{
 		perror("fork failed");
@@ -89,24 +51,22 @@ static void	do_cmd(t_cmd *input, t_envp *envp)
 	}
 	if (pid == 0)
 	{
-		pid_t	pid2;
-		int		fd[2];
-		t_cmd	*now;
-
+		/* int fd[2];
 		pipe(fd);
-		pid2 = fork();
-		waitpid(-1, &status, 0);
-		if (pid2 == 0)
-		{
-			close(fd[0]);
-			now = input;
-			while (now->next != NULL)
-				now = now->next;
-			if (now->fd_out != 1)
-				dup2(now->fd_out, 1);
-			do_pipe(input, envp, 1);
-			exit(1);
-		}
+		
+		
+		close(fd[1]);
+		dup2(fd[0], 0);
+		close(fd[0]); */
+
+		
+		do_pipe(input, envp, 1);
+
+		//dup2(fd[0], input->fd_out);
+
+		
+		printf("minishell: %s: command not found\n", input->name);
+		exit(1);
 	}
 }
 
@@ -116,6 +76,7 @@ static void	do_pipe(t_cmd *input, t_envp *envp, int n)
 	int		fd[2];
 	int		i;
 	t_cmd	*now;
+	int		status;
 
 	if (n == cmd_lstsize(input))
 		do_exexve(input, envp);
@@ -127,18 +88,27 @@ static void	do_pipe(t_cmd *input, t_envp *envp, int n)
 		if (pid == 0)
 		{
 			close(fd[0]);
-			//
-			now = input;
+			//dup2(fd[1], 1);
 			i = 0;
+			now = input;
 			while (i < cmd_lstsize(input) - n - 1)
 			{
 				now = now->next;
 				++i;
 			}
-			if (now->fd_out == 1)
-				dup2(fd[1], 1);
-			else
+			//printf("do fd_out = %d\n", now->fd_out);
+			//dup2(fd[1], 1);
+			//dup2(input->fd_out, 1);
+			if (now->fd_out != 0)//多分1
+			{
 				dup2(now->fd_out, 1);
+				printf("dup out = %d\n", now->fd_out);
+			}
+			else
+			{
+				dup2(fd[1], 1);
+			}
+			//
 			close(fd[1]);
 			do_pipe(input, envp, n + 1);
 		}
@@ -147,17 +117,25 @@ static void	do_pipe(t_cmd *input, t_envp *envp, int n)
 			close(fd[1]);
 			dup2(fd[0], 0);
 			close(fd[0]);
-			i = 0;
-			now = input;
-			while (i < cmd_lstsize(input) - n)
-			{
-				now = now->next;
-				++i;
-			}
 			do_exexve(now, envp);
 		}
 	}
+	/* pid = fork();
+	wait(NULL);
+	if (pid < 0)
+	{
+		perror("fork failed");
+		return ;
+	}
+	if (pid == 0)
+	{
+		do_(input, envp, 0);
+		printf("minishell: %s: command not found\n", input->name);
+		exit(1);
+	}*/
 }
+
+//static void	do_pipe(t_cmd *input, t_envp *envp, int n)
 
 static int	cmd_lstsize(t_cmd *input)
 {
@@ -295,4 +273,3 @@ static char	**get_exec_envp(t_envp *envp)
 	return (exec_envp);
 }
  */
-//cat libft/ft_strlen.c > test1 | ls > test2 | cat libft/ft_strlen.c | grep char
