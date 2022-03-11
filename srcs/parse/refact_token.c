@@ -6,13 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 21:04:42 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 23:24:39 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/11 21:46:30 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	do_refact(t_list **now, t_list **top)
+static void	del_empty_node(t_list **now, t_list **top)
 {
 	t_list	*now_after_refact;
 
@@ -46,8 +46,11 @@ void	refact_token(t_list **top)
 	while (now != NULL)
 	{
 		if (now->content == NULL || ft_strncmp(now->content, "\0", 1) == 0)
-			do_refact(&now, top);
+			del_empty_node(&now, top);
 		else
+		{
+			remove_quotes(&(now->content));
 			now = now->next;
+		}
 	}
 }

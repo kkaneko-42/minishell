@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/09 00:24:57 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/11 21:47:55 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void	put_all_tokens(t_list *tokens)
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = "echo hoge\"fuga\"piyo";
+	char	*input = "echo \"hello\"";
 	t_envp	*env_list = get_envp_list(envp);
 
 	res = parser(input, env_list);
