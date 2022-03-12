@@ -1,6 +1,6 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-MMD -MP -fsanitize=leak -g
+CFLAGS	:=	-MMD -MP #-fsanitize=leak -g
 WITH_RL :=	-lreadline
 RL_CONF	:=	~/.inputrc
 INC_DIR := ./includes
