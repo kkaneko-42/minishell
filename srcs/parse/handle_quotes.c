@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 17:32:35 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/11 21:50:47 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/12 13:36:55 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,29 @@
 
 static size_t	cpy_in_quotes(
 					char **dst, char *src, const char quote_type);
+static void	remove_quotes(char **token);
+
+void	remove_quotes_from_cmds(t_cmd *top)
+{
+	t_cmd	*now_cmd;
+	t_list	*now_arg;
+
+	now_cmd = top;
+	while (now_cmd != NULL)
+	{
+		remove_quotes(&(now_cmd->name));
+		now_arg = now_cmd->args;
+		while (now_arg != NULL)
+		{
+			remove_quotes(&(now_cmd->args->content));
+			now_arg = now_arg->next;
+		}
+		now_cmd = now_cmd->next;
+	}
+}
 
 //give a ref of str as an argument
-void	remove_quotes(char **token)
+static void	remove_quotes(char **token)
 {
 	char	*res;
 	size_t	i;

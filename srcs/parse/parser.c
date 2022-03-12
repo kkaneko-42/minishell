@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/11 21:47:55 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/12 13:37:33 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_cmd	*parser(const char *input, t_envp *env_list)
 		token = token->next;
 		get_cmd_info(now_cmd, &token);
 	}
+	remove_quotes_from_cmds(res);
 	return (res);
 }
 
@@ -229,7 +230,7 @@ void	put_all_tokens(t_list *tokens)
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = "echo \"hello\"";
+	char	*input = "\"\'\"echo\"\'\" hello";
 	t_envp	*env_list = get_envp_list(envp);
 
 	res = parser(input, env_list);

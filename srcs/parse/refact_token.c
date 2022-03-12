@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 21:04:42 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/11 21:46:30 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/12 13:38:02 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ void	refact_token(t_list **top)
 		if (now->content == NULL || ft_strncmp(now->content, "\0", 1) == 0)
 			del_empty_node(&now, top);
 		else
-		{
-			remove_quotes(&(now->content));
 			now = now->next;
-		}
 	}
 }
