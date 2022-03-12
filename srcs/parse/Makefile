@@ -9,7 +9,8 @@ SRCS	:=	./parser.c ./lexer.c \
 			../utils/ft_lstjoin.c ../utils/ft_getenv.c \
 			../utils/ft_strreplace.c ../utils/is_snakecase.c \
 			../utils/get_envp_list.c ../utils/free_strs.c \
-			../utils/addback_envp_list.c ./handle_quotes.c
+			../utils/addback_envp_list.c ./handle_quotes.c \
+			../utils/free_content.c
 OBJS	:= $(SRCS:.c=.o)
 LIBFT_DIR := ../../libft
 LIBFT := libft.a

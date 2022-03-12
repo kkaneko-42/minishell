@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 17:32:35 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/12 13:36:55 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 02:45:02 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	remove_quotes_from_cmds(t_cmd *top)
 		now_arg = now_cmd->args;
 		while (now_arg != NULL)
 		{
-			remove_quotes(&(now_cmd->args->content));
+			remove_quotes(&(now_arg->content));
 			now_arg = now_arg->next;
 		}
 		now_cmd = now_cmd->next;

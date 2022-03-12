@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/12 13:35:34 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 02:33:04 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	re_lexer(t_list **src);
 void	refact_token(t_list **top);
 void	remove_quotes_from_cmds(t_cmd *top);
 void	ft_lstjoin(t_list **lst1, t_list *lst2);
+void	free_content(char *content);
 
 //debug
 void	put_all_tokens(t_list *tokens);

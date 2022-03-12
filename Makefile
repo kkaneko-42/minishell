@@ -33,7 +33,8 @@ SRCS	:=	main.c \
 			re_lexer.c \
 			refact_token.c \
 			ft_lstjoin.c \
-			handle_quotes.c
+			handle_quotes.c \
+			free_content.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
