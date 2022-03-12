@@ -6,14 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/13 02:41:29 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 03:20:49 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	validate_token(const t_list *token);
-static int	token_is_metachar(const t_list *token);
 static t_cmd	*cmd_new(char *name);
 static void	cmdadd_back(t_cmd **lst, t_cmd *new);
 static void	get_cmd_info(t_cmd *cmd, t_list **token);
@@ -100,6 +99,7 @@ static void	input_file_specify(t_cmd *cmd, t_list **token)
 	char	*file_content;
 
 	*token = (*token)->next;
+	remove_quotes(&((*token)->content));
 	input_fd = open((*token)->content, O_RDONLY);
 	if (input_fd == -1)
 		; //open err
@@ -115,6 +115,7 @@ static void	heredoc(t_cmd *cmd, t_list **token)
 	char	*line;
 
 	*token = (*token)->next;
+	remove_quotes(&((*token)->content));
 	end_text = (*token)->content;
 	cmd_arg = NULL;
 	line = readline(HEREDOC_PROMPT);
@@ -137,6 +138,7 @@ static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 	int				fd_out;
 
 	*token = (*token)->next;
+	remove_quotes(&((*token)->content));
 	if (fg_append != O_APPEND)
 	{
 		if (unlink((*token)->content))
@@ -192,41 +194,15 @@ static void	cmdadd_back(t_cmd **lst, t_cmd *new)
 	}
 }
 
-static int	token_is_metachar(const t_list *token)
-{
-	t_list	*lst_metachar;
-	t_list	*now;
-
-	lst_metachar = get_metachar_list();
-	now = lst_metachar;
-	while (now != NULL)
-	{
-		if (ft_strncmp(token->content, now->content, ft_strlen(now->content)) == 0)
-			return (1);
-		now = now->next;
-	}
-	ft_lstclear(&lst_metachar, free_content);
-	return (0);
-}
-
-static t_list	*get_metachar_list(void)
-{
-	t_list	*res;
-
-	res = NULL;
-	ft_lstadd_back(&res, ft_lstnew(ft_strdup(">")));
-	ft_lstadd_back(&res, ft_lstnew(ft_strdup(">>")));
-	ft_lstadd_back(&res, ft_lstnew(ft_strdup("<")));
-	ft_lstadd_back(&res, ft_lstnew(ft_strdup("<<")));
-	ft_lstadd_back(&res, ft_lstnew(ft_strdup("|")));
-	return (res);
-}
-
 static void	validate_token(const t_list *token)
 {
 	//if tokens have an error, exit
+	/*
 	if (token == NULL)
 		exit(1);
+	if (check_metachar_target(token)
+		|| )
+	*/
 }
 /*
 //debug

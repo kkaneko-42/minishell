@@ -5,7 +5,7 @@ WITH_RL :=	-lreadline
 RL_CONF	:=	~/.inputrc
 INC_DIR := ./includes
 OBJ_DIR	:= ./objs
-VPATH	:=	srcs:srcs/utils:srcs/parse:srcs/exec:srcs/exec/builtin
+VPATH	:=	srcs:srcs/utils:srcs/parse:srcs/exec:srcs/exec/builtin:srcs/parse/validate
 SRCS	:=	main.c \
 			signal.c \
 			parser.c \
@@ -34,7 +34,8 @@ SRCS	:=	main.c \
 			refact_token.c \
 			ft_lstjoin.c \
 			handle_quotes.c \
-			free_content.c
+			free_content.c \
+			token_is_metachar.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft

@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/13 02:33:04 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 03:18:14 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define INIT_ERR "Initalization error\n"
 # define SHELL_NAME "minishell$ "
 # define EXIT_MSG "exit\n"
-# define APPEND 1
 
 typedef struct s_cmd
 {
@@ -86,8 +85,10 @@ void	lstdel_mid(t_list *lst);
 void	re_lexer(t_list **src);
 void	refact_token(t_list **top);
 void	remove_quotes_from_cmds(t_cmd *top);
+void	remove_quotes(char **str);
 void	ft_lstjoin(t_list **lst1, t_list *lst2);
 void	free_content(char *content);
+int	    token_is_metachar(const t_list *token);
 
 //debug
 void	put_all_tokens(t_list *tokens);

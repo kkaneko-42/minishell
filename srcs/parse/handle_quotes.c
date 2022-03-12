@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 17:32:35 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/13 02:45:02 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 03:18:11 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static size_t	cpy_in_quotes(
 					char **dst, char *src, const char quote_type);
-static void	remove_quotes(char **token);
 
 void	remove_quotes_from_cmds(t_cmd *top)
 {
@@ -36,7 +35,7 @@ void	remove_quotes_from_cmds(t_cmd *top)
 }
 
 //give a ref of str as an argument
-static void	remove_quotes(char **token)
+void	remove_quotes(char **str)
 {
 	char	*res;
 	size_t	i;
@@ -45,17 +44,17 @@ static void	remove_quotes(char **token)
 	i = 0;
 	while (42)
 	{
-		if ((*token)[i] == '\'' || (*token)[i] == '\"')
-			i += cpy_in_quotes(&res, &((*token)[i]), (*token)[i]) + 1;
+		if ((*str)[i] == '\'' || (*str)[i] == '\"')
+			i += cpy_in_quotes(&res, &((*str)[i]), (*str)[i]) + 1;
 		else
-			res = ft_stradd_char(&res, (*token)[i]);
-		if ((*token)[i] == 0x00)
+			res = ft_stradd_char(&res, (*str)[i]);
+		if ((*str)[i] == 0x00)
 			break;
 		else
 			++i;
 	}
-	free(*token);
-	*token = res;
+	free(*str);
+	*str = res;
 }
 
 static size_t	cpy_in_quotes(char **dst, char *src, const char quote_type)
