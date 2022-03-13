@@ -6,16 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 18:49:19 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 19:07:33 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 02:34:52 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	free_content(char *content)
-{
-	free(content);
-}
 
 void	lstdel_tail(t_list *lst)
 {

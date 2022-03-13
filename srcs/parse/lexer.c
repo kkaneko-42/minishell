@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/09 00:25:23 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 02:48:46 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ t_list	*lexer(const char *input)
 	t_list	*now;
 	size_t	i;
 
-	if (input == NULL)
-		return (NULL);
 	res = ft_lstnew(ft_strdup("\0"));
 	now = res;
 	i = 0;

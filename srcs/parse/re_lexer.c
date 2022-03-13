@@ -6,16 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 23:16:11 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 02:35:44 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	free_content(char *content)
-{
-	free(content);
-}
 
 void	re_lexer(t_list **src)
 {

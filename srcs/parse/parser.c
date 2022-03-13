@@ -6,14 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/09 00:24:57 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 03:20:49 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	validate_token(const t_list *token);
-static int	metachar_isin_token(const t_list *token);
 static t_cmd	*cmd_new(char *name);
 static void	cmdadd_back(t_cmd **lst, t_cmd *new);
 static void	get_cmd_info(t_cmd *cmd, t_list **token);
@@ -23,6 +22,7 @@ static char	*get_file_content_all(int fd);
 static void	input_file_specify(t_cmd *cmd, t_list **token);
 static void	heredoc(t_cmd *cmd, t_list **token);
 static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append);
+static t_list	*get_metachar_list(void);
 
 t_cmd	*parser(const char *input, t_envp *env_list)
 {
@@ -48,6 +48,7 @@ t_cmd	*parser(const char *input, t_envp *env_list)
 		token = token->next;
 		get_cmd_info(now_cmd, &token);
 	}
+	remove_quotes_from_cmds(res);
 	return (res);
 }
 
@@ -67,7 +68,7 @@ static void	get_cmd_info(t_cmd *cmd, t_list **token)
 
 static void	get_cmd_args(t_cmd *cmd, t_list **token)
 {
-	while ((*token) != NULL && !metachar_isin_token(*token))
+	while ((*token) != NULL && !token_is_metachar(*token))
 	{
 		ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup((*token)->content)));
 		*token = (*token)->next;
@@ -76,7 +77,7 @@ static void	get_cmd_args(t_cmd *cmd, t_list **token)
 
 static void	parse_metachar(t_cmd *cmd, t_list **token)
 {
-	while ((*token) != NULL && metachar_isin_token(*token))
+	while ((*token) != NULL && token_is_metachar(*token))
 	{
 		if (ft_strncmp((*token)->content, "|", 2) == 0)
 			break ;
@@ -98,6 +99,7 @@ static void	input_file_specify(t_cmd *cmd, t_list **token)
 	char	*file_content;
 
 	*token = (*token)->next;
+	remove_quotes(&((*token)->content));
 	input_fd = open((*token)->content, O_RDONLY);
 	if (input_fd == -1)
 		; //open err
@@ -113,6 +115,7 @@ static void	heredoc(t_cmd *cmd, t_list **token)
 	char	*line;
 
 	*token = (*token)->next;
+	remove_quotes(&((*token)->content));
 	end_text = (*token)->content;
 	cmd_arg = NULL;
 	line = readline(HEREDOC_PROMPT);
@@ -135,6 +138,7 @@ static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 	int				fd_out;
 
 	*token = (*token)->next;
+	remove_quotes(&((*token)->content));
 	if (fg_append != O_APPEND)
 	{
 		if (unlink((*token)->content))
@@ -190,27 +194,15 @@ static void	cmdadd_back(t_cmd **lst, t_cmd *new)
 	}
 }
 
-static int	metachar_isin_token(const t_list *token)
-{
-	const char		metachar[4] = "><|";
-	size_t			i;
-
-	i = 0;
-	while (metachar[i] != 0x00)
-	{
-		if (ft_strchr(token->content, metachar[i]) != NOT_FOUND
-			&& token->content[0] != '\"' && token->content[0] != '\'')
-			return (1);
-		++i;
-	}
-	return (0);
-}
-
 static void	validate_token(const t_list *token)
 {
 	//if tokens have an error, exit
+	/*
 	if (token == NULL)
 		exit(1);
+	if (check_metachar_target(token)
+		|| )
+	*/
 }
 /*
 //debug
@@ -229,7 +221,7 @@ void	put_all_tokens(t_list *tokens)
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = "echo hoge\"fuga\"piyo";
+	char	*input = "echo hogehoge\"hello > res\"fuga";
 	t_envp	*env_list = get_envp_list(envp);
 
 	res = parser(input, env_list);
