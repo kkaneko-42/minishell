@@ -127,7 +127,7 @@ static char	*get_heredoc_input(const char *end_text)
 	while (line != NULL && ft_strncmp(line, end_text, ft_strlen(end_text) + 1) != 0)
 	{
 		res = ft_stradd(&res, line);
-		res = ft_stradd(&res, ft_strdup("\n"));
+		res = ft_stradd(&res, "\n");
 		free(line);
 		line = readline(HEREDOC_PROMPT);
 	}
