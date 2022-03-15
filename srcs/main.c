@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 13:21:30 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 16:10:11 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	prompt(t_envp *env_list)
 		if (ft_strlen(input) > 0)
 		{
 			add_history(input);
-			cmd = parser(input);
+			cmd = parser(input, env_list);
 
 			for (t_cmd *now = cmd; now != NULL; now = now->next)
 			{
