@@ -6,13 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 11:30:28 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/06 16:20:05 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 13:28:15 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static void	print_env(t_envp *envp);
+static void	print_env(t_cmd *input, t_envp *envp);
 static int	have_equal(char *s);
 
 void	env(t_cmd *input, t_envp *envp)
@@ -21,12 +21,12 @@ void	env(t_cmd *input, t_envp *envp)
 
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
-		print_env(envp);
+		print_env(input, envp);
 	else
 		printf("env: too many arguments\n");
 }
 
-static void	print_env(t_envp *envp)
+static void	print_env(t_cmd *input, t_envp *envp)
 {
 	t_envp	*p;
 
@@ -35,7 +35,9 @@ static void	print_env(t_envp *envp)
 	{
 		if (have_equal(p->content)
 			&& !forbidden_char_is_exist_in_envp(p->content))
-			printf("%s\n", p->content);
+			//printf("%s\n", p->content);
+			ft_putstr_fd(p->content, input->fd_out);
+			ft_putstr_fd("\n", input->fd_out);
 		p = p->next;
 	}
 }

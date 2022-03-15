@@ -6,15 +6,15 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/06 16:10:56 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 13:30:01 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
 static void	sort_envp(t_envp *envp);
-static void	print_envp(t_envp *envp);
-static void	print_envp_content(char *content);
+static void	print_envp(t_cmd *input, t_envp *envp);
+static void	print_envp_content(t_cmd *input, char *content);
 
 void	export(t_cmd *input, t_envp *envp)
 {
@@ -23,7 +23,7 @@ void	export(t_cmd *input, t_envp *envp)
 
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
-		print_envp(envp);
+		print_envp(input, envp);
 	else
 	{
 		p_args = input->args;
@@ -72,7 +72,7 @@ static void	sort_envp(t_envp *envp)
 	}
 }
 
-static void	print_envp(t_envp *envp)
+static void	print_envp(t_cmd *input, t_envp *envp)
 {
 	t_envp		*p;
 	int			i;
@@ -94,34 +94,34 @@ static void	print_envp(t_envp *envp)
 					break ;
 				if ((p->content)[0] == '_' && (p->content)[1] == '=')
 					is_not_first_export++;
-				print_envp_content(p->content);
+				print_envp_content(input, p->content);
 			}
 			p = p->next;
 		}
 	}
 }
 
-static void	print_envp_content(char *content)
+static void	print_envp_content(t_cmd *input, char *content)
 {
 	int		is_first_equal;
 	size_t	i;
 
-	printf("declare -x ");
+	ft_putstr_fd("declare -x ", input->fd_out);
 	is_first_equal = 1;
 	i = 0;
 	while (content[i] != '\0')
 	{
-		printf("%c", content[i]);
+		ft_putchar_fd(content[i], input->fd_out);
 		if (content[i] == '=' && is_first_equal)
 		{
-			printf("%c", '\"');
+			ft_putstr_fd("\"", input->fd_out);
 			is_first_equal = 0;
 		}
 		++i;
 	}
 	if (content[i] == '\0' && !is_first_equal)
-		printf("%c", '\"');
-	printf("\n");
+		ft_putstr_fd("\"", input->fd_out);
+	ft_putstr_fd("\n", input->fd_out);
 }
 /* 
 //debug

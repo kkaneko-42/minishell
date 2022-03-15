@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/08 12:14:36 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/15 15:09:56 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 static char	*make_new_path_argc_0_or_1(t_cmd *input);
 
+static char	*make_new_path_argc_0_or_1(t_cmd *input, t_envp *envp);
 static char	*make_new_path_argc_2(t_cmd *input);
-
 static char	*get_new_path_argc_2(
 				char *now_path, char *old, char *new, char *old_found_p);
+static int	is_empty_str(char *s);
 
-static int	is_all_empty(char *s);
-
-void	cd(t_cmd *input)
+void	cd(t_cmd *input, t_envp *envp)
 {
 	int		argc;
 	char	*new_path;
@@ -29,7 +28,7 @@ void	cd(t_cmd *input)
 	argc = ft_lstsize(input->args);
 	new_path = NULL;
 	if (argc == 0 || argc == 1)
-		new_path = make_new_path_argc_0_or_1(input);
+		new_path = make_new_path_argc_0_or_1(input, envp);
 	else if (argc == 2)
 		new_path = make_new_path_argc_2(input);
 	else
@@ -41,11 +40,13 @@ void	cd(t_cmd *input)
 	free(new_path);
 }
 
-static char	*make_new_path_argc_0_or_1(t_cmd *input)
+static char	*make_new_path_argc_0_or_1(t_cmd *input, t_envp *envp)
 {
-	if (input->args == NULL || is_all_empty(input->args->content)
+	if (input->args == NULL || is_empty_str(input->args->content)
 		|| ft_strncmp(input->args->content, "~", 2) == 0)
-		return (ft_strdup(getenv("HOME")));
+		return (ft_strdup(ft_getenv("HOME", envp)));
+	else if (ft_strncmp(input->args->content, "~/", 2) == 0)
+		return (three_strjoin(ft_getenv("HOME", envp), "/", &(input->args->content)[2]));
 	return (ft_strdup(input->args->content));
 }
 
@@ -99,7 +100,7 @@ static char	*get_new_path_argc_2(
 	return (new_path);
 }
 
-static int	is_all_empty(char *s)
+static int	is_empty_str(char *s)
 {
 	if (s[0] == 0x00)
 		return (1);
