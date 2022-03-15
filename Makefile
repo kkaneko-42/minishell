@@ -35,7 +35,9 @@ SRCS	:=	main.c \
 			ft_lstjoin.c \
 			handle_quotes.c \
 			free_content.c \
-			token_is_metachar.c
+			is_metachar.c \
+			exit_with_error.c \
+			check_metachar_target.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
@@ -43,7 +45,7 @@ LIBFT := libft.a
 
 
 
-$(NAME): set_inputrc $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJ_DIR) $(OBJS)
 	make bonus -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ -I $(INC_DIR) $(WITH_RL)
 
@@ -52,9 +54,6 @@ $(OBJ_DIR)/%.o: %.c
 
 $(OBJ_DIR):
 	mkdir -p $@
-
-set_inputrc:
-	echo "set echo-control-characters off" >> $(RL_CONF)
 
 all: $(NAME)
 

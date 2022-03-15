@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/15 15:20:52 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 16:45:26 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,10 @@ void	exec(t_cmd *input, t_envp **envp)
 	pid = fork_and_waitpid();
 	if (pid == 0)
 	{
-		pid2 = fork_and_waitpid();
-		if (pid2 == 0)
-		{
-			if (last_output_is_not_stdout(input))
-				dup2(cmd_last(input)->fd_out, 1);
-			do_pipe(input, envp, 1);
-			exit(1);
-		}
+		if (last_output_is_not_stdout(input))
+			dup2(cmd_last(input)->fd_out, 1);
+		do_pipe(input, envp, 1);
+		exit(1);
 	}
 }
 
@@ -69,7 +65,6 @@ static int	is_only_buitin(t_cmd *input)
 		return (1);
 	return (0);
 }
-
 
 static void	do_builtin(t_cmd *input, t_envp **envp)
 {

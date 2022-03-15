@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/10 15:19:06 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 16:59:57 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	input_file_specify(t_cmd *cmd, t_list **token);
 static void	heredoc(t_cmd *cmd, t_list **token);
 static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append);
 static t_list	*get_metachar_list(void);
+static char	*get_heredoc_input(const char *end_text);
 
 t_cmd	*parser(const char *input, t_envp *env_list)
 {
@@ -68,7 +69,7 @@ static void	get_cmd_info(t_cmd *cmd, t_list **token)
 
 static void	get_cmd_args(t_cmd *cmd, t_list **token)
 {
-	while ((*token) != NULL && !token_is_metachar(*token))
+	while ((*token) != NULL && !is_metachar((*token)->content))
 	{
 		ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup((*token)->content)));
 		*token = (*token)->next;
@@ -77,7 +78,7 @@ static void	get_cmd_args(t_cmd *cmd, t_list **token)
 
 static void	parse_metachar(t_cmd *cmd, t_list **token)
 {
-	while ((*token) != NULL && token_is_metachar(*token))
+	while ((*token) != NULL && is_metachar((*token)->content))
 	{
 		if (ft_strncmp((*token)->content, "|", 2) == 0)
 			break ;
@@ -96,39 +97,43 @@ static void	parse_metachar(t_cmd *cmd, t_list **token)
 static void	input_file_specify(t_cmd *cmd, t_list **token)
 {
 	int		input_fd;
-	char	*file_content;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
 	input_fd = open((*token)->content, O_RDONLY);
 	if (input_fd == -1)
 		; //open err
-	file_content = get_file_content_all(input_fd);
-	ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(file_content)));
-	free(file_content);
+	cmd->stdin_str = get_file_content_all(input_fd);
 }
 
 static void	heredoc(t_cmd *cmd, t_list **token)
 {
 	char	*end_text;
-	char	*cmd_arg;
 	char	*line;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
 	end_text = (*token)->content;
-	cmd_arg = NULL;
+	cmd->stdin_str = get_heredoc_input(end_text);
+}
+
+static char	*get_heredoc_input(const char *end_text)
+{
+	char	*line;
+	char	*res;
+
+	res = NULL;
 	line = readline(HEREDOC_PROMPT);
 	while (line != NULL && ft_strncmp(line, end_text, ft_strlen(end_text) + 1) != 0)
 	{
-		cmd_arg = ft_stradd(&cmd_arg, line);
-		cmd_arg = ft_stradd(&cmd_arg, ft_strdup("\n"));
+		res = ft_stradd(&res, line);
+		res = ft_stradd(&res, "\n");
 		free(line);
 		line = readline(HEREDOC_PROMPT);
 	}
+	//eof validation
 	free(line);
-	ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(cmd_arg)));
-	free(cmd_arg);
+	return (res);
 }
 
 static void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
@@ -198,11 +203,9 @@ static void	validate_token(const t_list *token)
 {
 	//if tokens have an error, exit
 	/*
-	if (token == NULL)
-		exit(1);
-	if (check_metachar_target(token)
-		|| )
-	*/
+	if (check_metachar_target(token) == -1)
+		exit_with_error(PARSE_ERR, 1);
+		*/
 }
 /*
 //debug
@@ -221,7 +224,7 @@ void	put_all_tokens(t_list *tokens)
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = "echo hogehoge\"hello > res\"fuga";
+	char	*input = av[1];
 	t_envp	*env_list = get_envp_list(envp);
 
 	res = parser(input, env_list);

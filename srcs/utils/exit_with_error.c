@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   exit_with_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 17:47:07 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:33:50 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/13 21:05:31 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/13 21:06:06 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	receiver(void (*handler)(sig_atomic_t))
+void	exit_with_error(const char *msg, int status)
 {
-	int					err_fg;
-	struct sigaction	act;
-
-	err_fg = 0;
-	ft_bzero(&act, sizeof(struct sigaction));
-	act.sa_handler = handler;
-	err_fg += sigemptyset(&(act.sa_mask));
-	err_fg += sigaction(SIGQUIT, &act, NULL);
-	err_fg += sigaction(SIGINT, &act, NULL);
-	if (err_fg < 0)
-	{
-		printf(INIT_ERR);
-		exit(1);
-	}
+	printf("%s", msg);
+	exit(status);
 }

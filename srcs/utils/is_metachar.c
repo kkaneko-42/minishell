@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 03:02:04 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/13 03:02:29 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 21:01:06 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_list	*get_metachar_list(void);
 
-int	token_is_metachar(const t_list *token)
+int	is_metachar(const char *str)
 {
 	t_list	*lst_metachar;
 	t_list	*now;
@@ -23,7 +23,7 @@ int	token_is_metachar(const t_list *token)
 	now = lst_metachar;
 	while (now != NULL)
 	{
-		if (ft_strncmp(token->content, now->content, ft_strlen(now->content)) == 0)
+		if (ft_strncmp(str, now->content, ft_strlen(now->content)) == 0)
 			return (1);
 		now = now->next;
 	}

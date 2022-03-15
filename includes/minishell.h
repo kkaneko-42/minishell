@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 15:07:58 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 16:55:09 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_cmd
 {
     char            *name;
     t_list          *args;
+    char            *stdin_str;
     int             fd_out;
     struct s_cmd    *prev;
     struct s_cmd    *next;
@@ -89,7 +90,9 @@ void	remove_quotes_from_cmds(t_cmd *top);
 void	remove_quotes(char **str);
 void	ft_lstjoin(t_list **lst1, t_list *lst2);
 void	free_content(char *content);
-int	    token_is_metachar(const t_list *token);
+int	    is_metachar(const char *str);
+void	exit_with_error(const char *msg, int status);
+int	    check_metachar_target(const t_list *token);
 
 //debug
 void	put_all_tokens(t_list *tokens);

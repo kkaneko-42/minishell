@@ -6,13 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/15 15:09:56 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 16:11:21 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-static char	*make_new_path_argc_0_or_1(t_cmd *input);
 
 static char	*make_new_path_argc_0_or_1(t_cmd *input, t_envp *envp);
 static char	*make_new_path_argc_2(t_cmd *input);
