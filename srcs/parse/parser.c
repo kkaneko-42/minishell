@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:08:52 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/15 16:59:57 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,30 +97,24 @@ static void	parse_metachar(t_cmd *cmd, t_list **token)
 static void	input_file_specify(t_cmd *cmd, t_list **token)
 {
 	int		input_fd;
-	char	*file_content;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
 	input_fd = open((*token)->content, O_RDONLY);
 	if (input_fd == -1)
 		; //open err
-	file_content = get_file_content_all(input_fd);
-	ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(file_content)));
-	free(file_content);
+	cmd->stdin_str = get_file_content_all(input_fd);
 }
 
 static void	heredoc(t_cmd *cmd, t_list **token)
 {
 	char	*end_text;
-	char	*cmd_arg;
 	char	*line;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
 	end_text = (*token)->content;
-	cmd_arg = get_heredoc_input(end_text);
-	//ft_lstadd_back(&(cmd->args), ft_lstnew(ft_strdup(cmd_arg)));
-	free(cmd_arg);
+	cmd->stdin_str = get_heredoc_input(end_text);
 }
 
 static char	*get_heredoc_input(const char *end_text)
@@ -137,6 +131,7 @@ static char	*get_heredoc_input(const char *end_text)
 		free(line);
 		line = readline(HEREDOC_PROMPT);
 	}
+	//eof validation
 	free(line);
 	return (res);
 }

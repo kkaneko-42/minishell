@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:08:31 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/15 16:55:09 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_cmd
 {
     char            *name;
     t_list          *args;
+    char            *stdin_str;
     int             fd_out;
     struct s_cmd    *prev;
     struct s_cmd    *next;
