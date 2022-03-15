@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/13 03:18:14 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/13 21:38:35 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ void	remove_quotes_from_cmds(t_cmd *top);
 void	remove_quotes(char **str);
 void	ft_lstjoin(t_list **lst1, t_list *lst2);
 void	free_content(char *content);
-int	    token_is_metachar(const t_list *token);
+int	    is_metachar(const char *str);
+void	exit_with_error(const char *msg, int status);
+int	    check_metachar_target(const t_list *token);
 
 //debug
 void	put_all_tokens(t_list *tokens);
