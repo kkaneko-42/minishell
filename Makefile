@@ -1,46 +1,66 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-lreadline #-fsanitize=address -g
+CFLAGS	:=	-MMD -MP #-fsanitize=leak -g
+WITH_RL :=	-lreadline
+RL_CONF	:=	~/.inputrc
 INC_DIR := ./includes
-SRCS	:=	./srcs/main.c \
-			./srcs/signal.c \
-			./srcs/parse/parser.c \
-			./srcs/parse/lexer.c \
-			./srcs/exec/builtin/cd.c \
-			./srcs/exec/exec.c \
-			./srcs/exec/do_execve.c \
-			./srcs/exec/builtin/echo.c \
-			./srcs/exec/builtin/cd.c \
-			./srcs/exec/builtin/pwd.c \
-			./srcs/exec/builtin/env.c \
-			./srcs/exec/builtin/export.c \
-			./srcs/exec/builtin/export_utils.c \
-			./srcs/exec/builtin/export_utils2.c \
-			./srcs/exec/builtin/unset.c \
-			./srcs/utils/free_strs.c \
-			./srcs/utils/ft_getenv.c \
-			./srcs/utils/ft_strreplace.c \
-			./srcs/utils/is_snakecase.c \
-			./srcs/utils/addback_envp_list.c \
-			./srcs/utils/free_strs.c \
-			./srcs/utils/get_envp_list.c
-
-OBJS	:= $(SRCS:.c=.o)
+OBJ_DIR	:= ./objs
+VPATH	:=	srcs:srcs/utils:srcs/parse:srcs/exec:srcs/exec/builtin:srcs/parse/validate
+SRCS	:=	main.c \
+			signal.c \
+			parser.c \
+			lexer.c \
+			cd.c \
+			exec.c \
+			do_execve.c \
+			echo.c \
+			pwd.c \
+			env.c \
+			export.c \
+			export_utils.c \
+			export_utils2.c \
+			unset.c \
+			free_strs.c \
+			ft_getenv.c \
+			ft_strreplace.c \
+			is_snakecase.c \
+			addback_envp_list.c \
+			get_envp_list.c \
+			expand_env.c \
+			lstdel_head.c \
+			lstdel_tail.c \
+			lstdel_mid.c \
+			re_lexer.c \
+			refact_token.c \
+			ft_lstjoin.c \
+			handle_quotes.c \
+			free_content.c \
+			token_is_metachar.c
+OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
 LIBFT := libft.a
 
-$(NAME):	$(OBJS)
+
+
+$(NAME): set_inputrc $(OBJ_DIR) $(OBJS)
 	make bonus -C $(LIBFT_DIR)
-	$(CC) -I $(INC_DIR) $^ $(LIBFT_DIR)/$(LIBFT) -o $@ $(CFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ -I $(INC_DIR) $(WITH_RL)
 
-.c.o:
-	$(CC) -I $(INC_DIR) -c $^ -o $@ $(CFLAGS)
+$(OBJ_DIR)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR) $(WITH_RL)
 
-all:	$(NAME)
+$(OBJ_DIR):
+	mkdir -p $@
+
+set_inputrc:
+	echo "set echo-control-characters off" >> $(RL_CONF)
+
+all: $(NAME)
 
 clean:
 	make clean -C $(LIBFT_DIR) 
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean:		clean
 	rm -f $(NAME)
@@ -48,4 +68,6 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:     all clean fclean re
+-include $(DEPS)
+
+.PHONY:     all clean fclean re set_inputrc

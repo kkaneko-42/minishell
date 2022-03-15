@@ -48,7 +48,6 @@ static void	prompt(t_envp *env_list)
 			add_history(input);
 			cmd = parser(input);
 
-
 			for (t_cmd *now = cmd; now != NULL; now = now->next)
 			{
 				printf("cmd name:@%s@\n", now->name);
@@ -58,8 +57,7 @@ static void	prompt(t_envp *env_list)
 					printf("@%s@\n", arg_now->content);
 			}
 			printf("-------------\n");
-
-			
+      
 			exec(cmd, &env_list);
 			//free cmd;
 		}

@@ -6,14 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 18:30:17 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/12 01:07:40 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void		try_expand(char **str, t_envp *env_list);
-static void		do_expand(char **str, t_envp *env_list);
 static char		*get_env_name_from_token(char *str);
 static size_t	get_envname_tail_index(char *str);
 static size_t	get_envname_head_index(char *str);
@@ -25,26 +24,26 @@ void	expand_env(t_list *token, t_envp *env_list)
 	now_token = token;
 	while (now_token != NULL)
 	{
-		if (now_token->content[0] != '\''
-			&& ft_strchr(now_token->content, '$') != NOT_FOUND)
-		{
-			do_expand(&(now_token->content), env_list);
-		}
+		try_expand(&(now_token->content), env_list);
 		now_token = now_token->next;
 	}
 }
 
-static void	do_expand(char **str, t_envp *env_list)
+static void	try_expand(char **str, t_envp *env_list)
 {
+	int		fg_expand;
 	size_t	i;
 	size_t	envname_tail_i;
 	char	*env_name;
 	char	*env_value;
 
+	fg_expand = 1;
 	i = 0;
 	while ((*str)[i] != 0x00)
 	{
-		if ((*str)[i] == '$')
+		if ((*str)[i] == '\'')
+			fg_expand = !fg_expand;
+		else if ((*str)[i] == '$' && fg_expand)
 		{
 			envname_tail_i = i + get_envname_tail_index(*str + i);
 			env_name = get_env_name_from_token(*str);
@@ -70,11 +69,13 @@ static char	*get_env_name_from_token(char *str)
 static size_t	get_envname_tail_index(char *str)
 {
 	size_t	i;
+	size_t	j;
 
 	i = get_envname_head_index(str);
-	while (is_snakecase(str[i], i))
-		++i;
-	return (i - 1);
+	j = 0;
+	while (is_snakecase(str[i + j], j))
+		++j;
+	return (i + j - 1);
 }
 
 static size_t	get_envname_head_index(char *str)
@@ -86,7 +87,7 @@ static size_t	get_envname_head_index(char *str)
 		++i;
 	return (i + 1);
 }
-
+/*
 //debug
 int main(int ac, char **av, char **envp)
 {
@@ -103,3 +104,4 @@ int main(int ac, char **av, char **envp)
 		printf("%s\n", now_token->content);
 	return (0);
 }
+*/

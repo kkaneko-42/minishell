@@ -34,7 +34,6 @@
 # define INIT_ERR "Initalization error\n"
 # define SHELL_NAME "minishell$ "
 # define EXIT_MSG "exit\n"
-# define APPEND 1
 
 typedef struct s_cmd
 {
@@ -55,7 +54,8 @@ typedef struct s_envp
 
 
 t_list	*lexer(const char *input);
-t_cmd	*parser(const char *input);
+t_cmd	*parser(const char *input, t_envp *env_list);
+void	expand_env(t_list *token, t_envp *env_list);
 
 void	exec(t_cmd *input, t_envp **envp);
 void	echo(t_cmd *input);
@@ -80,5 +80,18 @@ char	*ft_getenv(const char *name, t_envp *env_list);
 size_t  ft_strreplace(
 			char **str, const char *replace, size_t start, size_t end);
 void	receiver(void (*handler)(sig_atomic_t));
+void	lstdel_head(t_list **top);
+void	lstdel_tail(t_list *lst);
+void	lstdel_mid(t_list *lst);
+void	re_lexer(t_list **src);
+void	refact_token(t_list **top);
+void	remove_quotes_from_cmds(t_cmd *top);
+void	remove_quotes(char **str);
+void	ft_lstjoin(t_list **lst1, t_list *lst2);
+void	free_content(char *content);
+int	    token_is_metachar(const t_list *token);
+
+//debug
+void	put_all_tokens(t_list *tokens);
 
 #endif
