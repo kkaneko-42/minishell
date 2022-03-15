@@ -6,14 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/07 23:37:25 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 15:09:38 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static char	*get_path(t_envp *envp);
-static char	*three_strjoin(char *s1, char *s2, char *s3);
 static char	**get_exec_args(t_cmd *input);
 static char	**get_exec_envp(t_envp *envp);
 
@@ -64,7 +63,7 @@ static char	*get_path(t_envp *envp)
 	return (NULL);
 }
 
-static char	*three_strjoin(char *s1, char *s2, char *s3)
+char	*three_strjoin(char *s1, char *s2, char *s3)
 {
 	char	*str;
 	size_t	s1_len;

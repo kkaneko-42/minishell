@@ -6,62 +6,198 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/11 15:57:03 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 15:20:52 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	do_cmd(t_cmd *input, t_envp *envp);
-static void	do_pipe(t_cmd *input, t_envp *envp, int n);
-static int	cmd_lstsize(t_cmd *input);
+static int		is_only_buitin(t_cmd *input);
+static void		do_builtin(t_cmd *input, t_envp **envp);
+static void		do_cmd(t_cmd *input, t_envp **envp);
+static void		do_pipe(t_cmd *input, t_envp **envp, int n);
+static void		set_output_to_stdout_or_fd_out(t_cmd *input, int fd[2], int from_right);
+static void		set_input_from_stdin(t_cmd *input, int fd[2]);
+static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right);
+static int		cmd_size(t_cmd *input);
+static pid_t	fork_and_waitpid(void);
+static int		last_output_is_not_stdout(t_cmd *input);
+static t_cmd	*cmd_last(t_cmd *input);
+static int		check_fork_err(pid_t pid);
 
-int status;
-
-void exec(t_cmd *input, t_envp **envp)
+void	exec(t_cmd *input, t_envp **envp)
 {
 	pid_t	pid;
-	int		fd[2];
-	
-	pid = fork();
-	waitpid(-1, &status, 0);
-	if (pid < 0)
+	pid_t	pid2;
+
+	if (is_only_buitin(input))
 	{
-		perror("fork failed");
+		do_builtin(input, envp);
 		return ;
 	}
-	else if (pid == 0)
+	pid = fork_and_waitpid();
+	if (pid == 0)
 	{
-		//do_cmd(input, *envp);
-		pid_t	pid2;
-		int		fd[2];
-		t_cmd	*now;
-
-		pipe(fd);
-		pid2 = fork();
-		waitpid(-1, &status, 0);
+		pid2 = fork_and_waitpid();
 		if (pid2 == 0)
 		{
-			close(fd[0]);
-			now = input;
-			while (now->next != NULL)
-				now = now->next;
-			if (now->fd_out != 1)
-				dup2(now->fd_out, 1);
-			do_pipe(input, *envp, 1);
+			if (last_output_is_not_stdout(input))
+				dup2(cmd_last(input)->fd_out, 1);
+			do_pipe(input, envp, 1);
 			exit(1);
 		}
 	}
 }
 
-static void	exec2(t_cmd *input, t_envp **envp)
+static int	is_only_buitin(t_cmd *input)
+{
+	if (cmd_size(input) != 1)
+		return (0);
+	if (!ft_strncmp(input->name, "echo", 5))
+		return (1);
+	else if (!ft_strncmp(input->name, "cd", 3))
+		return (1);
+	else if (!ft_strncmp(input->name, "pwd", 4))
+		return (1);
+	else if (!ft_strncmp(input->name, "export", 7))
+		return (1);
+	else if (!ft_strncmp(input->name, "env", 4))
+		return (1);
+	else if (!ft_strncmp(input->name, "unset", 6))
+		return (1);
+	else if (!ft_strncmp(input->name, "exit", 5))
+		return (1);
+	return (0);
+}
+
+
+static void	do_builtin(t_cmd *input, t_envp **envp)
+{
+	if (!ft_strncmp(input->name, "echo", 5))
+		echo(input);
+	else if (!ft_strncmp(input->name, "cd", 3))
+		cd(input, *envp);
+	else if (!ft_strncmp(input->name, "pwd", 4))
+		pwd(input);
+	else if (!ft_strncmp(input->name, "export", 7))
+		export(input, *envp);
+	else if (!ft_strncmp(input->name, "env", 4))
+		env(input, *envp);
+	else if (!ft_strncmp(input->name, "unset", 6))
+		unset(input, envp);
+	else if (!ft_strncmp(input->name, "exit", 5))
+		exit(0);//exit???
+}
+
+static pid_t	fork_and_waitpid(void)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork failed");
+		exit(-1);
+	}
+	waitpid(-1, &status, 0);
+	if (status == -1)
+		exit(-1);
+	return (pid);
+}
+
+static int	last_output_is_not_stdout(t_cmd *input)
+{
+	if (cmd_last(input)->fd_out != 1)
+		return (1);
+	return (0);
+}
+
+static t_cmd	*cmd_last(t_cmd *input)
+{
+	t_cmd	*now;
+
+	now = input;
+	while (now->next != NULL)
+		now = now->next;
+	return (now);
+}
+
+static void	do_pipe(t_cmd *input, t_envp **envp, int from_right)
+{
+	pid_t	pid;
+	int		status;
+	int		fd[2];
+
+	if (from_right == cmd_size(input))
+		do_cmd(input, envp);
+	else
+	{
+		pipe(fd);
+		pid = fork_and_waitpid();
+		if (pid == 0)
+		{
+			set_output_to_stdout_or_fd_out(input, fd, from_right);
+			do_pipe(input, envp, from_right + 1);
+		}
+		else
+		{
+			set_input_from_stdin(input, fd);
+			do_cmd(should_be_done_cmd(input, from_right), envp);
+		}
+	}
+}
+
+static void	set_output_to_stdout_or_fd_out(t_cmd *input, int fd[2], int from_right)
+{
+	t_cmd	*now;
+	int		i;
+
+	close(fd[0]);
+	now = input;
+	i = 0;
+	while (i < cmd_size(input) - from_right - 1)
+	{
+		now = now->next;
+		++i;
+	}
+	if (now->fd_out == 1)
+		dup2(fd[1], 1);
+	else
+		dup2(now->fd_out, 1);
+	close(fd[1]);
+}
+
+static void	set_input_from_stdin(t_cmd *input, int fd[2])
+{
+	close(fd[1]);
+	dup2(fd[0], 0);
+	close(fd[0]);
+}
+
+static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right)
+{
+	int		i;
+	t_cmd	*now;
+
+	i = 0;
+	now = input;
+	while (i < cmd_size(input) - from_right)
+	{
+		now = now->next;
+		++i;
+	}
+	return (now);
+}
+
+static void	do_cmd(t_cmd *input, t_envp **envp)
 {
 	if (input->name[0] == '\n')
 		return ;
 	if (!ft_strncmp(input->name, "echo", 5))
 		echo(input);
 	else if (!ft_strncmp(input->name, "cd", 3))
-		cd(input);
+		cd(input, *envp);
 	else if (!ft_strncmp(input->name, "pwd", 4))
 		pwd(input);
 	else if (!ft_strncmp(input->name, "export", 7))
@@ -73,93 +209,10 @@ static void	exec2(t_cmd *input, t_envp **envp)
 	else if (!ft_strncmp(input->name, "exit", 5))
 		exit(0);//exit???
 	else
-		do_cmd(input, *envp);
+		do_exexve(input, *envp);
 }
 
-static void	do_cmd(t_cmd *input, t_envp *envp)
-{
-	pid_t	pid;
-
-	pid = fork();
-	waitpid(-1, &status, 0);
-	if (pid < 0)
-	{
-		perror("fork failed");
-		return ;
-	}
-	if (pid == 0)
-	{
-		pid_t	pid2;
-		int		fd[2];
-		t_cmd	*now;
-
-		pipe(fd);
-		pid2 = fork();
-		waitpid(-1, &status, 0);
-		if (pid2 == 0)
-		{
-			close(fd[0]);
-			now = input;
-			while (now->next != NULL)
-				now = now->next;
-			if (now->fd_out != 1)
-				dup2(now->fd_out, 1);
-			do_pipe(input, envp, 1);
-			exit(1);
-		}
-	}
-}
-
-static void	do_pipe(t_cmd *input, t_envp *envp, int n)
-{
-	pid_t	pid;
-	int		fd[2];
-	int		i;
-	t_cmd	*now;
-
-	if (n == cmd_lstsize(input))
-		do_exexve(input, envp);
-	else
-	{
-		pipe(fd);
-		pid = fork();
-		waitpid(-1, &status, 0);
-		if (pid == 0)
-		{
-			close(fd[0]);
-			//
-			now = input;
-			i = 0;
-			while (i < cmd_lstsize(input) - n - 1)
-			{
-				now = now->next;
-				++i;
-			}
-			if (now->fd_out == 1)
-				dup2(fd[1], 1);
-			else
-				dup2(now->fd_out, 1);
-			close(fd[1]);
-			do_pipe(input, envp, n + 1);
-		}
-		else
-		{
-			close(fd[1]);
-			dup2(fd[0], 0);
-			close(fd[0]);
-			i = 0;
-			now = input;
-			while (i < cmd_lstsize(input) - n)
-			{
-				now = now->next;
-				++i;
-			}
-			do_exexve(now, envp);
-		}
-	}
-}
-
-static int	cmd_lstsize(t_cmd *input)
+static int	cmd_size(t_cmd *input)
 {
 	int		i;
 	t_cmd	*now;
@@ -173,6 +226,17 @@ static int	cmd_lstsize(t_cmd *input)
 	}
 	return (i);
 }
+
+/* 
+static int	check_fork_err(pid_t pid)
+{
+	if (pid < 0)
+	{
+		perror("fork failed");
+		exit(-1);
+	}
+	return
+} */
 
 /* 
 static void	do_exexve(t_cmd *input, t_envp *envp)

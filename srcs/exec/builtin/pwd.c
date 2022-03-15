@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:06:30 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/03 22:45:57 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 13:29:39 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	pwd(t_cmd *input)
 	else
 	{
 		getcwd(now_path, 512);
-		printf("%s\n", getcwd(now_path, 512));
+		ft_putstr_fd(now_path, input->fd_out);
+		ft_putstr_fd("\n", input->fd_out);
 	}
 }
 

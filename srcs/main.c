@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/11 15:08:10 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 13:21:30 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,17 @@ static void	prompt(t_envp *env_list)
 			cmd = parser(input);
 
 
-		for (t_cmd *now = cmd; now != NULL; now = now->next)
-		{
-			printf("cmd name:@%s@\n", now->name);
-			printf("fd_out: %d\n", now->fd_out);
-			printf("args:\n");
-			for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
-				printf("@%s@\n", arg_now->content);
-		}
+			for (t_cmd *now = cmd; now != NULL; now = now->next)
+			{
+				printf("cmd name:@%s@\n", now->name);
+				printf("fd_out: %d\n", now->fd_out);
+				printf("args:\n");
+				for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
+					printf("@%s@\n", arg_now->content);
+			}
 			printf("-------------\n");
+
+			
 			exec(cmd, &env_list);
 			//free cmd;
 		}

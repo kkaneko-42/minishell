@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 23:58:37 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 15:07:58 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_cmd	*parser(const char *input);
 
 void	exec(t_cmd *input, t_envp **envp);
 void	echo(t_cmd *input);
-void	cd(t_cmd *input);
+void	cd(t_cmd *input, t_envp *envp);
 void	pwd(t_cmd *input);
 void	export(t_cmd *input, t_envp *envp);
 void	env(t_cmd *input, t_envp *envp);
@@ -74,6 +74,7 @@ int	    ft_strcmp(char *s1, char *s2);
 int	    get_max_rank(t_envp *envp);
 void	free_strs(char **strs);
 void	do_exexve(t_cmd *input, t_envp *envp);
+char	*three_strjoin(char *s1, char *s2, char *s3);
 int	    is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
 size_t  ft_strreplace(
