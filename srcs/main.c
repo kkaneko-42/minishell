@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-static sig_atomic_t	g_sig;
+volatile sig_atomic_t	g_sig;
 
 static void		validate_args(int ac, char **av, char **envp);
 static void		sig_handler(sig_atomic_t sig);
