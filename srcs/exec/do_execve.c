@@ -6,14 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/07 16:50:44 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 15:09:38 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static char	*get_path(t_envp *envp);
-static char	*three_strjoin(char *s1, char *s2, char *s3);
 static char	**get_exec_args(t_cmd *input);
 static char	**get_exec_envp(t_envp *envp);
 
@@ -30,7 +29,7 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 		printf("minishell: %s: No such file or directory\n", input->name);
 		exit(1);
 	}
-	path_env = ft_split(&get_path(envp)[5], ':');
+	path_env = ft_split(get_path(envp), ':');
 	i = 0;
 	while (path_env[i] != NULL)
 	{
@@ -47,6 +46,7 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 		++i;
 	}
 	free_strs(path_env);
+	path_env = NULL;
 }
 
 static char	*get_path(t_envp *envp)
@@ -63,7 +63,7 @@ static char	*get_path(t_envp *envp)
 	return (NULL);
 }
 
-static char	*three_strjoin(char *s1, char *s2, char *s3)
+char	*three_strjoin(char *s1, char *s2, char *s3)
 {
 	char	*str;
 	size_t	s1_len;
@@ -92,15 +92,14 @@ static char	**get_exec_args(t_cmd *input)
 	exec_args = (char **)ft_xmalloc(sizeof(char *) * (argc + 2));
 	exec_args[0] = (char *)ft_xmalloc(sizeof(char)
 			* (ft_strlen(input->name) + 1));
-	ft_memmove(exec_args[0], input->name, ft_strlen(input->name));
+	ft_memmove(exec_args[0], input->name, ft_strlen(input->name) + 1);
 	p_args = input->args;
 	i = 1;
 	while (p_args != NULL)
 	{
 		exec_args[i] = (char *)ft_xmalloc(sizeof(char)
 				* (ft_strlen(p_args->content) + 1));
-		ft_memmove(exec_args[i], p_args->content, ft_strlen(p_args->content));
-		exec_args[i][ft_strlen(p_args->content)] = '\0';
+		ft_memmove(exec_args[i], p_args->content, ft_strlen(p_args->content) + 1);
 		p_args = p_args->next;
 		++i;
 	}
@@ -115,6 +114,7 @@ static char	**get_exec_envp(t_envp *envp)
 	t_envp	*p_envp;
 	size_t	i;
 
+	argc = 0;
 	p_envp = envp;
 	while (p_envp != NULL)
 	{
@@ -128,8 +128,7 @@ static char	**get_exec_envp(t_envp *envp)
 	{
 		exec_envp[i] = (char *)ft_xmalloc(sizeof(char)
 				* (ft_strlen(p_envp->content) + 1));
-		ft_memmove(exec_envp[i], p_envp->content, ft_strlen(p_envp->content));
-		exec_envp[i][ft_strlen(p_envp->content)] = '\0';
+		ft_memmove(exec_envp[i], p_envp->content, ft_strlen(p_envp->content) + 1);
 		p_envp = p_envp->next;
 		++i;
 	}

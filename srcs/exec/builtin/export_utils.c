@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/06 16:19:44 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 12:09:35 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,19 @@ int	first_char_is_equal(char *s)
 int	forbidden_char_is_exist_in_envp(char *s)
 {
 	size_t	i;
+	size_t	j;
 
 	if (first_char_is_equal(s))
 		return (1);
 	i = 0;
 	while (s[i] != '\0' && s[i] == ' ')
 		i++;
-	while (s[i] != '\0' && s[i] != '=')
+	j = 0;
+	while (s[i + j] != '\0' && s[i + j] != '=')
 	{
-		if (ft_isalnum(s[i]) == 0 && s[i] != '_')
+		if (!is_snakecase(s[i + j], j))
 			return (1);
-		++i;
+		++j;
 	}
 	return (0);
 }
