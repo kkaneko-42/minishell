@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:10:11 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/15 16:34:17 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 	t_envp	*env_list;
 
 	validate_args(ac, av, envp);
-	//receiver(sig_handler);
+	receiver(sig_handler);
 	env_list = get_envp_list(envp);
 	prompt(env_list);
 	return (0);
@@ -70,7 +70,7 @@ static void	validate_args(int ac, char **av, char **envp)
 	if (envp == NULL)
 		exit(1);
 }
-/* 
+
 static void	sig_handler(sig_atomic_t sig)
 {
 	if (sig == SIGINT)
@@ -81,4 +81,3 @@ static void	sig_handler(sig_atomic_t sig)
 		rl_redisplay();
 	}
 }
- */

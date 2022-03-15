@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 17:47:07 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/08 12:11:26 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/15 16:33:50 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-/* 
+
 void	receiver(void (*handler)(sig_atomic_t))
 {
 	int					err_fg;
@@ -29,4 +29,3 @@ void	receiver(void (*handler)(sig_atomic_t))
 		exit(1);
 	}
 }
- */
