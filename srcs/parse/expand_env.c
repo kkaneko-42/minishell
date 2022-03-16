@@ -6,13 +6,14 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/12 01:07:40 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 14:55:00 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void		try_expand(char **str, t_envp *env_list);
+static void		do_expand(char **str, t_envp *env_list, size_t *i);
 static char		*get_env_name_from_token(char *str);
 static size_t	get_envname_tail_index(char *str);
 static size_t	get_envname_head_index(char *str);
@@ -32,26 +33,35 @@ void	expand_env(t_list *token, t_envp *env_list)
 static void	try_expand(char **str, t_envp *env_list)
 {
 	int		fg_expand;
+	int		fg_parse_single_quote;
 	size_t	i;
-	size_t	envname_tail_i;
-	char	*env_name;
-	char	*env_value;
 
+	fg_parse_single_quote = 1;
 	fg_expand = 1;
 	i = 0;
 	while ((*str)[i] != 0x00)
 	{
-		if ((*str)[i] == '\'')
+		if ((*str)[i] == '\"')
+			fg_parse_single_quote = !fg_parse_single_quote;
+		else if ((*str)[i] == '\'' && fg_parse_single_quote)
 			fg_expand = !fg_expand;
 		else if ((*str)[i] == '$' && fg_expand)
-		{
-			envname_tail_i = i + get_envname_tail_index(*str + i);
-			env_name = get_env_name_from_token(*str);
-			env_value = ft_getenv(env_name, env_list);
-			i = ft_strreplace(str, env_value, i, envname_tail_i);
-		}
+			do_expand(str, env_list, &i);
 		++i;
 	}
+}
+
+static void	do_expand(char **str, t_envp *env_list, size_t *i)
+{
+	size_t	envname_tail_i;
+	char	*env_name;
+	char	*env_value;
+
+	envname_tail_i = *i + get_envname_tail_index(*str + *i);
+	env_name = get_env_name_from_token(*str);
+	env_value = ft_getenv(env_name, env_list);
+	*i = ft_strreplace(str, env_value, *i, envname_tail_i);
+	free(env_name);
 }
 
 static char	*get_env_name_from_token(char *str)
