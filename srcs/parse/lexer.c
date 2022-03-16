@@ -6,20 +6,20 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 14:34:53 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 15:07:13 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void	get_str_in_quote(
-		const char *input, t_list *dst, size_t *input_i);
+				const char *input, t_list *dst, size_t *input_i);
 static void	get_metachar(
-		const char *input, t_list **now, size_t *input_i);
+				const char *input, t_list **now, size_t *input_i);
 static void	skip_whitespace(
-		const char *input, t_list **now, size_t *input_i);
+				const char *input, t_list **now, size_t *input_i);
 static void	metachar_to_list(
-		char *metachar, t_list **now, size_t *input_i);
+				char *metachar, t_list **now, size_t *input_i);
 
 t_list	*lexer(const char *input)
 {
