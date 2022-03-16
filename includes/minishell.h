@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:55:09 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 01:11:12 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	free_content(char *content);
 int	    is_metachar(const char *str);
 void	exit_with_error(const char *msg, int status);
 int	    check_metachar_target(const t_list *token);
+int	    check_nb_quotes(const t_list *tokens);
+void	free_cmds(t_cmd *cmds);
 
 //debug
 void	put_all_tokens(t_list *tokens);

@@ -6,13 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:59:57 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 01:32:10 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	validate_token(const t_list *token);
+static int		validate_token(const t_list *token);
 static t_cmd	*cmd_new(char *name);
 static void	cmdadd_back(t_cmd **lst, t_cmd *new);
 static void	get_cmd_info(t_cmd *cmd, t_list **token);
@@ -30,13 +30,13 @@ t_cmd	*parser(const char *input, t_envp *env_list)
 	t_list	*token;
 	t_cmd	*res;
 	t_cmd	*now_cmd;
-
 	
 	token = lexer(input);
 	expand_env(token, env_list);
 	re_lexer(&token);
 	refact_token(&token);
-	validate_token(token);
+	if (validate_token(token))
+		return (NULL); //Todo: free tokens
 	res = NULL;
 	now_cmd = INIT;
 	while (token != NULL)
@@ -199,15 +199,18 @@ static void	cmdadd_back(t_cmd **lst, t_cmd *new)
 	}
 }
 
-static void	validate_token(const t_list *token)
+static int	validate_token(const t_list *token)
 {
 	//if tokens have an error, exit
-	/*
-	if (check_metachar_target(token) == -1)
-		exit_with_error(PARSE_ERR, 1);
-		*/
+	if (check_metachar_target(token)
+		|| check_nb_quotes(token))
+	{
+		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
+		return (1);
+	}
+	return (0);
 }
-/*
+
 //debug
 void	put_all_tokens(t_list *tokens)
 {
@@ -220,11 +223,11 @@ void	put_all_tokens(t_list *tokens)
 		printf("next:%p\n", now->next);
 	}
 }
-
+/*
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = av[1];
+	char	*input = "echo hello > ";
 	t_envp	*env_list = get_envp_list(envp);
 
 	res = parser(input, env_list);

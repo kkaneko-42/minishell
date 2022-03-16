@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:58:55 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 01:17:56 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,23 @@ static void	prompt(t_envp *env_list)
 		{
 			add_history(input);
 			cmd = parser(input, env_list);
-
-			for (t_cmd *now = cmd; now != NULL; now = now->next)
+			if (cmd != NULL)
 			{
-				printf("cmd name:@%s@\n", now->name);
-				printf("fd_out: %d\n", now->fd_out);
-				printf("args:\n");
-				for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
-					printf("@%s@\n", arg_now->content);
-				printf("stdin_str:\n%s\n", now->stdin_str);
+				/*
+				for (t_cmd *now = cmd; now != NULL; now = now->next)
+				{
+					printf("cmd name:@%s@\n", now->name);
+					printf("fd_out: %d\n", now->fd_out);
+					printf("args:\n");
+					for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
+						printf("@%s@\n", arg_now->content);
+					printf("stdin_str:\n%s\n", now->stdin_str);
+					printf("-------------\n");
+				}
+				*/
+				exec(cmd, &env_list);
+				free_cmds(cmd);
 			}
-			printf("-------------\n");
-
-			exec(cmd, &env_list);
-			//free cmd;
 		}
 		free(input);
 	}

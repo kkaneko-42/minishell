@@ -37,7 +37,9 @@ SRCS	:=	main.c \
 			free_content.c \
 			is_metachar.c \
 			exit_with_error.c \
-			check_metachar_target.c
+			check_metachar_target.c \
+			check_nb_quotes.c \
+			free_cmds.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
