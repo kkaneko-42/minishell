@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 01:11:12 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 17:12:27 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,13 @@ void	exit_with_error(const char *msg, int status);
 int	    check_metachar_target(const t_list *token);
 int	    check_nb_quotes(const t_list *tokens);
 void	free_cmds(t_cmd *cmds);
+void	input_file_specify(t_cmd *cmd, t_list **token);
+void	heredoc(t_cmd *cmd, t_list **token);
+void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append);
+void	get_cmd_info(t_cmd *cmd, t_list **token);
+void	get_cmd_args(t_cmd *cmd, t_list **token);
+t_cmd	*cmd_new(char *name);
+void	cmdadd_back(t_cmd **lst, t_cmd *new);
 
 //debug
 void	put_all_tokens(t_list *tokens);

@@ -6,11 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 14:55:00 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 17:18:38 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void		try_expand(char **str, t_envp *env_list);
 static void		do_expand(char **str, t_envp *env_list, size_t *i);

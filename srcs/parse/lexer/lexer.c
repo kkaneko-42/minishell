@@ -6,11 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 15:07:13 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 17:18:25 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	get_str_in_quote(
 				const char *input, t_list *dst, size_t *input_i);
