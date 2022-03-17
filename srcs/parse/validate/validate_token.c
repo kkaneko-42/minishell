@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_content.c                                     :+:      :+:    :+:   */
+/*   validate_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 02:32:22 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/17 18:19:54 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/17 18:50:11 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/17 18:51:12 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "minishell.h"
 
-void	free_content(char *content)
+int	validate_token(const t_list *token)
 {
-	free(content);
-	content = NULL;
+	if (check_metachar_target(token)
+		|| check_nb_quotes(token))
+	{
+		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
+		return (1);
+	}
+	return (0);
 }

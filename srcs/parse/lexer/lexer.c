@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:21:59 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 17:18:25 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/17 18:42:27 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	get_str_in_quote(
 	if (input[(*input_i)] != 0x00)
 		(*input_i) += 1;
 	dst->content = ft_stradd(&(dst->content), src_str);
+	free(src_str);
 }
 
 static void	metachar_to_list(

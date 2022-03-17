@@ -1,6 +1,6 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-MMD -MP #-fsanitize=leak -g
+CFLAGS	:=	-g -MMD -MP #-fsanitize=leak -g
 WITH_RL :=	-lreadline
 RL_CONF	:=	~/.inputrc
 INC_DIR := ./includes
@@ -49,7 +49,9 @@ SRCS	:=	main.c \
 			check_nb_quotes.c \
 			free_cmds.c \
 			handle_metachar.c \
-			handle_t_cmd.c
+			handle_t_cmd.c \
+			validate_token.c \
+			put_all_tokens.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft

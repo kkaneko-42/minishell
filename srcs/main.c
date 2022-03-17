@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 01:17:56 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/17 18:31:32 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char **av, char **envp)
 	receiver(sig_handler);
 	env_list = get_envp_list(envp);
 	prompt(env_list);
+	exit(0); //free envlist
 	return (0);
 }
 
