@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 17:32:35 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/13 03:18:11 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/16 15:07:59 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	remove_quotes(char **str)
 		else
 			res = ft_stradd_char(&res, (*str)[i]);
 		if ((*str)[i] == 0x00)
-			break;
+			break ;
 		else
 			++i;
 	}

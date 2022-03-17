@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   re_lexer.c                                         :+:      :+:    :+:   */
+/*   put_all_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 14:35:00 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/17 18:51:59 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/17 18:52:14 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-void	re_lexer(t_list **src)
+void	put_all_tokens(t_list *tokens)
 {
-	t_list	*new_tokens;
-	t_list	*now;
-
-	new_tokens = NULL;
-	now = *src;
-	while (now != NULL)
+	for (t_list *now = tokens; now != NULL; now = now->next)
 	{
-		ft_lstjoin(&new_tokens, lexer(now->content));
-		now = now->next;
+		printf("===============================\n");
+		printf("content:%s\n", now->content);
+		printf("prev:%p\n", now->prev);
+		printf("now:%p\n", now);
+		printf("next:%p\n", now->next);
 	}
-	ft_lstclear(src, free_content);
-	*src = new_tokens;
 }

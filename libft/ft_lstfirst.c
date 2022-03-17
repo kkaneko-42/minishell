@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   re_lexer.c                                         :+:      :+:    :+:   */
+/*   ft_lstfirst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 14:35:00 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/17 17:44:19 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/17 17:45:44 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	re_lexer(t_list **src)
+t_list	*ft_lstfirst(t_list *lst)
 {
-	t_list	*new_tokens;
-	t_list	*now;
+	t_list	*now_lst;
 
-	new_tokens = NULL;
-	now = *src;
-	while (now != NULL)
-	{
-		ft_lstjoin(&new_tokens, lexer(now->content));
-		now = now->next;
-	}
-	ft_lstclear(src, free_content);
-	*src = new_tokens;
+	now_lst = lst;
+	if (now_lst == NULL)
+		return (NULL);
+	while (now_lst->prev != NULL)
+		now_lst = now_lst->prev;
+	return (now_lst);
 }

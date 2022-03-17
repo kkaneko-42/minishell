@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   re_lexer.c                                         :+:      :+:    :+:   */
+/*   free_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 14:35:00 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/16 01:03:58 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/16 01:20:00 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-void	re_lexer(t_list **src)
+static void	free_cmd_members(t_cmd *cmd);
+
+void	free_cmds(t_cmd *cmds)
 {
-	t_list	*new_tokens;
-	t_list	*now;
+	t_cmd	*now;
+	t_cmd	*next;
 
-	new_tokens = NULL;
-	now = *src;
+	now = cmds;
 	while (now != NULL)
 	{
-		ft_lstjoin(&new_tokens, lexer(now->content));
-		now = now->next;
+		next = now->next;
+		free_cmd_members(now);
+		now = next;
 	}
-	ft_lstclear(src, free_content);
-	*src = new_tokens;
+}
+
+static void	free_cmd_members(t_cmd *cmd)
+{
+	free(cmd->name);
+	ft_lstclear(&(cmd->args), free_content);
+	free(cmd->stdin_str);
+	if (cmd->fd_out > STDERR_FILENO)
+		close(cmd->fd_out);
+	free(cmd);
 }

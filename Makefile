@@ -1,11 +1,19 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-MMD -MP #-fsanitize=leak -g
+CFLAGS	:=	-g -MMD -MP #-fsanitize=leak -g
 WITH_RL :=	-lreadline
 RL_CONF	:=	~/.inputrc
 INC_DIR := ./includes
 OBJ_DIR	:= ./objs
-VPATH	:=	srcs:srcs/utils:srcs/parse:srcs/exec:srcs/exec/builtin:srcs/parse/validate
+VPATH	:=	srcs:\
+			srcs/utils:\
+			srcs/parse:\
+			srcs/exec:\
+			srcs/exec/builtin:\
+			srcs/parse/validate:\
+			srcs/parse/lexer:\
+			srcs/parse/expansion:\
+			srcs/parse/parser
 SRCS	:=	main.c \
 			signal.c \
 			parser.c \
@@ -37,7 +45,13 @@ SRCS	:=	main.c \
 			free_content.c \
 			is_metachar.c \
 			exit_with_error.c \
-			check_metachar_target.c
+			check_metachar_target.c \
+			check_nb_quotes.c \
+			free_cmds.c \
+			handle_metachar.c \
+			handle_t_cmd.c \
+			validate_token.c \
+			put_all_tokens.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft

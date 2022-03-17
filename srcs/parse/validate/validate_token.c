@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   re_lexer.c                                         :+:      :+:    :+:   */
+/*   validate_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 14:35:00 by kkaneko          ###   ########.fr       */
+/*   Created: 2022/03/17 18:50:11 by kkaneko           #+#    #+#             */
+/*   Updated: 2022/03/17 19:21:18 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-void	re_lexer(t_list **src)
+int	validate_token(const t_list *token)
 {
-	t_list	*new_tokens;
-	t_list	*now;
-
-	new_tokens = NULL;
-	now = *src;
-	while (now != NULL)
+	if (check_metachar_target(token)
+		|| check_nb_quotes(token))
 	{
-		ft_lstjoin(&new_tokens, lexer(now->content));
-		now = now->next;
+		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
+		return (1);
 	}
-	ft_lstclear(src, free_content);
-	*src = new_tokens;
+	return (0);
 }

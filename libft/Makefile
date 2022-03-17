@@ -9,7 +9,8 @@ SRCS	=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c\
 			ft_strmapi.c ft_striteri.c ft_putchar_fd.c\
 			ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 			ft_stradd.c get_next_line.c get_next_line_utils.c \
-			ft_strcmp.c ft_xmalloc.c ft_stradd_char.c
+			ft_strcmp.c ft_xmalloc.c ft_stradd_char.c \
+			ft_lstfirst.c
 BONUS_SRCS	=	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c\
 			ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c\
 			ft_lstclear.c ft_lstiter.c ft_lstmap.c
@@ -18,7 +19,7 @@ INC_DIR = ./
 OBJS	= $(SRCS:.c=.o)
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 CC		= cc
-CFLAG	= -Wall -Wextra -Werror
+CFLAG	= -Wall -Wextra -Werror -g
 AR		= ar rcs
 
 ifdef WITH_BONUS

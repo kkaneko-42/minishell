@@ -11,7 +11,9 @@ SRCS	:=	./parser.c ./lexer.c \
 			../utils/get_envp_list.c ../utils/free_strs.c \
 			../utils/addback_envp_list.c ./handle_quotes.c \
 			../utils/free_content.c ../utils/exit_with_error.c \
-			../utils/is_metachar.c
+			../utils/is_metachar.c \
+			./validate/check_metachar_target.c \
+			./validate/check_nb_quotes.c
 OBJS	:= $(SRCS:.c=.o)
 LIBFT_DIR := ../../libft
 LIBFT := libft.a

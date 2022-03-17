@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 02:58:35 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/15 16:34:59 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/17 19:25:15 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_metachar_target(const t_list *token)
 	while (now != NULL)
 	{
 		if (is_metachar(now->content) && has_no_target(now))
-			return (-1);
+			return (1);
 		now = now->next;
 	}
 	return (0);
@@ -32,11 +32,14 @@ int	check_metachar_target(const t_list *token)
 static int	has_no_target(t_list *metachar_node)
 {
 	char	*next_content;
+	int		res;
 
+	res = 0;
 	if (metachar_node->next == NULL)
 		return (1);
 	next_content = ft_strdup(metachar_node->next->content);
 	if (ft_strlen(next_content) == 0 || is_metachar(next_content))
-		return (1);
-	return (0);
+		res = 1;
+	free(next_content);
+	return (res);
 }
