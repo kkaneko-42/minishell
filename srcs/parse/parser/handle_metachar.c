@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:06:13 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 17:09:26 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/17 19:44:55 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,21 @@ void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 {
 	const mode_t	out_file_rights = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	const int		open_flags = O_RDWR | O_CREAT | fg_append;
+	char			*file_name;
 	int				fd_out;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
+	file_name = (*token)->content;
 	if (fg_append != O_APPEND)
 	{
-		if (unlink((*token)->content))
-			; //unlink err
+		if (unlink(file_name))
+			perror(file_name); //unlink err
 	}
 	//other flags(eg:O_CLOEXEC) may be needed
-	fd_out = open((*token)->content, open_flags, out_file_rights);
-	//open err
+	fd_out = open(file_name, open_flags, out_file_rights);
+	if (fd_out == -1)
+		perror(file_name);
 	cmd->fd_out = fd_out;
 }
 
