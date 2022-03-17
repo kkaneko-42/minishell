@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:06:13 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/17 19:54:20 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 01:37:51 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	input_file_specify(t_cmd *cmd, t_list **token)
 	input_fd = open((*token)->content, O_RDONLY);
 	if (input_fd == -1)
 		; //open err
+	free(cmd->stdin_str);
 	cmd->stdin_str = get_file_content_all(input_fd);
 }
 
@@ -34,6 +35,7 @@ void	heredoc(t_cmd *cmd, t_list **token)
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
+	free(cmd->stdin_str);
 	end_text = (*token)->content;
 	cmd->stdin_str = get_heredoc_input(end_text);
 }
@@ -73,7 +75,6 @@ void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 		if (unlink(file_name) && errno != ENOENT)
 			perror(file_name);
 	}
-	//other flags(eg:O_CLOEXEC) may be needed
 	fd_out = open(file_name, open_flags, out_file_rights);
 	if (fd_out == -1)
 		perror(file_name);

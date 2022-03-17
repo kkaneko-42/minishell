@@ -51,7 +51,8 @@ SRCS	:=	main.c \
 			handle_metachar.c \
 			handle_t_cmd.c \
 			validate_token.c \
-			put_all_tokens.c
+			put_all_tokens.c \
+			handle_envname.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft

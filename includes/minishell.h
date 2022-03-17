@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/17 18:51:10 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 01:33:45 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,21 @@
 
 typedef struct s_cmd
 {
-    char            *name;
-    t_list          *args;
-    char            *stdin_str;
-    int             fd_out;
-    struct s_cmd    *prev;
-    struct s_cmd    *next;
-}                   t_cmd;
+	char			*name;
+	t_list			*args;
+	char			*stdin_str;
+	int				fd_out;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct s_envp
 {
-    struct s_envp	*next;
+	struct s_envp	*next;
 	struct s_envp	*prev;
 	char			*content;
 	int				rank;
-}                   t_envp;
-
+}					t_envp;
 
 t_list	*lexer(const char *input);
 t_cmd	*parser(const char *input, t_envp *env_list);
@@ -64,19 +63,19 @@ void	export(t_cmd *input, t_envp *envp);
 void	env(t_cmd *input, t_envp *envp);
 void	unset(t_cmd *input, t_envp **envp);
 void	delete_env_export(t_envp **envp, char *p_args);
-int	    is_exist_env(t_envp *envp, char *new_env);
+int		is_exist_env(t_envp *envp, char *new_env);
 t_envp	*get_envp_list(char **envp);
-int	    first_char_is_equal(char *s);
-int	    forbidden_char_is_exist_in_envp(char *s);
-int	    addback_envp_list(t_envp **envp_list, char *s);
-int	    ft_strcmp(char *s1, char *s2);
-int	    get_max_rank(t_envp *envp);
+int		first_char_is_equal(char *s);
+int		forbidden_char_is_exist_in_envp(char *s);
+int		addback_envp_list(t_envp **envp_list, char *s);
+int		ft_strcmp(char *s1, char *s2);
+int		get_max_rank(t_envp *envp);
 void	free_strs(char **strs);
 void	do_exexve(t_cmd *input, t_envp *envp);
 char	*three_strjoin(char *s1, char *s2, char *s3);
-int	    is_snakecase(char c, size_t i);
+int		is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
-size_t  ft_strreplace(
+size_t	ft_strreplace(
 			char **str, const char *replace, size_t start, size_t end);
 void	receiver(void (*handler)(sig_atomic_t));
 void	lstdel_head(t_list **top);
@@ -88,10 +87,10 @@ void	remove_quotes_from_cmds(t_cmd *top);
 void	remove_quotes(char **str);
 void	ft_lstjoin(t_list **lst1, t_list *lst2);
 void	free_content(char *content);
-int	    is_metachar(const char *str);
+int		is_metachar(const char *str);
 void	exit_with_error(const char *msg, int status);
-int	    check_metachar_target(const t_list *token);
-int	    check_nb_quotes(const t_list *tokens);
+int		check_metachar_target(const t_list *token);
+int		check_nb_quotes(const t_list *tokens);
 void	free_cmds(t_cmd *cmds);
 void	input_file_specify(t_cmd *cmd, t_list **token);
 void	heredoc(t_cmd *cmd, t_list **token);
@@ -100,7 +99,10 @@ void	get_cmd_info(t_cmd *cmd, t_list **token);
 void	get_cmd_args(t_cmd *cmd, t_list **token);
 t_cmd	*cmd_new(char *name);
 void	cmdadd_back(t_cmd **lst, t_cmd *new);
-int	    validate_token(const t_list *token);
+int		validate_token(const t_list *token);
+size_t	get_envname_head_index(char *str);
+size_t	get_envname_tail_index(char *str);
+char	*get_env_name_from_token(char *str);
 
 //debug
 void	put_all_tokens(t_list *tokens);
