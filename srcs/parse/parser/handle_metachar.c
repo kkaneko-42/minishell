@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:06:13 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/17 19:44:55 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/17 19:54:20 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 	file_name = (*token)->content;
 	if (fg_append != O_APPEND)
 	{
-		if (unlink(file_name))
-			perror(file_name); //unlink err
+		if (unlink(file_name) && errno != ENOENT)
+			perror(file_name);
 	}
 	//other flags(eg:O_CLOEXEC) may be needed
 	fd_out = open(file_name, open_flags, out_file_rights);
