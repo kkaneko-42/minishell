@@ -29,6 +29,7 @@ void	input_file_specify(t_cmd *cmd, t_list **token)
 		perror(file_name);
 	free(cmd->stdin_str);
 	cmd->stdin_str = get_file_content_all(input_fd);
+	close(input_fd);
 }
 
 void	heredoc(t_cmd *cmd, t_list **token)
