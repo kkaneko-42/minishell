@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/18 16:40:25 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/19 00:32:54 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,19 @@ void	exec(t_cmd *input, t_envp **envp)
 	pid_t	pid2;
 
 	if (is_only_buitin(input))
-	{
 		do_builtin(input, envp);
-		return ;
-	}
-	pid = fork_and_waitpid();
-	if (pid == 0)
+	else
 	{
-		if (last_output_is_not_stdout(input))
-			dup2(cmd_last(input)->fd_out, 1);
-		do_pipe(input, envp, 1);
-		exit(1);
+		pid = fork_and_waitpid();
+		if (pid == 0)
+		{
+			if (last_output_is_not_stdout(input))
+				dup2(cmd_last(input)->fd_out, 1);
+			do_pipe(input, envp, 1);
+			exit(1);
+		}
 	}
+	//$? errono
 }
 
 static int	is_only_buitin(t_cmd *input)
@@ -81,7 +82,7 @@ static void	do_builtin(t_cmd *input, t_envp **envp)
 	else if (!ft_strncmp(input->name, "unset", 6))
 		unset(input, envp);
 	else if (!ft_strncmp(input->name, "exit", 5))
-		exit(0);//exit???
+		exit_builtin(input);
 }
 
 static pid_t	fork_and_waitpid(void)
@@ -223,16 +224,19 @@ static int	cmd_size(t_cmd *input)
 	return (i);
 }
 
-/* 
-static int	check_fork_err(pid_t pid)
+
+static pid_t	fork_and_err(void)
 {
+	pid_t	pid;
+
+	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork failed");
 		exit(-1);
 	}
-	return
-} */
+	return (pid);
+}
 
 /* 
 static void	do_exexve(t_cmd *input, t_envp *envp)
