@@ -6,11 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 21:04:42 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/18 16:34:26 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 17:59:06 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	del_empty_node(t_list **now, t_list **top)
 {
