@@ -48,6 +48,7 @@ SRCS	:=	main.c \
 			check_nb_quotes.c \
 			free_cmds.c \
 			handle_metachar.c \
+			handle_metachar_utils.c \
 			handle_t_cmd.c \
 			validate_token.c \
 			put_all_tokens.c \
