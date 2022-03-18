@@ -1,6 +1,6 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror -g -MMD -MP #-fsanitize=leak -g
+CFLAGS	:=	-g -MMD -MP #-fsanitize=leak -g
 WITH_RL :=	-lreadline
 INC_DIR := ./includes
 OBJ_DIR	:= ./objs
