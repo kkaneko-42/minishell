@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/18 01:33:45 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:21:28 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int		validate_token(const t_list *token);
 size_t	get_envname_head_index(char *str);
 size_t	get_envname_tail_index(char *str);
 char	*get_env_name_from_token(char *str);
+void	free_envp_list(t_envp **env_list, void (*del)(char *));
 
 //debug
 void	put_all_tokens(t_list *tokens);

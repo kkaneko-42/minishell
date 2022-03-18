@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/18 16:06:26 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:28:12 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,11 @@
 static t_list	*tokenize(const char *input, t_envp *env_list);
 static t_cmd	*set_cmd_info(t_list *token);
 void			parse_metachar(t_cmd *cmd, t_list **token);
-static t_list	*get_metachar_list(void);
 
 t_cmd	*parser(const char *input, t_envp *env_list)
 {
 	t_list	*token;
-	t_list	*now_token;
 	t_cmd	*res;
-	t_cmd	*now_cmd;
 
 	token = tokenize(input, env_list);
 	if (validate_token(token))

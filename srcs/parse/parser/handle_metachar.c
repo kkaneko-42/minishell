@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:06:13 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/18 01:37:51 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:36:28 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ static char	*get_file_content_all(int fd);
 void	input_file_specify(t_cmd *cmd, t_list **token)
 {
 	int		input_fd;
+	char	*file_name;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
-	input_fd = open((*token)->content, O_RDONLY);
+	file_name = (*token)->content;
+	input_fd = open(file_name, O_RDONLY);
 	if (input_fd == -1)
-		; //open err
+		perror(file_name);
 	free(cmd->stdin_str);
 	cmd->stdin_str = get_file_content_all(input_fd);
 }
@@ -31,7 +33,6 @@ void	input_file_specify(t_cmd *cmd, t_list **token)
 void	heredoc(t_cmd *cmd, t_list **token)
 {
 	char	*end_text;
-	char	*line;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));

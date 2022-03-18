@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 21:04:42 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/12 13:38:02 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:34:26 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ static void	del_empty_node(t_list **now, t_list **top)
 void	refact_token(t_list **top)
 {
 	t_list	*now;
-	t_list	*del;
-	size_t	i;
 
-	i = 0;
 	now = *top;
 	while (now != NULL)
 	{
