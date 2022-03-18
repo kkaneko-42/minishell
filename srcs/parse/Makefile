@@ -1,19 +1,40 @@
 NAME	:=	a.out
 CC		:=	gcc
-CFLAGS	:=	-lreadline #-fsanitize=address -g
+CFLAGS	:=	-Wall -Wextra -Werror -lreadline #-fsanitize=address -g
 INC_DIR := ../../includes
-SRCS	:=	./parser.c ./lexer.c \
-			./re_lexer.c ./refact_token.c \
-			./expand_env.c ../utils/lstdel_head.c \
-			../utils/lstdel_tail.c ../utils/lstdel_mid.c \
-			../utils/ft_lstjoin.c ../utils/ft_getenv.c \
-			../utils/ft_strreplace.c ../utils/is_snakecase.c \
-			../utils/get_envp_list.c ../utils/free_strs.c \
-			../utils/addback_envp_list.c ./handle_quotes.c \
-			../utils/free_content.c ../utils/exit_with_error.c \
-			../utils/is_metachar.c \
-			./validate/check_metachar_target.c \
-			./validate/check_nb_quotes.c
+VPATH	:=	./:\
+			./expansion:\
+			./parser:\
+			./validate:\
+			./lexer:\
+			../utils
+SRCS	:=	parser.c \
+			lexer.c \
+			free_strs.c \
+			ft_getenv.c \
+			ft_strreplace.c \
+			is_snakecase.c \
+			addback_envp_list.c \
+			get_envp_list.c \
+			expand_env.c \
+			lstdel_head.c \
+			lstdel_tail.c \
+			lstdel_mid.c \
+			re_lexer.c \
+			refact_token.c \
+			ft_lstjoin.c \
+			handle_quotes.c \
+			free_content.c \
+			is_metachar.c \
+			exit_with_error.c \
+			check_metachar_target.c \
+			check_nb_quotes.c \
+			free_cmds.c \
+			handle_metachar.c \
+			handle_t_cmd.c \
+			validate_token.c \
+			put_all_tokens.c \
+			handle_envname.c
 OBJS	:= $(SRCS:.c=.o)
 LIBFT_DIR := ../../libft
 LIBFT := libft.a

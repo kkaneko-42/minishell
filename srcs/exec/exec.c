@@ -90,6 +90,7 @@ static pid_t	fork_and_waitpid(void)
 	pid_t	pid;
 	int		status;
 
+	status = 0;
 	pid = fork();
 	if (pid < 0)
 	{

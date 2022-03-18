@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:08:09 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/07 17:24:01 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:28:39 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	is_exist(const char *name, char *env);
 
 char	*ft_getenv(const char *name, t_envp *env_list)
 {
-	const size_t	cmp_len = ft_strlen(name) + 1;
 	t_envp			*now_env;
 
 	now_env = env_list;
