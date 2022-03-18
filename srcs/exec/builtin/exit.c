@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+#include <limits.h>
 
 static int	is_number(char *exit_num);
 static int	is_valid_size(char *exit_num);
@@ -31,7 +32,7 @@ void	exit_builtin(t_cmd *input)
 		ft_putstr_fd("minishell: exit: ", 1);
 		ft_putstr_fd(exit_num, 1);
 		ft_putendl_fd(": numeric argument required", 1);
-		exit(255);
+		exit(UCHAR_MAX);
 	}
 	else if (argc >= 2)
 	{
