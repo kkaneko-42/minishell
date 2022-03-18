@@ -22,21 +22,21 @@ void	exit_builtin(t_cmd *input)
 	unsigned char	res;
 	char			*exit_num;
 
-	ft_putendl_fd("exit", 1);
+	ft_putendl_fd("exit", STDERR_FILENO);
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		exit(0);
 	exit_num = input->args->content;
 	if (!is_number(exit_num) || !is_valid_size(exit_num))
 	{
-		ft_putstr_fd("minishell: exit: ", 1);
-		ft_putstr_fd(exit_num, 1);
-		ft_putendl_fd(": numeric argument required", 1);
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(exit_num, STDERR_FILENO);
+		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		exit(UCHAR_MAX);
 	}
 	else if (argc >= 2)
 	{
-		ft_putendl_fd("minishell: exit:  too many arguments", 1);
+		ft_putendl_fd("minishell: exit:  too many arguments", STDERR_FILENO);
 	}
 	else
 	{
