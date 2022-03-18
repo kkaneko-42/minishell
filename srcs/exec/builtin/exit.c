@@ -49,7 +49,7 @@ static int	is_number(char *exit_num)
 	size_t	i;
 
 	i = 0;
-	if (exit_num[0] == '-')
+	if (exit_num[0] == '-' || exit_num[0] == '+')
 		++i;
 	while (exit_num[i] != '\0')
 	{
