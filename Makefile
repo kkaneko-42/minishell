@@ -2,7 +2,6 @@ NAME	:=	minishell
 CC		:=	gcc
 CFLAGS	:=	-g -MMD -MP #-fsanitize=leak -g
 WITH_RL :=	-lreadline
-RL_CONF	:=	~/.inputrc
 INC_DIR := ./includes
 OBJ_DIR	:= ./objs
 VPATH	:=	srcs:\
@@ -51,12 +50,13 @@ SRCS	:=	main.c \
 			handle_metachar.c \
 			handle_t_cmd.c \
 			validate_token.c \
-			put_all_tokens.c
+			put_all_tokens.c \
+			handle_envname.c \
+			free_envp_list.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
 LIBFT := libft.a
-
 
 
 $(NAME): $(OBJ_DIR) $(OBJS)
@@ -83,4 +83,4 @@ re:			fclean all
 
 -include $(DEPS)
 
-.PHONY:     all clean fclean re set_inputrc
+.PHONY:     all clean fclean re
