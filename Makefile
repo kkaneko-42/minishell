@@ -28,6 +28,7 @@ SRCS	:=	main.c \
 			export_utils.c \
 			export_utils2.c \
 			unset.c \
+			exit.c \
 			free_strs.c \
 			ft_getenv.c \
 			ft_strreplace.c \
