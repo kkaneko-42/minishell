@@ -6,11 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 19:02:34 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 14:35:00 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 17:58:43 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	re_lexer(t_list **src)
 {
