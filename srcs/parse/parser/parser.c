@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/17 18:52:11 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:06:26 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,11 @@ void	parse_metachar(t_cmd *cmd, t_list **token)
 		*token = (*token)->next;
 	}
 }
-
 /*
 int main(int ac, char **av, char **envp)
 {
 	t_cmd	*res;
-	char	*input = "echo hello > ";
+	char	*input = av[1];
 	t_envp	*env_list = get_envp_list(envp);
 
 	res = parser(input, env_list);
