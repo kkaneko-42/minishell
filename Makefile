@@ -2,7 +2,7 @@ NAME	:=	minishell
 CC		:=	gcc
 CFLAGS	:=	-g -MMD -MP #-fsanitize=leak -g
 WITH_RL :=	-lreadline
-INC_DIR := ./includes
+INCLUDE := -I./includes -L.brew/opt/readline/lib -I.brew/opt/readline/include
 OBJ_DIR	:= ./objs
 VPATH	:=	srcs:\
 			srcs/utils:\
@@ -62,10 +62,10 @@ LIBFT := libft.a
 
 $(NAME): $(OBJ_DIR) $(OBJS)
 	make bonus -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ -I $(INC_DIR) $(WITH_RL)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ $(INCLUDE) $(WITH_RL)
 
 $(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
 
 $(OBJ_DIR):
 	mkdir -p $@
