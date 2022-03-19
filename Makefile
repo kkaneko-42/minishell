@@ -13,7 +13,8 @@ VPATH	:=	srcs:\
 			srcs/parse/lexer:\
 			srcs/parse/expansion:\
 			srcs/parse/parser
-SRCS	:=	signal.c \
+SRCS	:=	main.c \
+			signal.c \
 			parser.c \
 			lexer.c \
 			cd.c \
@@ -60,12 +61,9 @@ LIBFT_DIR := ./libft
 LIBFT := libft.a
 
 
-$(NAME): $(OBJ_DIR) $(OBJS) $(OBJ_DIR)/main.o
+$(NAME): $(OBJ_DIR) $(OBJS)
 	make bonus -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) $(OBJ_DIR)/main.o $(LIBFT_DIR)/$(LIBFT) -o $@ $(INCLUDE) $(WITH_RL)
-
-$(OBJ_DIR)/main.o: main.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ $(INCLUDE) $(WITH_RL)
 
 $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
