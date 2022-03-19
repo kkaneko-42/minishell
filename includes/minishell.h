@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/18 18:57:29 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/19 12:42:12 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define INIT_ERR "Initalization error\n"
 # define SHELL_NAME "minishell$ "
 # define EXIT_MSG "exit\n"
+# define LLONG_MAX_STR "9223372036854775807"
+# define LLONG_MIN_STR "-9223372036854775808"
 
 typedef struct s_cmd
 {
