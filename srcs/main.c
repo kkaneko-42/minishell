@@ -6,13 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/18 16:22:12 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/19 19:03:49 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-
-volatile sig_atomic_t	g_sig;
+#include "minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 static void		validate_args(int ac, char **av, char **envp);
 static void		sig_handler(sig_atomic_t sig);
@@ -87,4 +87,5 @@ static void	sig_handler(sig_atomic_t sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	return ;
 }
