@@ -1,8 +1,8 @@
 NAME	:=	minishell
 CC		:=	gcc
 CFLAGS	:=	-g -MMD -MP #-fsanitize=leak -g
-WITH_RL :=	-lreadline
-INC_DIR := ./includes
+WITH_RL :=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+INCLUDE := -I ./includes -I ~/.brew/opt/readline/include
 OBJ_DIR	:= ./objs
 VPATH	:=	srcs:\
 			srcs/utils:\
@@ -13,8 +13,7 @@ VPATH	:=	srcs:\
 			srcs/parse/lexer:\
 			srcs/parse/expansion:\
 			srcs/parse/parser
-SRCS	:=	main.c \
-			signal.c \
+SRCS	:=	signal.c \
 			parser.c \
 			lexer.c \
 			cd.c \
@@ -61,12 +60,15 @@ LIBFT_DIR := ./libft
 LIBFT := libft.a
 
 
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJ_DIR) $(OBJS) $(OBJ_DIR)/main.o
 	make bonus -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ -I $(INC_DIR) $(WITH_RL)
+	$(CC) $(CFLAGS) $(OBJS) $(OBJ_DIR)/main.o $(LIBFT_DIR)/$(LIBFT) -o $@ $(INCLUDE) $(WITH_RL)
+
+$(OBJ_DIR)/main.o: main.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
 
 $(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR) $(WITH_RL)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
 
 $(OBJ_DIR):
 	mkdir -p $@
