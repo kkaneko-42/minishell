@@ -6,13 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 12:11:37 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/18 17:51:17 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/19 12:57:13 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long long	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int			i;
 	int			sign;

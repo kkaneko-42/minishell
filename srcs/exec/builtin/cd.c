@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/18 19:15:10 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/20 00:43:36 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,30 @@ void	cd(t_cmd *input, t_envp *envp)
 	else if (argc == 2)
 		new_path = make_new_path_argc_2(input);
 	else
-		printf("cd: too many arguments\n");
+		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
 	if (new_path == NULL)
 		return ;
+	if (access(new_path, X_OK) == -1)
+	{
+		if (access(new_path, F_OK) == -1)
+		{
+			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			ft_putstr_fd(input->args->content, STDERR_FILENO);
+			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+		}
+		else if (access(new_path, X_OK) == -1)
+		{
+			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			ft_putstr_fd(input->args->content, STDERR_FILENO);
+			ft_putendl_fd(": Permission denied", STDERR_FILENO);
+		}
+		return ;
+	}
 	if (chdir(new_path))
-		printf("cd: no such file or directory: %s\n", new_path);
+	{
+		perror("chdir error");
+		exit(1);
+	}
 	free(new_path);
 }
 
@@ -70,7 +89,8 @@ static char	*make_new_path_argc_2(t_cmd *input)
 	old_found_p = ft_strnstr(now_path, old, ft_strlen(now_path));
 	if (old_found_p == NULL)
 	{
-		printf("cd: string not in pwd: %s\n", old);
+		ft_putstr_fd("cd: string not in pwd: ", STDERR_FILENO);
+		ft_putendl_fd(old, STDERR_FILENO);
 		return (NULL);
 	}
 	new_path = get_new_path_argc_2(now_path, old, new, old_found_p);
@@ -108,7 +128,7 @@ static char	*get_new_path_argc_2(
 
 static int	is_empty_str(char *s)
 {
-	if (s[0] == 0x00)
+	if (s[0] == '\0')
 		return (1);
 	return (0);
 }

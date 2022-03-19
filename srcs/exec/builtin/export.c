@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/15 13:30:01 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/20 00:08:54 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ void	export(t_cmd *input, t_envp *envp)
 		while (p_args != NULL)
 		{
 			if (forbidden_char_is_exist_in_envp(p_args->content))
-				printf("minishell: export: `%s': not a valid identifier\n",
-					p_args->content);
+			{
+				ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+				ft_putstr_fd(p_args->content, STDERR_FILENO);
+				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+			}
 			else if (is_exist_env(envp, p_args->content) == 1)
 			{
 				delete_env_export(&envp, p_args->content);
 				addback_envp_list(&envp, p_args->content);
 			}
 			else if (is_exist_env(envp, p_args->content) != 2)
-			{
-				if (!addback_envp_list(&envp, p_args->content)) //malloc err
-					printf("exit?");//exit?
-			}
+				addback_envp_list(&envp, p_args->content);
 			p_args = p_args->next;
 		}
 	}

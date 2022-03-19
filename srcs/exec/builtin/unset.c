@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/06 16:19:22 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/20 00:14:36 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ void	unset(t_cmd *input, t_envp **envp)
 	while (p_args != NULL)
 	{
 		if (forbidden_char_is_exist_in_envp(p_args->content))
-			printf("minishell: unset: `%s': not a valid identifier\n",
-				p_args->content);
+		{
+			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
+			ft_putstr_fd(p_args->content, STDERR_FILENO);
+			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+		}
 		else
 			delete_env_unset(envp, p_args);
 		p_args = p_args->next;

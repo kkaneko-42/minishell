@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 11:30:28 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/15 13:28:15 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/19 22:01:09 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	env(t_cmd *input, t_envp *envp)
 	if (argc == 0)
 		print_env(input, envp);
 	else
-		printf("env: too many arguments\n");
+		ft_putendl_fd("env: too many arguments", STDERR_FILENO);
 }
 
 static void	print_env(t_cmd *input, t_envp *envp)
