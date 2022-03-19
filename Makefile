@@ -1,9 +1,8 @@
 NAME	:=	minishell
 CC		:=	gcc
 CFLAGS	:=	-g -MMD -MP #-fsanitize=leak -g
-WITH_RL :=	-lreadline
-RL_CONF	:=	~/.inputrc
-INC_DIR := ./includes
+WITH_RL :=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+INCLUDE := -I ./includes -I ~/.brew/opt/readline/include
 OBJ_DIR	:= ./objs
 VPATH	:=	srcs:\
 			srcs/utils:\
@@ -50,22 +49,24 @@ SRCS	:=	main.c \
 			check_nb_quotes.c \
 			free_cmds.c \
 			handle_metachar.c \
+			handle_metachar_utils.c \
 			handle_t_cmd.c \
 			validate_token.c \
-			put_all_tokens.c
+			put_all_tokens.c \
+			handle_envname.c \
+			free_envp_list.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
 LIBFT := libft.a
 
 
-
 $(NAME): $(OBJ_DIR) $(OBJS)
 	make bonus -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ -I $(INC_DIR) $(WITH_RL)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT) -o $@ $(INCLUDE) $(WITH_RL)
 
 $(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR) $(WITH_RL)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
 
 $(OBJ_DIR):
 	mkdir -p $@
@@ -84,4 +85,4 @@ re:			fclean all
 
 -include $(DEPS)
 
-.PHONY:     all clean fclean re set_inputrc
+.PHONY:     all clean fclean re

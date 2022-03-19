@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-
-volatile sig_atomic_t	g_sig;
+#include "minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 static void		validate_args(int ac, char **av, char **envp);
 static void		sig_handler(sig_atomic_t sig);
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char **envp)
 	receiver(sig_handler);
 	env_list = get_envp_list(envp);
 	prompt(env_list);
-	exit(0); //free envlist
+	free_envp_list(&env_list, free_content);
 	return (0);
 }
 
@@ -72,6 +72,8 @@ static void	prompt(t_envp *env_list)
 
 static void	validate_args(int ac, char **av, char **envp)
 {
+	(void)ac;
+	(void)av;
 	if (envp == NULL)
 		exit(1);
 }
@@ -85,4 +87,10 @@ static void	sig_handler(sig_atomic_t sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	return ;
 }
