@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/19 20:54:28 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/19 21:25:45 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ static void	sig_handler(sig_atomic_t sig)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+	{
 		rl_on_new_line();
 		rl_redisplay();
 	}
