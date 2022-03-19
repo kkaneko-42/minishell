@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:28:22 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/19 00:41:13 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/19 00:58:39 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,5 @@ static int	is_valid_size(char *exit_num)
 	}
 	return (1);
 }
+
+//+42みたいなとき
