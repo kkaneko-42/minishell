@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 23:39:16 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/20 23:07:07 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	delete_first_node(t_envp **envp, t_envp **p_envp);
 static void	delete_last_node(t_envp **envp, t_envp **p_envp);
 static void	delete_between_node(t_envp **envp, t_envp **p_envp);
 
-void	delete_env_export(t_envp **envp, char *old_env)
+void	delete_env(t_envp **envp, char *old_env)
 {
 	t_envp	*p_envp;
 	size_t	i;

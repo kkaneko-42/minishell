@@ -6,58 +6,52 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/20 00:43:36 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/21 00:16:37 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static char	*make_new_path_argc_0_or_1(t_cmd *input, t_envp *envp);
-static char	*make_new_path_argc_2(t_cmd *input);
-static char	*get_new_path_argc_2(
-				char *now_path, char *old, char *new, char *old_found_p);
-static int	is_empty_str(char *s);
+static char	*get_new_path(t_cmd *input, t_envp *envp);
+static int	is_empty_str(const char *s);
 
 void	cd(t_cmd *input, t_envp *envp)
 {
 	int		argc;
 	char	*new_path;
+	char	*old_pwd;
+	char	*old_pwd_env;
+	char	*pwd_env;
 
-	argc = ft_lstsize(input->args);
-	new_path = NULL;
-	if (argc == 0 || argc == 1)
-		new_path = make_new_path_argc_0_or_1(input, envp);
-	else if (argc == 2)
-		new_path = make_new_path_argc_2(input);
-	else
-		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
-	if (new_path == NULL)
-		return ;
-	if (access(new_path, X_OK) == -1)
-	{
-		if (access(new_path, F_OK) == -1)
-		{
-			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-			ft_putstr_fd(input->args->content, STDERR_FILENO);
-			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
-		}
-		else if (access(new_path, X_OK) == -1)
-		{
-			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-			ft_putstr_fd(input->args->content, STDERR_FILENO);
-			ft_putendl_fd(": Permission denied", STDERR_FILENO);
-		}
-		return ;
-	}
+	new_path = get_new_path(input, envp);
+	errno = 0;
 	if (chdir(new_path))
 	{
-		perror("chdir error");
-		exit(1);
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		if (input->args != NULL)
+			ft_putstr_fd(input->args->content, STDERR_FILENO);
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	}
+	else
+	{
+		if (ft_getenv("PWD", envp) == NULL)
+			old_pwd = ft_strdup("\0");
+		else
+			old_pwd = ft_strdup(ft_getenv("PWD", envp));
+		delete_env(&envp, "PWD");
+		delete_env(&envp, "OLDPWD");
+		old_pwd_env = ft_strjoin("OLDPWD=", old_pwd);
+		addback_envp_list(&envp, old_pwd_env);
+		free(old_pwd);
+		free(old_pwd_env);
+		pwd_env = ft_strjoin("PWD=", get_now_path());
+		addback_envp_list(&envp, pwd_env);
+		free(pwd_env);
 	}
 	free(new_path);
 }
 
-static char	*make_new_path_argc_0_or_1(t_cmd *input, t_envp *envp)
+static char	*get_new_path(t_cmd *input, t_envp *envp)
 {
 	if (input->args == NULL || is_empty_str(input->args->content)
 		|| ft_strncmp(input->args->content, "~", 2) == 0)
@@ -75,58 +69,7 @@ static char	*make_new_path_argc_0_or_1(t_cmd *input, t_envp *envp)
 	return (ft_strdup(input->args->content));
 }
 
-static char	*make_new_path_argc_2(t_cmd *input)
-{
-	char	now_path[512];
-	char	*old;
-	char	*new;
-	char	*new_path;
-	char	*old_found_p;
-
-	getcwd(now_path, 512);
-	old = input->args->content;
-	new = input->args->next->content;
-	old_found_p = ft_strnstr(now_path, old, ft_strlen(now_path));
-	if (old_found_p == NULL)
-	{
-		ft_putstr_fd("cd: string not in pwd: ", STDERR_FILENO);
-		ft_putendl_fd(old, STDERR_FILENO);
-		return (NULL);
-	}
-	new_path = get_new_path_argc_2(now_path, old, new, old_found_p);
-	return (new_path);
-}
-
-static char	*get_new_path_argc_2(
-	char *now_path, char *old, char *new, char *old_found_p)
-{
-	char	*new_path;
-	size_t	i;
-
-	new_path = (char *)malloc(sizeof(char)
-			* (ft_strlen(now_path) - ft_strlen(old) + ft_strlen(new) + 1));
-	if (new_path == NULL)
-		return (NULL);
-	i = 0;
-	while (&now_path[i] != old_found_p)
-	{
-		new_path[i] = now_path[i];
-		++i;
-	}
-	ft_memmove(&new_path[i], new, ft_strlen(new));
-	i += ft_strlen(new);
-	old_found_p += ft_strlen(old);
-	while (*old_found_p != 0x00)
-	{
-		new_path[i] = *old_found_p;
-		++i;
-		++old_found_p;
-	}
-	new_path[i] = 0x00;
-	return (new_path);
-}
-
-static int	is_empty_str(char *s)
+static int	is_empty_str(const char *s)
 {
 	if (s[0] == '\0')
 		return (1);

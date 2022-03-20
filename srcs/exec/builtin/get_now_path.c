@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   get_now_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 17:06:30 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/21 00:36:10 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/21 00:04:43 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/03/21 00:28:59 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static int	is_empty(char *s);
-
-void	pwd(t_cmd *input)
+char	*get_now_path(void)
 {
 	char	*now_path;
+	int		first_loop;
+	size_t	size;
 
-	now_path = get_now_path();
-	if (errno)
+	now_path = NULL;
+	first_loop = 1;
+	size = 1;
+	errno = 0;
+	while (errno == ERANGE || first_loop)
 	{
-		ft_putstr_fd("minishell: pwd: ", STDERR_FILENO);
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		free(now_path);
 		errno = 0;
-		return ;
+		first_loop = 0;
+		now_path = (char *)malloc(sizeof(char) * (size + 1));
+		getcwd(now_path, size);
+		now_path[size] = '\0';
+		++size;
 	}
-	ft_putstr_fd(now_path, input->fd_out);
-	ft_putstr_fd("\n", input->fd_out);
-	free(now_path);
-}
-
-static int	is_empty(char *s)
-{
-	if (s[0] == '\0')
-		return (1);
-	return (0);
+	return (now_path);
 }
