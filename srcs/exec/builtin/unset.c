@@ -36,7 +36,7 @@ void	unset(t_cmd *input, t_envp **envp)
 			ft_putstr_fd(p_args->content, STDERR_FILENO);
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 		}
-		else if (ft_strncmp(p_args->content, "-", 2) != 0)
+		else
 			delete_env_unset(envp, p_args);
 		p_args = p_args->next;
 	}
