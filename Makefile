@@ -25,9 +25,10 @@ SRCS	:=	main.c \
 			env.c \
 			export.c \
 			export_utils.c \
-			export_utils2.c \
 			unset.c \
 			exit.c \
+			delete_env.c \
+			get_now_path.c \
 			free_strs.c \
 			ft_getenv.c \
 			ft_strreplace.c \

@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   get_now_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 17:47:07 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/21 01:03:38 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/21 00:04:43 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/03/21 00:28:59 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <signal.h>
+#include "../../../includes/minishell.h"
 
-void	receiver(void (*handler)(sig_atomic_t))
+char	*get_now_path(void)
 {
-	int					err_fg;
-	struct sigaction	act;
+	char	*now_path;
+	int		first_loop;
+	size_t	size;
 
-	err_fg = 0;
-	ft_bzero(&act, sizeof(struct sigaction));
-	act.sa_handler = handler;
-	err_fg += sigemptyset(&(act.sa_mask));
-	err_fg += sigaction(SIGQUIT, &act, NULL);
-	err_fg += sigaction(SIGINT, &act, NULL);
-	if (err_fg < 0)
+	now_path = NULL;
+	first_loop = 1;
+	size = 1;
+	errno = 0;
+	while (errno == ERANGE || first_loop)
 	{
-		printf(INIT_ERR);
-		exit(1);
+		free(now_path);
+		errno = 0;
+		first_loop = 0;
+		now_path = (char *)malloc(sizeof(char) * (size + 1));
+		getcwd(now_path, size);
+		now_path[size] = '\0';
+		++size;
 	}
+	return (now_path);
 }

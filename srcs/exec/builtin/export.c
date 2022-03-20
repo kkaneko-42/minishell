@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/20 00:08:54 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/20 23:06:28 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	export(t_cmd *input, t_envp *envp)
 			}
 			else if (is_exist_env(envp, p_args->content) == 1)
 			{
-				delete_env_export(&envp, p_args->content);
+				delete_env(&envp, p_args->content);
 				addback_envp_list(&envp, p_args->content);
 			}
 			else if (is_exist_env(envp, p_args->content) != 2)

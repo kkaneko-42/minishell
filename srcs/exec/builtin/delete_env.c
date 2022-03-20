@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   delete_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/19 21:14:39 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/21 01:02:23 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	delete_first_node(t_envp **envp, t_envp **p_envp);
 static void	delete_last_node(t_envp **envp, t_envp **p_envp);
 static void	delete_between_node(t_envp **envp, t_envp **p_envp);
 
-void	delete_env_export(t_envp **envp, char *old_env)
+void	delete_env(t_envp **envp, char *old_env)
 {
 	t_envp	*p_envp;
 	size_t	i;

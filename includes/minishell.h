@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/19 12:42:12 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/21 00:06:42 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	export(t_cmd *input, t_envp *envp);
 void	env(t_cmd *input, t_envp *envp);
 void	unset(t_cmd *input, t_envp **envp);
 void	exit_builtin(t_cmd *input);
-void	delete_env_export(t_envp **envp, char *p_args);
+void	delete_env(t_envp **envp, char *p_args);
+char	*get_now_path(void);
 int		is_exist_env(t_envp *envp, char *new_env);
 t_envp	*get_envp_list(char **envp);
 int		first_char_is_equal(char *s);
