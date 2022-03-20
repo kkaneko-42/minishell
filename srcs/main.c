@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-
-volatile sig_atomic_t	g_sig;
+#include "minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 static void		validate_args(int ac, char **av, char **envp);
 static void		sig_handler(sig_atomic_t sig);
@@ -87,4 +87,10 @@ static void	sig_handler(sig_atomic_t sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	return ;
 }

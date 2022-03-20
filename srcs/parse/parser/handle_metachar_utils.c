@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handle_metachar_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 00:01:18 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/19 00:13:05 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/21 01:01:29 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/readline.h>
 
 char	*get_heredoc_input(const char *end_text)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   delete_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/20 23:07:07 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/21 01:02:23 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	delete_env(t_envp **envp, char *old_env)
 		i = 0;
 		while (old_env[i] != '\0' && p_envp->content[i] != '\0')
 		{
-			if (old_env[i] == '=' || p_envp->content[i] == '='
+			if ((old_env[i] == '=' || p_envp->content[i] == '=')
 				|| (old_env[i] != p_envp->content[i]))
 				break ;
 			++i;
 		}
-		if (old_env[i] == '=' && p_envp->content[i] == '='
-			|| old_env[i] == '\0' && p_envp->content[i] == '='
-			|| old_env[i] == '=' && p_envp->content[i] == '\0'
-			|| old_env[i] == '\0' && p_envp->content[i] == '\0')
+		if ((old_env[i] == '=' && p_envp->content[i] == '=')
+			|| (old_env[i] == '\0' && p_envp->content[i] == '=')
+			|| (old_env[i] == '=' && p_envp->content[i] == '\0')
+			|| (old_env[i] == '\0' && p_envp->content[i] == '\0'))
 		{
 			delete_node(envp, &p_envp);
 			break ;

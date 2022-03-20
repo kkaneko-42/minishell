@@ -6,15 +6,16 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 17:47:07 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/18 16:24:59 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/21 01:03:38 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <signal.h>
 
 void	receiver(void (*handler)(sig_atomic_t))
 {
-	/* int					err_fg;
+	int					err_fg;
 	struct sigaction	act;
 
 	err_fg = 0;
@@ -27,5 +28,5 @@ void	receiver(void (*handler)(sig_atomic_t))
 	{
 		printf(INIT_ERR);
 		exit(1);
-	} */
+	}
 }
