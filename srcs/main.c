@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/19 12:34:51 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/21 00:55:08 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char **envp)
 	receiver(sig_handler);
 	env_list = get_envp_list(envp);
 	prompt(env_list);
-	exit(0); //free envlist
+	free_envp_list(&env_list, free_content);
 	return (0);
 }
 
@@ -72,6 +72,8 @@ static void	prompt(t_envp *env_list)
 
 static void	validate_args(int ac, char **av, char **envp)
 {
+	(void)ac;
+	(void)av;
 	if (envp == NULL)
 		exit(1);
 }

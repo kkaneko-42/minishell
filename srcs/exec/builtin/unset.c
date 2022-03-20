@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/20 00:14:36 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/20 17:37:43 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	unset(t_cmd *input, t_envp **envp)
 			ft_putstr_fd(p_args->content, STDERR_FILENO);
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 		}
-		else
+		else if (ft_strncmp(p_args->content, "-", 2) != 0)
 			delete_env_unset(envp, p_args);
 		p_args = p_args->next;
 	}

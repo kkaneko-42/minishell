@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/19 00:32:54 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/19 21:48:11 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	exec(t_cmd *input, t_envp **envp)
 			exit(1);
 		}
 	}
-	//$? errono
+	//$?
 }
 
 static int	is_only_buitin(t_cmd *input)
@@ -90,6 +90,7 @@ static pid_t	fork_and_waitpid(void)
 	pid_t	pid;
 	int		status;
 
+	status = 0;
 	pid = fork();
 	if (pid < 0)
 	{

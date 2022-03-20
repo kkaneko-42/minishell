@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:19:05 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 17:18:38 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/18 18:12:54 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void		try_expand(char **str, t_envp *env_list);
 static void		do_expand(char **str, t_envp *env_list, size_t *i);
-static char		*get_env_name_from_token(char *str);
-static size_t	get_envname_tail_index(char *str);
-static size_t	get_envname_head_index(char *str);
 
 void	expand_env(t_list *token, t_envp *env_list)
 {
@@ -62,40 +59,6 @@ static void	do_expand(char **str, t_envp *env_list, size_t *i)
 	env_value = ft_getenv(env_name, env_list);
 	*i = ft_strreplace(str, env_value, *i, envname_tail_i);
 	free(env_name);
-}
-
-static char	*get_env_name_from_token(char *str)
-{
-	size_t	head_i;
-	size_t	tail_i;
-	char	*res;
-
-	head_i = get_envname_head_index(str);
-	tail_i = get_envname_tail_index(str);
-	res = ft_substr(str, head_i, tail_i - head_i + 1);
-	return (res);
-}
-
-static size_t	get_envname_tail_index(char *str)
-{
-	size_t	i;
-	size_t	j;
-
-	i = get_envname_head_index(str);
-	j = 0;
-	while (is_snakecase(str[i + j], j))
-		++j;
-	return (i + j - 1);
-}
-
-static size_t	get_envname_head_index(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != 0x00 && str[i] != '$')
-		++i;
-	return (i + 1);
 }
 /*
 //debug
