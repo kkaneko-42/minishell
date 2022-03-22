@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 13:45:33 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 16:26:40 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ static int		is_only_buitin(t_cmd *input);
 static void		do_builtin(t_cmd *input, t_envp **envp);
 static void		do_cmd(t_cmd *input, t_envp **envp);
 static void		do_pipe(t_cmd *input, t_envp **envp, int n);
-static void		set_output_to_stdout_or_fd_out(t_cmd *input, int fd[2], int from_right);
-static void		set_input_from_stdin(t_cmd *input, int fd[2]);
+static void		set_input_from_redirection(cosnt char *stdin_str);
+static void		set_output(t_cmd *input, int fd[2], int from_right);
+static void		set_input(t_cmd *input, int fd[2], int from_right);
 static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right);
 static int		cmd_size(t_cmd *input);
 static pid_t	fork_and_waitpid(void);
@@ -127,25 +128,40 @@ static void	do_pipe(t_cmd *input, t_envp **envp, int from_right)
 	int		fd[2];
 
 	if (from_right == cmd_size(input))
+	{
+		if (input->stdin_str != NULL)
+			set_input_from_redirection(input->stdin_str);
 		do_cmd(input, envp);
+	}
 	else
 	{
 		pipe(fd);
 		pid = fork_and_waitpid();
 		if (pid == 0)
 		{
-			set_output_to_stdout_or_fd_out(input, fd, from_right);
+			set_output(input, fd, from_right);
 			do_pipe(input, envp, from_right + 1);
 		}
 		else
 		{
-			set_input_from_stdin(input, fd);
+			set_input(input, fd, from_right);
 			do_cmd(should_be_done_cmd(input, from_right), envp);
 		}
 	}
 }
 
-static void	set_output_to_stdout_or_fd_out(t_cmd *input, int fd[2], int from_right)
+static void	set_input_from_redirection(const char *stdin_str)
+{
+	int	fd[2];
+
+	pipe(fd);
+	write(fd[1], stdin_str, ft_strlen(stdin_str) + 1);
+	dup2(fd[0], 0);
+	close(fd[0]);
+	close(fd[1]);
+}
+
+static void	set_output(t_cmd *input, int fd[2], int from_right)
 {
 	t_cmd	*now;
 	int		i;
@@ -165,11 +181,29 @@ static void	set_output_to_stdout_or_fd_out(t_cmd *input, int fd[2], int from_rig
 	close(fd[1]);
 }
 
-static void	set_input_from_stdin(t_cmd *input, int fd[2])
+static void	set_input(t_cmd *input, int fd[2], int from_right)
 {
+	t_cmd	*now;
+	int		i;
+
 	close(fd[1]);
-	dup2(fd[0], 0);
-	close(fd[0]);
+	now = input;
+	i = 0;
+	while (i < cmd_size(input) - from_right)
+	{
+		now = now->next;
+		++i;
+	}
+	if (now->stdin_str == NULL)
+	{
+		dup2(fd[0], 0);
+		close(fd[0]);
+	}
+	else
+	{
+		close(fd[0]);
+		set_input_from_redirection(now);
+	}
 }
 
 static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right)
