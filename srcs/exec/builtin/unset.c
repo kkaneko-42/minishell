@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/20 17:37:43 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 17:13:00 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
 static void	delete_first_node(t_envp **envp, t_envp **p_envp);
-static void	delete_last_node(t_envp **envp, t_envp **p_envp);
-static void	delete_between_node(t_envp **envp, t_envp **p_envp);
+static void	delete_last_node(t_envp **p_envp);
+static void	delete_between_node(t_envp **p_envp);
 static void	delete_env_unset(t_envp **envp, t_list *p_args);
 
 void	unset(t_cmd *input, t_envp **envp)
@@ -58,9 +58,9 @@ static void	delete_env_unset(t_envp **envp, t_list *p_args)
 			if (p_envp->prev == NULL)
 				delete_first_node(envp, &p_envp);
 			else if (p_envp->next == NULL)
-				delete_last_node(envp, &p_envp);
+				delete_last_node(&p_envp);
 			else
-				delete_between_node(envp, &p_envp);
+				delete_between_node(&p_envp);
 			break ;
 		}
 		else
@@ -74,6 +74,8 @@ static void	delete_first_node(t_envp **envp, t_envp **p_envp)
 
 	if ((*p_envp)->next == NULL)
 	{
+		free((*p_envp)->content);
+		(*p_envp)->content = NULL;
 		free(*p_envp);
 		*p_envp = NULL;
 	}
@@ -83,19 +85,23 @@ static void	delete_first_node(t_envp **envp, t_envp **p_envp)
 		(*p_envp)->next->prev = NULL;
 		*envp = (*p_envp)->next;
 		*p_envp = (*p_envp)->next;
+		free(tmp->content);
+		tmp->content = NULL;
 		free(tmp);
 		tmp = NULL;
 	}
 }
 
-static void	delete_last_node(t_envp **envp, t_envp **p_envp)
+static void	delete_last_node(t_envp **p_envp)
 {
 	(*p_envp)->prev->next = NULL;
+	free((*p_envp)->content);
+	(*p_envp)->content = NULL;
 	free(*p_envp);
 	*p_envp = NULL;
 }
 
-static void	delete_between_node(t_envp **envp, t_envp **p_envp)
+static void	delete_between_node(t_envp **p_envp)
 {
 	t_envp	*tmp;
 
@@ -103,6 +109,8 @@ static void	delete_between_node(t_envp **envp, t_envp **p_envp)
 	(*p_envp)->prev->next = (*p_envp)->next;
 	(*p_envp)->next->prev = (*p_envp)->prev;
 	(*p_envp) = (*p_envp)->next;
+	free((*p_envp)->content);
+	(*p_envp)->content = NULL;
 	free(tmp);
 	tmp = NULL;
 }
