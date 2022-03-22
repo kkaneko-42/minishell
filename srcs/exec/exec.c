@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 16:18:45 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 16:26:40 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,11 +195,13 @@ static void	set_input(t_cmd *input, int fd[2], int from_right)
 		++i;
 	}
 	if (now->stdin_str == NULL)
+	{
 		dup2(fd[0], 0);
+		close(fd[0]);
+	}
 	else
 	{
 		close(fd[0]);
-		close(fd[1]);
 		set_input_from_heredoc(now);
 	}
 }
