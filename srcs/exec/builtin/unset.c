@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 17:13:00 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 01:39:35 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	unset(t_cmd *input, t_envp **envp)
 {
 	int		argc;
 	t_list	*p_args;
-	t_envp	*p_envp;
-	t_envp	*tmp;
 
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
@@ -104,13 +102,14 @@ static void	delete_last_node(t_envp **p_envp)
 static void	delete_between_node(t_envp **p_envp)
 {
 	t_envp	*tmp;
+	t_envp	*next;
 
 	tmp = *p_envp;
 	(*p_envp)->prev->next = (*p_envp)->next;
 	(*p_envp)->next->prev = (*p_envp)->prev;
 	(*p_envp) = (*p_envp)->next;
-	free((*p_envp)->content);
-	(*p_envp)->content = NULL;
+	free(tmp->content);
+	tmp->content = NULL;
 	free(tmp);
 	tmp = NULL;
 }

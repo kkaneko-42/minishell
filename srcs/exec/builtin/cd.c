@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 13:48:54 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 00:59:21 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	cd(t_cmd *input, t_envp *envp)
 	if (chdir(new_path))
 		cd_err(input);
 	else
-		set_pwd_and_old_pwd(input, envp, old_path, new_path);
+		set_pwd_and_old_pwd(envp, old_path);
 	free(old_path);
 	free(new_path);
 }

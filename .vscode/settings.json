@@ -46,6 +46,8 @@
 		"cinttypes": "cpp",
 		"typeinfo": "cpp",
 		"bit": "cpp",
-		"readline.h": "c"
+		"readline.h": "c",
+		"ctime": "cpp",
+		"iomanip": "cpp"
 	}
 }

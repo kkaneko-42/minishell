@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:28:22 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/19 13:19:11 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 01:03:58 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	is_valid_size(const char *exit_num);
 void	exit_builtin(t_cmd *input)
 {
 	int				argc;
-	unsigned char	res;
 	char			*exit_num;
 
 	ft_putstr_fd(EXIT_MSG, STDERR_FILENO);

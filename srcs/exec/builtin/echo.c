@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:47:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/18 16:24:23 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 01:03:37 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	echo(t_cmd *input)
 {
-	int		argc;
 	t_list	*p;
 	int		need_new_line;
 
-	argc = ft_lstsize(input->args);
 	p = input->args;
 	need_new_line = 1;
 	if (p != NULL && ft_strncmp(p->content, "-n", 3) == 0)
