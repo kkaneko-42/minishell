@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_now_path.c                                     :+:      :+:    :+:   */
+/*   cd_err.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 00:04:43 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 13:56:56 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/22 12:50:47 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/03/22 13:49:12 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char	*get_now_path(void)
+void	cd_err(t_cmd *input)
 {
-	char	*now_path;
-	int		first_loop;
-	size_t	size;
-
-	now_path = NULL;
-	first_loop = 1;
-	size = 1;
-	errno = 0;
-	while (errno == ERANGE || first_loop)
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+	if (input->args != NULL)
 	{
-		free(now_path);
-		errno = 0;
-		first_loop = 0;
-		now_path = (char *)ft_xmalloc(sizeof(char) * (size + 1));
-		getcwd(now_path, size);
-		now_path[size] = '\0';
-		++size;
+		ft_putstr_fd(input->args->content, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	if (errno)
-	{
-		free(now_path);
-		now_path = NULL;
-	}
-	return (now_path);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 }

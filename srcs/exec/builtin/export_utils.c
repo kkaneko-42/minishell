@@ -6,13 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/15 12:09:35 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 13:49:39 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	first_char_is_equal(char *s)
+int	first_char_is_equal(const char *s)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ int	first_char_is_equal(char *s)
 	return (0);
 }
 
-int	forbidden_char_is_exist_in_envp(char *s)
+int	forbidden_char_is_exist_in_envp(const char *s)
 {
 	size_t	i;
 	size_t	j;
@@ -44,7 +44,7 @@ int	forbidden_char_is_exist_in_envp(char *s)
 	return (0);
 }
 
-int	is_exist_env(t_envp *envp, char *new_env)
+int	is_exist_env(t_envp *envp, const char *new_env)
 {
 	t_envp	*p;
 	size_t	i;
