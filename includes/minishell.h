@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/21 00:06:42 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 13:52:56 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,16 @@ void	export(t_cmd *input, t_envp *envp);
 void	env(t_cmd *input, t_envp *envp);
 void	unset(t_cmd *input, t_envp **envp);
 void	exit_builtin(t_cmd *input);
+void	cd_err(t_cmd *input);
 void	delete_env(t_envp **envp, char *p_args);
 char	*get_now_path(void);
-int		is_exist_env(t_envp *envp, char *new_env);
+void	set_pwd_and_old_pwd(
+			t_cmd *input, t_envp *envp, char *old_path, char *new_path);
+int		is_exist_env(t_envp *envp, const char *new_env);
+int		is_empty_str(const char *s);
 t_envp	*get_envp_list(char **envp);
-int		first_char_is_equal(char *s);
-int		forbidden_char_is_exist_in_envp(char *s);
+int		first_char_is_equal(const char *s);
+int		forbidden_char_is_exist_in_envp(const char *s);
 int		addback_envp_list(t_envp **envp_list, char *s);
 int		ft_strcmp(char *s1, char *s2);
 int		get_max_rank(t_envp *envp);
