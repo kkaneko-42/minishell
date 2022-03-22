@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 16:05:44 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 16:18:45 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		do_cmd(t_cmd *input, t_envp **envp);
 static void		do_pipe(t_cmd *input, t_envp **envp, int n);
 static void		set_input_from_heredoc(t_cmd *input);
 static void		set_output(t_cmd *input, int fd[2], int from_right);
-static void		set_input_from_stdin(t_cmd *input, int fd[2], int from_right);
+static void		set_input(t_cmd *input, int fd[2], int from_right);
 static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right);
 static int		cmd_size(t_cmd *input);
 static pid_t	fork_and_waitpid(void);
@@ -144,7 +144,7 @@ static void	do_pipe(t_cmd *input, t_envp **envp, int from_right)
 		}
 		else
 		{
-			set_input_from_stdin(input, fd, from_right);
+			set_input(input, fd, from_right);
 			do_cmd(should_be_done_cmd(input, from_right), envp);
 		}
 	}
@@ -181,7 +181,7 @@ static void	set_output(t_cmd *input, int fd[2], int from_right)
 	close(fd[1]);
 }
 
-static void	set_input_from_stdin(t_cmd *input, int fd[2], int from_right)
+static void	set_input(t_cmd *input, int fd[2], int from_right)
 {
 	t_cmd	*now;
 	int		i;
@@ -200,11 +200,7 @@ static void	set_input_from_stdin(t_cmd *input, int fd[2], int from_right)
 	{
 		close(fd[0]);
 		close(fd[1]);
-		pipe(fd);
-		write(fd[1], now->stdin_str, ft_strlen(now->stdin_str) + 1);
-		dup2(fd[0], 0);
-		close(fd[0]);
-		close(fd[1]);
+		set_input_from_heredoc(now);
 	}
 }
 
