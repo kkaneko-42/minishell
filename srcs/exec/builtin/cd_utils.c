@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:31:17 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 13:56:42 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 15:34:05 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	set_pwd_and_old_pwd(
 {
 	static int	fg_pwd_is_exist = 0;
 
-	if (ft_getenv("PWD", envp) != NULL)
+	if (ft_getenv("PWD", envp) != NOT_FOUND)
 		fg_pwd_is_exist = 1;
-	if (ft_getenv("PWD", envp) == NULL)
+	if (ft_getenv("PWD", envp) == NOT_FOUND)
 	{
-		if (ft_getenv("OLDPWD", envp) == NULL)
+		if (ft_getenv("OLDPWD", envp) == NOT_FOUND)
 			return ;
 		set_old_pwd_env_from_old_path(envp, old_path, fg_pwd_is_exist);
 		fg_pwd_is_exist = 0;
 	}
-	else if (ft_getenv("OLDPWD", envp) == NULL)
+	else if (ft_getenv("OLDPWD", envp) == NOT_FOUND)
 		set_pwd_env(envp);
 	else
 	{
