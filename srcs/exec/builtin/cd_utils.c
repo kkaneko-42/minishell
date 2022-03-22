@@ -6,17 +6,19 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:31:17 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 13:32:58 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 13:56:42 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static void	set_old_pwd_env_from_old_path(t_envp *envp, char *old_path, int	fg_pwd_is_existed);
+static void	set_old_pwd_env_from_old_path(
+				t_envp *envp, char *old_path, int fg_pwd_is_existed);
 static void	set_old_pwd_env_from_pwd(t_envp *envp);
 static void	set_pwd_env(t_envp *envp);
 
-void	set_pwd_and_old_pwd(t_cmd *input, t_envp *envp, char *old_path, char *new_path)
+void	set_pwd_and_old_pwd(
+		t_cmd *input, t_envp *envp, char *old_path, char *new_path)
 {
 	static int	fg_pwd_is_exist = 0;
 
@@ -38,7 +40,8 @@ void	set_pwd_and_old_pwd(t_cmd *input, t_envp *envp, char *old_path, char *new_p
 	}
 }
 
-static void	set_old_pwd_env_from_old_path(t_envp *envp, char *old_path, int fg_pwd_is_existed)
+static void	set_old_pwd_env_from_old_path(
+		t_envp *envp, char *old_path, int fg_pwd_is_existed)
 {
 	char		*old_path_env;
 
@@ -68,7 +71,7 @@ static void	set_pwd_env(t_envp *envp)
 {
 	char	*now_path;
 	char	*now_path_env;
-	
+
 	delete_env(&envp, "PWD");
 	now_path = get_now_path();
 	now_path_env = ft_strjoin("PWD=", now_path);

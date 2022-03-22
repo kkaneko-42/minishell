@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 13:32:50 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 13:48:54 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ static char	*get_new_path(t_cmd *input, t_envp *envp)
 	else if (ft_strncmp(input->args->content, "~/", 2) == 0)
 	{
 		if (ft_getenv("HOME", envp) == NULL)
-			return (three_strjoin(getenv("HOME"), "/", &(input->args->content)[2]));
-		return (three_strjoin(ft_getenv("HOME", envp), "/", &(input->args->content)[2]));
+			return (three_strjoin(
+					getenv("HOME"), "/", &(input->args->content)[2]));
+		return (three_strjoin(
+				ft_getenv("HOME", envp), "/", &(input->args->content)[2]));
 	}
 	return (ft_strdup(input->args->content));
 }

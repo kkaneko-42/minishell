@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/19 21:48:11 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 13:45:33 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ static void	do_cmd(t_cmd *input, t_envp **envp)
 	else if (!ft_strncmp(input->name, "unset", 6))
 		unset(input, envp);
 	else if (!ft_strncmp(input->name, "exit", 5))
-		exit(0);//exit???
+		exit_builtin(input);
 	else
 		do_exexve(input, *envp);
 }
