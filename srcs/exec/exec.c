@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 16:26:40 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 16:55:47 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		is_only_buitin(t_cmd *input);
 static void		do_builtin(t_cmd *input, t_envp **envp);
 static void		do_cmd(t_cmd *input, t_envp **envp);
 static void		do_pipe(t_cmd *input, t_envp **envp, int n);
-static void		set_input_from_redirection(cosnt char *stdin_str);
+static void		set_input_from_redirection(const char *stdin_str);
 static void		set_output(t_cmd *input, int fd[2], int from_right);
 static void		set_input(t_cmd *input, int fd[2], int from_right);
 static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right);
@@ -202,7 +202,7 @@ static void	set_input(t_cmd *input, int fd[2], int from_right)
 	else
 	{
 		close(fd[0]);
-		set_input_from_redirection(now);
+		set_input_from_redirection(now->stdin_str);
 	}
 }
 
