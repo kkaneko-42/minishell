@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 01:10:27 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 01:57:46 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	sort_envp(t_envp *envp);
 static void	print_envp(t_cmd *input, t_envp *envp);
 static void	print_envp_content(t_cmd *input, char *content);
-static void add_env(t_envp **env_list, char *content);
+static void	add_env(t_envp **env_list, char *content);
 
 void	export(t_cmd *input, t_envp *envp)
 {
@@ -30,26 +30,13 @@ void	export(t_cmd *input, t_envp *envp)
 		p_args = input->args;
 		while (p_args != NULL)
 		{
-			if (forbidden_char_is_exist_in_envp(p_args->content))
-			{
-				ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-				ft_putstr_fd(p_args->content, STDERR_FILENO);
-				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-			}
-			else if (is_exist_env(envp, p_args->content) == 1)
-			{
-				delete_env(&envp, p_args->content);
-				addback_envp_list(&envp, p_args->content);
-			}
-			else if (is_exist_env(envp, p_args->content) != 2)
-				addback_envp_list(&envp, p_args->content);
-			//add_env(&envp, p_args->content);
+			add_env(&envp, p_args->content);
 			p_args = p_args->next;
 		}
 	}
 }
 
-static void add_env(t_envp **env_list, char *content)
+static void	add_env(t_envp **env_list, char *content)
 {
 	if (forbidden_char_is_exist_in_envp(content))
 	{
