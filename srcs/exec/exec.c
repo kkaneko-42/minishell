@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 16:26:40 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/22 16:55:12 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static pid_t	fork_and_waitpid(void);
 static int		last_output_is_not_stdout(t_cmd *input);
 static t_cmd	*cmd_last(t_cmd *input);
 static int		check_fork_err(pid_t pid);
+static pid_t	fork_and_err(void);
 
 void	exec(t_cmd *input, t_envp **envp)
 {
@@ -92,12 +93,13 @@ static pid_t	fork_and_waitpid(void)
 	int		status;
 
 	status = 0;
-	pid = fork();
+	/* pid = fork();
 	if (pid < 0)
 	{
 		perror("fork failed");
 		exit(-1);
-	}
+	} */
+	pid = fork_and_err();
 	waitpid(-1, &status, 0);
 	if (status == -1)
 		exit(-1);
