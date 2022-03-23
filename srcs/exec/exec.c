@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 16:55:12 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 01:13:50 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		is_only_buitin(t_cmd *input);
 static void		do_builtin(t_cmd *input, t_envp **envp);
 static void		do_cmd(t_cmd *input, t_envp **envp);
 static void		do_pipe(t_cmd *input, t_envp **envp, int n);
-static void		set_input_from_heredoc(t_cmd *input);
+static void		set_input_from_redirection(const char *stdin_str);
 static void		set_output(t_cmd *input, int fd[2], int from_right);
 static void		set_input(t_cmd *input, int fd[2], int from_right);
 static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right);
@@ -31,12 +31,15 @@ void	exec(t_cmd *input, t_envp **envp)
 {
 	pid_t	pid;
 	pid_t	pid2;
+	int		status;
 
 	if (is_only_buitin(input))
 		do_builtin(input, envp);
 	else
 	{
-		pid = fork_and_waitpid();
+		status = 0;
+		pid = fork_and_err();
+		waitpid(-1, &status, 0);
 		if (pid == 0)
 		{
 			if (last_output_is_not_stdout(input))
@@ -44,8 +47,32 @@ void	exec(t_cmd *input, t_envp **envp)
 			do_pipe(input, envp, 1);
 			exit(1);
 		}
+		printf("$? = %d\n", WEXITSTATUS(status));
 	}
 	//$?
+}
+
+static void	set_question_mark_env(char *end_status_env, int end_status)
+{
+	int	digits;
+	int	end_status;
+
+	digits = 0;
+	while (end_status != 0)
+	{
+		++digit;
+		end_status /= 10;
+	}
+	if (digits == 0)
+	{
+		end_status_env[0] = 0;
+		end_status_env[1] = '\0';
+	}
+	else if (digits == 1)
+	{
+		end_status_env[0] = 0;
+		end_status_env[1] = '\0';
+	}
 }
 
 static int	is_only_buitin(t_cmd *input)
@@ -97,12 +124,12 @@ static pid_t	fork_and_waitpid(void)
 	if (pid < 0)
 	{
 		perror("fork failed");
-		exit(-1);
+		exit(1);
 	} */
 	pid = fork_and_err();
 	waitpid(-1, &status, 0);
 	if (status == -1)
-		exit(-1);
+		exit(1);
 	return (pid);
 }
 
@@ -132,7 +159,7 @@ static void	do_pipe(t_cmd *input, t_envp **envp, int from_right)
 	if (from_right == cmd_size(input))
 	{
 		if (input->stdin_str != NULL)
-			set_input_from_heredoc(input);
+			set_input_from_redirection(input->stdin_str);
 		do_cmd(input, envp);
 	}
 	else
@@ -152,12 +179,12 @@ static void	do_pipe(t_cmd *input, t_envp **envp, int from_right)
 	}
 }
 
-static void	set_input_from_heredoc(t_cmd *input)
+static void	set_input_from_redirection(const char *stdin_str)
 {
 	int	fd[2];
 
 	pipe(fd);
-	write(fd[1], input->stdin_str, ft_strlen(input->stdin_str) + 1);
+	write(fd[1], stdin_str, ft_strlen(stdin_str) + 1);
 	dup2(fd[0], 0);
 	close(fd[0]);
 	close(fd[1]);
@@ -204,7 +231,7 @@ static void	set_input(t_cmd *input, int fd[2], int from_right)
 	else
 	{
 		close(fd[0]);
-		set_input_from_heredoc(now);
+		set_input_from_redirection(now->stdin_str);
 	}
 }
 
@@ -269,7 +296,7 @@ static pid_t	fork_and_err(void)
 	if (pid < 0)
 	{
 		perror("fork failed");
-		exit(-1);
+		exit(1);
 	}
 	return (pid);
 }

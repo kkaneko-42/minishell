@@ -34,7 +34,8 @@ SRCS	:=	parser.c \
 			handle_t_cmd.c \
 			validate_token.c \
 			put_all_tokens.c \
-			handle_envname.c
+			handle_envname.c \
+			handle_metachar_utils.c
 OBJS	:= $(SRCS:.c=.o)
 LIBFT_DIR := ../../libft
 LIBFT := libft.a

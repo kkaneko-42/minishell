@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:06:13 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/19 00:10:22 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/20 00:01:17 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	heredoc(t_cmd *cmd, t_list **token)
 
 void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
 {
-	const mode_t	out_file_rights = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	const int		open_flags = O_RDWR | O_CREAT | fg_append;
 	char			*file_name;
 
 	*token = (*token)->next;
