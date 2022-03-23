@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 01:57:46 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 15:48:13 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 static void	sort_envp(t_envp *envp);
 static void	print_envp(t_cmd *input, t_envp *envp);
 static void	print_envp_content(t_cmd *input, char *content);
-static void	add_env(t_envp **env_list, char *content);
+static int	add_env(t_envp **env_list, char *content);
 
-void	export(t_cmd *input, t_envp *envp)
+int	export(t_cmd *input, t_envp *envp)
 {
 	int		argc;
 	t_list	*p_args;
+	int		ret;
 
+	ret = 0;
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		print_envp(input, envp);
@@ -30,19 +32,24 @@ void	export(t_cmd *input, t_envp *envp)
 		p_args = input->args;
 		while (p_args != NULL)
 		{
-			add_env(&envp, p_args->content);
+			ret = add_env(&envp, p_args->content);
 			p_args = p_args->next;
 		}
 	}
+	return (ret);
 }
 
-static void	add_env(t_envp **env_list, char *content)
+static int	add_env(t_envp **env_list, char *content)
 {
+	int	ret;
+
+	ret = 0;
 	if (forbidden_char_is_exist_in_envp(content))
 	{
 		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 		ft_putstr_fd(content, STDERR_FILENO);
 		ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+		ret = 1;
 	}
 	else if (is_exist_env(*env_list, content) == 1)
 	{
@@ -51,6 +58,7 @@ static void	add_env(t_envp **env_list, char *content)
 	}
 	else if (is_exist_env(*env_list, content) != 2)
 		addback_envp_list(env_list, content);
+	return (ret);
 }
 
 static void	sort_envp(t_envp *envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/23 00:59:09 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 18:12:14 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	expand_env(t_list *token, t_envp *env_list);
 
 void	exec(t_cmd *input, t_envp **envp);
 void	echo(t_cmd *input);
-void	cd(t_cmd *input, t_envp *envp);
-void	pwd(t_cmd *input);
-void	export(t_cmd *input, t_envp *envp);
-void	env(t_cmd *input, t_envp *envp);
-void	unset(t_cmd *input, t_envp **envp);
+int		cd(t_cmd *input, t_envp *envp);
+int		pwd(t_cmd *input);
+int		export(t_cmd *input, t_envp *envp);
+int		env(t_cmd *input, t_envp *envp);
+int		unset(t_cmd *input, t_envp **envp);
 void	exit_builtin(t_cmd *input);
 void	cd_err(t_cmd *input);
 void	delete_env(t_envp **envp, char *p_args);

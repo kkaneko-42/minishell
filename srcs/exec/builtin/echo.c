@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:47:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 01:03:37 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 18:19:50 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void	echo(t_cmd *input)
 {
-	t_list	*p;
+	t_list	*p_args;
 	int		need_new_line;
 
-	p = input->args;
+	p_args = input->args;
 	need_new_line = 1;
-	if (p != NULL && ft_strncmp(p->content, "-n", 3) == 0)
+	if (p_args != NULL && ft_strncmp(p_args->content, "-n", 3) == 0)
 	{
 		need_new_line = 0;
-		p = p->next;
+		p_args = p_args->next;
 	}
-	while (p != NULL)
+	while (p_args != NULL)
 	{
-		ft_putstr_fd(p->content, input->fd_out);
-		p = p->next;
-		if (p != NULL)
+		ft_putstr_fd(p_args->content, input->fd_out);
+		p_args = p_args->next;
+		if (p_args != NULL)
 			ft_putstr_fd(" ", input->fd_out);
 	}
 	if (need_new_line)

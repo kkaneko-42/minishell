@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 17:41:55 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/21 00:35:02 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 17:38:14 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_envp	*get_envp_list(char **envp)
 			addback_envp_list(&envp_list, envp[i]);
 		++i;
 	}
-	addback_envp_list(&envp_list, "?=0  ");
-	ft_getenv("?", envp_list)[1] = '\0';
+	addback_envp_list(&envp_list, "?=0");
 	return (envp_list);
 }

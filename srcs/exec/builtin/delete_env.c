@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 17:10:19 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:43:04 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ static void	delete_between_node(t_envp **p_envp)
 	(*p_envp)->prev->next = (*p_envp)->next;
 	(*p_envp)->next->prev = (*p_envp)->prev;
 	(*p_envp) = (*p_envp)->next;
-	free((*p_envp)->content);
-	(*p_envp)->content = NULL;
+	free((tmp)->content);
+	(tmp)->content = NULL;
 	free(tmp);
 	tmp = NULL;
 }

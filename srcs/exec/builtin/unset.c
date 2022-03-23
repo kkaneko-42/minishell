@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 15:13:25 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 18:13:18 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@ static void	delete_last_node(t_envp **p_envp);
 static void	delete_between_node(t_envp **p_envp);
 static void	delete_env_unset(t_envp **envp, t_list *p_args);
 
-void	unset(t_cmd *input, t_envp **envp)
+int	unset(t_cmd *input, t_envp **envp)
 {
 	int		argc;
 	t_list	*p_args;
+	int		ret;
 
+	ret = 0;
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
-		return ;
+		return (ret);
 	p_args = input->args;
 	while (p_args != NULL)
 	{
@@ -33,11 +35,13 @@ void	unset(t_cmd *input, t_envp **envp)
 			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
 			ft_putstr_fd(p_args->content, STDERR_FILENO);
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+			ret = 1;
 		}
 		else
 			delete_env_unset(envp, p_args);
 		p_args = p_args->next;
 	}
+	return (ret);
 }
 
 static void	delete_env_unset(t_envp **envp, t_list *p_args)

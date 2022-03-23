@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 00:59:21 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:07:22 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,28 @@
 
 static char	*get_new_path(t_cmd *input, t_envp *envp);
 
-void	cd(t_cmd *input, t_envp *envp)
+int	cd(t_cmd *input, t_envp *envp)
 {
 	char	*old_path;
 	char	*new_path;
+	int		ret;
 
 	old_path = get_now_path();
 	new_path = get_new_path(input, envp);
 	errno = 0;
 	if (chdir(new_path))
+	{
 		cd_err(input);
+		ret = 1;
+	}
 	else
+	{
 		set_pwd_and_old_pwd(envp, old_path);
+		ret = 0;
+	}
 	free(old_path);
 	free(new_path);
+	return (ret);
 }
 
 static char	*get_new_path(t_cmd *input, t_envp *envp)
