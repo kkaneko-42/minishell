@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/23 15:14:52 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 18:22:53 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 static void		validate_args(int ac, char **av, char **envp);
 static void		sig_handler(sig_atomic_t sig);
-static void		prompt(t_envp *env_list);
+static void		prompt(t_envp **env_list);
+static void		parse_and_execute(const char *input, t_envp **env_list);
 
 int	main(int ac, char **av, char **envp)
 {
@@ -25,15 +26,14 @@ int	main(int ac, char **av, char **envp)
 	validate_args(ac, av, envp);
 	receiver(sig_handler);
 	env_list = get_envp_list(envp);
-	prompt(env_list);
+	prompt(&env_list);
 	free_envp_list(&env_list, free_content);
 	return (0);
 }
 
-static void	prompt(t_envp *env_list)
+static void	prompt(t_envp **env_list)
 {
 	char	*input;
-	t_cmd	*cmd;
 
 	input = NULL;
 	while (1)
@@ -45,28 +45,21 @@ static void	prompt(t_envp *env_list)
 			break ;
 		}
 		if (ft_strlen(input) > 0)
-		{
-			add_history(input);
-			cmd = parser(input, env_list);
-			if (cmd != NULL)
-			{
-				/*
-				for (t_cmd *now = cmd; now != NULL; now = now->next)
-				{
-					printf("cmd name:@%s@\n", now->name);
-					printf("fd_out: %d\n", now->fd_out);
-					printf("args:\n");
-					for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
-						printf("@%s@\n", arg_now->content);
-					printf("stdin_str:\n%s\n", now->stdin_str);
-					printf("-------------\n");
-				}
-				*/
-				exec(cmd, &env_list);
-				free_cmds(cmd);
-			}
-		}
+			parse_and_execute(input, env_list);
 		free(input);
+	}
+}
+
+static void	parse_and_execute(const char *input, t_envp **env_list)
+{
+	t_cmd	*cmd;
+
+	add_history(input);
+	cmd = parser(input, *env_list);
+	if (cmd != NULL)
+	{
+		exec(cmd, env_list);
+		free_cmds(cmd);
 	}
 }
 

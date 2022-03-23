@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:31:17 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 15:34:05 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 16:43:34 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static void	set_old_pwd_env_from_old_path(
 static void	set_old_pwd_env_from_pwd(t_envp *envp);
 static void	set_pwd_env(t_envp *envp);
 
-void	set_pwd_and_old_pwd(
-		t_cmd *input, t_envp *envp, char *old_path, char *new_path)
+void	set_pwd_and_old_pwd(t_envp *envp, char *old_path)
 {
 	static int	fg_pwd_is_exist = 0;
 

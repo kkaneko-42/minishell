@@ -6,19 +6,21 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 12:09:10 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/06 23:29:34 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 01:34:35 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static int	handle_null(const char *s1, const char *s2, size_t n);
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
 	i = 0;
-	if (n == 0)
-		return (0);
+	if (n == 0 || s1 == NULL || s2 == NULL)
+		return (handle_null(s1, s2, n));
 	while (s1[i] != '\0' && s2[i] != '\0' && i < n - 1)
 	{
 		if (s1[i] != s2[i])
@@ -26,6 +28,17 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+static int	handle_null(const char *s1, const char *s2, size_t n)
+{
+	if (n == 0 || (s1 == NULL && s2 == NULL))
+		return (0);
+	else if (s1 != NULL && s2 == NULL)
+		return (s1[0]);
+	else if (s1 == NULL && s2 != NULL)
+		return (s2[0]);
+	return (0);
 }
 
 /* 

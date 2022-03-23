@@ -6,15 +6,14 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 01:13:50 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 18:17:12 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static int		is_only_buitin(t_cmd *input);
-static void		do_builtin(t_cmd *input, t_envp **envp);
-static void		do_cmd(t_cmd *input, t_envp **envp);
+static int		do_cmd(t_cmd *input, t_envp **envp);
 static void		do_pipe(t_cmd *input, t_envp **envp, int n);
 static void		set_input_from_redirection(const char *stdin_str);
 static void		set_output(t_cmd *input, int fd[2], int from_right);
@@ -26,6 +25,8 @@ static int		last_output_is_not_stdout(t_cmd *input);
 static t_cmd	*cmd_last(t_cmd *input);
 static int		check_fork_err(pid_t pid);
 static pid_t	fork_and_err(void);
+static void	set_question_mark_env(t_envp *envp, int end_status);
+static size_t	count_digits(int n);
 
 void	exec(t_cmd *input, t_envp **envp)
 {
@@ -34,7 +35,7 @@ void	exec(t_cmd *input, t_envp **envp)
 	int		status;
 
 	if (is_only_buitin(input))
-		do_builtin(input, envp);
+		status = do_cmd(input, envp);
 	else
 	{
 		status = 0;
@@ -47,32 +48,22 @@ void	exec(t_cmd *input, t_envp **envp)
 			do_pipe(input, envp, 1);
 			exit(1);
 		}
-		printf("$? = %d\n", WEXITSTATUS(status));
+		status = WEXITSTATUS(status);
 	}
-	//$?
+	set_question_mark_env(*envp, status);
 }
 
-static void	set_question_mark_env(char *end_status_env, int end_status)
+static void	set_question_mark_env(t_envp *envp, int end_status)
 {
-	int	digits;
-	int	end_status;
+	char	*end_status_str;
+	char	*new_end_status_env;
 
-	digits = 0;
-	while (end_status != 0)
-	{
-		++digit;
-		end_status /= 10;
-	}
-	if (digits == 0)
-	{
-		end_status_env[0] = 0;
-		end_status_env[1] = '\0';
-	}
-	else if (digits == 1)
-	{
-		end_status_env[0] = 0;
-		end_status_env[1] = '\0';
-	}
+	end_status_str = ft_itoa(end_status);
+	new_end_status_env = ft_strjoin("?=", end_status_str);
+	free(end_status_str);
+	delete_env(&envp, "?");
+	addback_envp_list(&envp, new_end_status_env);
+	free(new_end_status_env);
 }
 
 static int	is_only_buitin(t_cmd *input)
@@ -96,36 +87,12 @@ static int	is_only_buitin(t_cmd *input)
 	return (0);
 }
 
-static void	do_builtin(t_cmd *input, t_envp **envp)
-{
-	if (!ft_strncmp(input->name, "echo", 5))
-		echo(input);
-	else if (!ft_strncmp(input->name, "cd", 3))
-		cd(input, *envp);
-	else if (!ft_strncmp(input->name, "pwd", 4))
-		pwd(input);
-	else if (!ft_strncmp(input->name, "export", 7))
-		export(input, *envp);
-	else if (!ft_strncmp(input->name, "env", 4))
-		env(input, *envp);
-	else if (!ft_strncmp(input->name, "unset", 6))
-		unset(input, envp);
-	else if (!ft_strncmp(input->name, "exit", 5))
-		exit_builtin(input);
-}
-
 static pid_t	fork_and_waitpid(void)
 {
 	pid_t	pid;
 	int		status;
 
 	status = 0;
-	/* pid = fork();
-	if (pid < 0)
-	{
-		perror("fork failed");
-		exit(1);
-	} */
 	pid = fork_and_err();
 	waitpid(-1, &status, 0);
 	if (status == -1)
@@ -250,26 +217,28 @@ static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right)
 	return (now);
 }
 
-static void	do_cmd(t_cmd *input, t_envp **envp)
+static int	do_cmd(t_cmd *input, t_envp **envp)
 {
-	if (input->name[0] == '\n')
-		return ;
+	int	ret;
+
+	ret = 0;
 	if (!ft_strncmp(input->name, "echo", 5))
 		echo(input);
 	else if (!ft_strncmp(input->name, "cd", 3))
-		cd(input, *envp);
+		ret = cd(input, *envp);
 	else if (!ft_strncmp(input->name, "pwd", 4))
-		pwd(input);
+		ret = pwd(input);
 	else if (!ft_strncmp(input->name, "export", 7))
-		export(input, *envp);
+		ret = export(input, *envp);
 	else if (!ft_strncmp(input->name, "env", 4))
-		env(input, *envp);
+		ret = env(input, *envp);
 	else if (!ft_strncmp(input->name, "unset", 6))
-		unset(input, envp);
+		ret = unset(input, envp);
 	else if (!ft_strncmp(input->name, "exit", 5))
 		exit_builtin(input);
 	else
 		do_exexve(input, *envp);
+	return (ret);
 }
 
 static int	cmd_size(t_cmd *input)
@@ -286,7 +255,6 @@ static int	cmd_size(t_cmd *input)
 	}
 	return (i);
 }
-
 
 static pid_t	fork_and_err(void)
 {
