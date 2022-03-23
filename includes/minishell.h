@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/22 13:52:56 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 00:59:09 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ void	exit_builtin(t_cmd *input);
 void	cd_err(t_cmd *input);
 void	delete_env(t_envp **envp, char *p_args);
 char	*get_now_path(void);
-void	set_pwd_and_old_pwd(
-			t_cmd *input, t_envp *envp, char *old_path, char *new_path);
+void	set_pwd_and_old_pwd(t_envp *envp, char *old_path);
 int		is_exist_env(t_envp *envp, const char *new_env);
 int		is_empty_str(const char *s);
 t_envp	*get_envp_list(char **envp);
