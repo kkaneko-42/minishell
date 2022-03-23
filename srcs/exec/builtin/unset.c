@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 01:39:35 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/23 15:13:25 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ static void	delete_last_node(t_envp **p_envp)
 static void	delete_between_node(t_envp **p_envp)
 {
 	t_envp	*tmp;
-	t_envp	*next;
 
 	tmp = *p_envp;
 	(*p_envp)->prev->next = (*p_envp)->next;
