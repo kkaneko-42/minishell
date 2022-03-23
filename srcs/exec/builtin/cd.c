@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 16:07:22 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 22:13:02 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	cd(t_cmd *input, t_envp *envp)
 	}
 	else
 	{
-		set_pwd_and_old_pwd(envp, old_path);
+		cd_set_env(envp, old_path);
 		ret = 0;
 	}
 	free(old_path);
@@ -57,28 +57,3 @@ static char	*get_new_path(t_cmd *input, t_envp *envp)
 	}
 	return (ft_strdup(input->args->content));
 }
-
-/* 
-//debug
-int main(int ac, char **av, char **envp)
-{
-	t_cmd	*res;
-	char	now_path[512];
-
-	res = parser(av[1]);
-	for (t_cmd *now = res; now != NULL; now = now->next)
-	{
-		printf("cmd name:@%s@\n", now->name);
-		printf("args:\n");
-		for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
-			printf("@%s@\n", arg_now->content);
-	}
-	getcwd(now_path, 512);
-	printf("before_path = %s\n\n", now_path);
-	exec(res);
-	//chdir("..");
-	//chdir("abcdabc");
-	getcwd(now_path, 512);
-	printf("\nafter_path = %s\n", now_path);
-	return (0);
-} */
