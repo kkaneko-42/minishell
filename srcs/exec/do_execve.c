@@ -23,8 +23,6 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 	char	**path_env;
 	size_t	i;
 	char	*path_cmd_search;
-	char	**exec_args;
-	char	**exec_envp;
 
 	if (get_path(envp) == NULL)
 	{
