@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_err.c                                           :+:      :+:    :+:   */
+/*   t_cmd_size.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 12:50:47 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 22:11:48 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/23 22:36:42 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/03/23 22:53:58 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	cd_err(t_cmd *input)
+int	t_cmd_size(t_cmd *input)
 {
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	if (input->args != NULL)
+	int		i;
+	t_cmd	*now;
+
+	i = 0;
+	now = input;
+	while (now != NULL)
 	{
-		ft_putstr_fd(input->args->content, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
+		++i;
+		now = now->next;
 	}
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	return (i);
 }

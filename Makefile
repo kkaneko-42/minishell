@@ -18,7 +18,7 @@ SRCS	:=	main.c \
 			parser.c \
 			lexer.c \
 			cd.c \
-			cd_utils.c \
+			cd_set_env.c \
 			exec.c \
 			do_execve.c \
 			echo.c \
@@ -32,6 +32,8 @@ SRCS	:=	main.c \
 			delete_env.c \
 			get_now_path.c \
 			is_empty_str.c \
+			t_cmd_last.c \
+			t_cmd_size.c \
 			free_strs.c \
 			ft_getenv.c \
 			ft_strreplace.c \

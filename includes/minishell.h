@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/23 22:59:54 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/24 00:01:43 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define EXIT_MSG "exit\n"
 # define LLONG_MAX_STR "9223372036854775807"
 # define LLONG_MIN_STR "-9223372036854775808"
+# define FORK_ERR -1
+# define WAIT_ERR -1
 
 typedef struct s_cmd
 {
@@ -68,7 +70,7 @@ void	exit_builtin(t_cmd *input);
 void	cd_err(t_cmd *input);
 void	delete_env(t_envp **envp, char *p_args);
 char	*get_now_path(void);
-void	set_pwd_and_old_pwd(t_envp *envp, char *old_path);
+void	cd_set_env(t_envp *envp, char *old_path);
 int		is_exist_env(t_envp *envp, const char *new_env);
 int		is_empty_str(const char *s);
 t_envp	*get_envp_list(char **envp);
@@ -80,6 +82,8 @@ int		get_max_rank(t_envp *envp);
 void	free_strs(char **strs);
 void	do_exexve(t_cmd *input, t_envp *envp);
 char	*three_strjoin(char *s1, char *s2, char *s3);
+t_cmd	*t_cmd_last(t_cmd *input);
+int		t_cmd_size(t_cmd *input);
 int		is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
 size_t	ft_strreplace(
