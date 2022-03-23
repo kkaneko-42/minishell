@@ -21,8 +21,6 @@ static void	search_from_path_and_execute(
 void	do_exexve(t_cmd *input, t_envp *envp)
 {
 	char	**path_env;
-	size_t	i;
-	char	*path_cmd_search;
 
 	if (get_path(envp) == NULL)
 	{
