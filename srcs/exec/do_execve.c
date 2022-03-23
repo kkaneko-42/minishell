@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 01:02:12 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/23 23:01:38 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static char	*get_path(t_envp *envp);
 static char	**get_exec_args(t_cmd *input);
 static char	**get_exec_envp(t_envp *envp);
+static void	search_from_path_and_execute(
+				char **path_env, t_cmd *input, t_envp *envp);
 
 void	do_exexve(t_cmd *input, t_envp *envp)
 {
@@ -30,6 +32,23 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 		exit(1);
 	}
 	path_env = ft_split(get_path(envp), ':');
+	search_from_path_and_execute(path_env, input, envp);
+	free_strs(path_env);
+	path_env = NULL;
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(input->name, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	exit(1);
+}
+
+static void	search_from_path_and_execute(
+				char **path_env, t_cmd *input, t_envp *envp)
+{
+	size_t	i;
+	char	*path_cmd_search;
+	char	**exec_args;
+	char	**exec_envp;
+
 	i = 0;
 	while (path_env[i] != NULL)
 	{
@@ -45,12 +64,6 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 		free_strs(exec_envp);
 		++i;
 	}
-	free_strs(path_env);
-	path_env = NULL;
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(input->name, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	exit(1);
 }
 
 static char	*get_path(t_envp *envp)
@@ -65,24 +78,6 @@ static char	*get_path(t_envp *envp)
 		p = p->next;
 	}
 	return (NULL);
-}
-
-char	*three_strjoin(char *s1, char *s2, char *s3)
-{
-	char	*str;
-	size_t	s1_len;
-	size_t	s2_len;
-	size_t	s3_len;
-
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	s3_len = ft_strlen(s3);
-	str = (char *)ft_xmalloc(sizeof(char) * (s1_len + s2_len + s3_len + 1));
-	ft_memmove(str, s1, s1_len);
-	ft_memmove(&str[s1_len], s2, s2_len);
-	ft_memmove(&str[s1_len + s2_len], s3, s3_len);
-	str[s1_len + s2_len + s3_len] = '\0';
-	return (str);
 }
 
 static char	**get_exec_args(t_cmd *input)
@@ -103,7 +98,8 @@ static char	**get_exec_args(t_cmd *input)
 	{
 		exec_args[i] = (char *)ft_xmalloc(sizeof(char)
 				* (ft_strlen(p_args->content) + 1));
-		ft_memmove(exec_args[i], p_args->content, ft_strlen(p_args->content) + 1);
+		ft_memmove(exec_args[i], p_args->content,
+			ft_strlen(p_args->content) + 1);
 		p_args = p_args->next;
 		++i;
 	}
@@ -113,18 +109,11 @@ static char	**get_exec_args(t_cmd *input)
 
 static char	**get_exec_envp(t_envp *envp)
 {
-	int		argc;
-	char	**exec_envp;
-	t_envp	*p_envp;
-	size_t	i;
+	const int	argc = count_env_lstsize(envp);
+	char		**exec_envp;
+	t_envp		*p_envp;
+	size_t		i;
 
-	argc = 0;
-	p_envp = envp;
-	while (p_envp != NULL)
-	{
-		argc++;
-		p_envp = p_envp->next;
-	}
 	exec_envp = (char **)ft_xmalloc(sizeof(char *) * (argc + 1));
 	p_envp = envp;
 	i = 0;
@@ -132,7 +121,9 @@ static char	**get_exec_envp(t_envp *envp)
 	{
 		exec_envp[i] = (char *)ft_xmalloc(sizeof(char)
 				* (ft_strlen(p_envp->content) + 1));
-		ft_memmove(exec_envp[i], p_envp->content, ft_strlen(p_envp->content) + 1);
+		ft_memmove(exec_envp[i],
+			p_envp->content,
+			ft_strlen(p_envp->content) + 1);
 		p_envp = p_envp->next;
 		++i;
 	}
