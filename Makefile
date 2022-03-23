@@ -1,6 +1,6 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-g -MMD -MP -fsanitize=address
+CFLAGS	:=	-g -MMD -MP #-fsanitize=address
 WITH_RL :=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 INCLUDE := -I ./includes -I ~/.brew/opt/readline/include
 OBJ_DIR	:= ./objs
@@ -60,7 +60,9 @@ SRCS	:=	main.c \
 			validate_token.c \
 			put_all_tokens.c \
 			handle_envname.c \
-			free_envp_list.c
+			free_envp_list.c \
+			count_env_lstsize.c \
+			three_str_join.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
