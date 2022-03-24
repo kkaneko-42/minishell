@@ -1,6 +1,6 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-g -MMD -MP #-fsanitize=address
+CFLAGS	:=	-g -MMD -MP #-fsanitize=undefined
 WITH_RL :=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 INCLUDE := -I ./includes -I ~/.brew/opt/readline/include
 OBJ_DIR	:= ./objs

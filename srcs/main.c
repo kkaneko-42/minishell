@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/24 00:44:07 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:03:57 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int ac, char **av, char **envp)
 	t_envp	*env_list;
 
 	validate_args(ac, av, envp);
-	receiver(sig_handler);
+	receiver(SIGINT, sig_handler);
+	receiver(SIGQUIT, sig_handler);
 	env_list = get_envp_list(envp);
 	put_title();
 	prompt(&env_list);
