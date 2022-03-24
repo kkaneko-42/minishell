@@ -1,14 +1,8 @@
 NAME	:=	minishell
 CC		:=	gcc
-<<<<<<< HEAD
-CFLAGS	:=	-g -MMD -MP #-fsanitize=undefined
-WITH_RL :=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
-INCLUDE := -I ./includes -I ~/.brew/opt/readline/include
-=======
 CFLAGS	:=	-g -MMD -MP #-fsanitize=address
 WITH_RL :=	-lreadline -L$(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
 INCLUDE := -I ./includes -I $(shell brew --prefix readline)/include
->>>>>>> 0c2cc3e366b491766542d22b6f0bf4010574e544
 OBJ_DIR	:= ./objs
 VPATH	:=	srcs:\
 			srcs/utils:\
