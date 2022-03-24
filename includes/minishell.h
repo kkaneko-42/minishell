@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
 /*   Updated: 2022/03/24 19:42:09 by okumurahyu       ###   ########.fr       */
@@ -25,12 +25,15 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# define CYAN "\x1b[36m"
+# define GREEN "\x1b[32m"
+# define COLOR_RESET "\x1b[39m"
 # define HEREDOC_PROMPT "heredoc> "
 # define INIT NULL
 # define NOT_FOUND NULL
 # define PARSE_ERR "parse error\n"
 # define INIT_ERR "Initalization error\n"
-# define SHELL_NAME "minishell$ "
+# define SHELL_NAME "\x1b[32mminishell$ \x1b[39m"
 # define EXIT_MSG "exit\n"
 # define LLONG_MAX_STR "9223372036854775807"
 # define LLONG_MIN_STR "-9223372036854775808"
@@ -132,6 +135,7 @@ size_t	get_envname_tail_index(char *str);
 char	*get_env_name_from_token(char *str);
 void	free_envp_list(t_envp **env_list, void (*del)(char *));
 int		count_env_lstsize(t_envp *env_list);
+void	put_title(void);
 
 //debug
 void	put_all_tokens(t_list *tokens);
