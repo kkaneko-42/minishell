@@ -41,7 +41,6 @@
 # define WAIT_ERR -1
 # define CMD_SUCCESS 0
 # define CMD_ERR 1
-# define CMD_NOT_FOUND 127
 
 typedef struct s_cmd
 {
