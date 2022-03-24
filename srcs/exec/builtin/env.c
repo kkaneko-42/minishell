@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 11:30:28 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 17:11:15 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/25 00:12:44 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int	env(t_cmd *input, t_envp *envp)
 
 static void	print_env(t_cmd *input, t_envp *envp)
 {
-	t_envp	*p;
+	t_envp	*p_envp;
 
-	p = envp;
-	while (p != NULL)
+	p_envp = envp;
+	while (p_envp != NULL)
 	{
-		if (have_equal(p->content)
-			&& !forbidden_char_is_exist_in_envp(p->content))
-			ft_putstr_fd(p->content, input->fd_out);
+		if (have_equal(p_envp->content)
+			&& !forbidden_char_is_exist_in_envp(p_envp->content))
+			ft_putstr_fd(p_envp->content, input->fd_out);
 		ft_putstr_fd("\n", input->fd_out);
-		p = p->next;
+		p_envp = p_envp->next;
 	}
 }
 
