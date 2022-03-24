@@ -70,7 +70,8 @@ SRCS	:=	main.c \
 			handle_envname.c \
 			free_envp_list.c \
 			count_env_lstsize.c \
-			three_str_join.c
+			three_str_join.c \
+			put_title.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
