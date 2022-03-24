@@ -1,14 +1,17 @@
 NAME	:=	minishell
 CC		:=	gcc
 CFLAGS	:=	-g -MMD -MP #-fsanitize=address
-WITH_RL :=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
-INCLUDE := -I ./includes -I ~/.brew/opt/readline/include
+WITH_RL :=	-lreadline -L$(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
+INCLUDE := -I ./includes -I $(shell brew --prefix readline)/include
 OBJ_DIR	:= ./objs
 VPATH	:=	srcs:\
 			srcs/utils:\
 			srcs/parse:\
 			srcs/exec:\
 			srcs/exec/builtin:\
+			srcs/exec/builtin/utils:\
+			srcs/exec/cmd_exec:\
+			srcs/exec/pipe:\
 			srcs/parse/validate:\
 			srcs/parse/lexer:\
 			srcs/parse/expansion:\
@@ -28,12 +31,17 @@ SRCS	:=	main.c \
 			export_utils.c \
 			unset.c \
 			exit.c \
-			cd_err.c \
 			delete_env.c \
 			get_now_path.c \
 			is_empty_str.c \
+			error_builtin.c \
 			t_cmd_last.c \
 			t_cmd_size.c \
+			pipe_io.c \
+			pipe_utils.c \
+			do_pipe.c \
+			do_cmd.c \
+			error_execve.c \
 			free_strs.c \
 			ft_getenv.c \
 			ft_strreplace.c \

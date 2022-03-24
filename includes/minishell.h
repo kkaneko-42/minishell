@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/24 01:00:04 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/24 19:42:09 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define LLONG_MIN_STR "-9223372036854775808"
 # define FORK_ERR -1
 # define WAIT_ERR -1
+# define CMD_SUCCESS 0
+# define CMD_ERR 1
 
 typedef struct s_cmd
 {
@@ -69,9 +71,8 @@ int		pwd(t_cmd *input);
 int		export(t_cmd *input, t_envp *envp);
 int		env(t_cmd *input, t_envp *envp);
 int		unset(t_cmd *input, t_envp **envp);
-void	exit_builtin(t_cmd *input);
-void	cd_err(t_cmd *input);
-void	delete_env(t_envp **envp, char *p_args);
+int		exit_builtin(t_cmd *input);
+void	delete_env(t_envp **envp, char *old_env);
 char	*get_now_path(void);
 void	cd_set_env(t_envp *envp, char *old_path);
 int		is_exist_env(t_envp *envp, const char *new_env);
@@ -83,10 +84,25 @@ int		addback_envp_list(t_envp **envp_list, char *s);
 int		ft_strcmp(char *s1, char *s2);
 int		get_max_rank(t_envp *envp);
 void	free_strs(char **strs);
+int		too_many_args_err(char *cmd_name);
+void	num_arg_required_err(char *exit_status);
+int		identifier_err(char *cmd_name, char *content);
+int		cd_err(t_cmd *input);
+int		pwd_err(void);
 void	do_exexve(t_cmd *input, t_envp *envp);
+void	no_file_dir_err(char *cmd_name);
+void	cmd_not_found_err(char *cmd_name);
 char	*three_strjoin(char *s1, char *s2, char *s3);
 t_cmd	*t_cmd_last(t_cmd *input);
 int		t_cmd_size(t_cmd *input);
+void	set_output(t_cmd *input, int fd[2], int from_right);
+void	set_input_from_redirection(const char *stdin_str);
+void	set_input(t_cmd *input, int fd[2], int from_right);
+pid_t	fork_and_err(void);
+int		waitpid_and_err(pid_t pid);
+pid_t	fork_and_waitpid(void);
+void	do_pipe(t_cmd *input, t_envp **envp, int n);
+int		do_cmd(t_cmd *input, t_envp **envp);
 int		is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
 size_t	ft_strreplace(
