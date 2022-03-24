@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/24 19:42:09 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/24 23:59:42 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
 size_t	ft_strreplace(
 			char **str, const char *replace, size_t start, size_t end);
-void	receiver(void (*handler)(sig_atomic_t));
+void	receiver(sig_atomic_t sig, void (*handler)(sig_atomic_t));
 void	lstdel_head(t_list **top);
 void	lstdel_tail(t_list *lst);
 void	lstdel_mid(t_list *lst);
@@ -136,6 +136,8 @@ char	*get_env_name_from_token(char *str);
 void	free_envp_list(t_envp **env_list, void (*del)(char *));
 int		count_env_lstsize(t_envp *env_list);
 void	put_title(void);
+void	receiver_for_readline(void);
+void	receiver_for_exec(void);
 
 //debug
 void	put_all_tokens(t_list *tokens);
