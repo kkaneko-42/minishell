@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/25 00:17:37 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/25 00:25:54 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define WAIT_ERR -1
 # define CMD_SUCCESS 0
 # define CMD_ERR 1
+# define CMD_NOT_FOUND 127
 
 typedef struct s_cmd
 {

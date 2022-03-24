@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 23:59:27 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/25 00:25:07 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 	free_strs(path_env);
 	path_env = NULL;
 	cmd_not_found_err(input->name);
-	exit(CMD_ERR);
+	exit(CMD_NOT_FOUND);
 }
 
 static void	search_from_path_and_execute(
