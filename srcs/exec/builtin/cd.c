@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 22:13:02 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/24 16:05:35 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,21 @@ int	cd(t_cmd *input, t_envp *envp)
 {
 	char	*old_path;
 	char	*new_path;
-	int		ret;
 
 	old_path = get_now_path();
 	new_path = get_new_path(input, envp);
 	errno = 0;
 	if (chdir(new_path))
 	{
-		cd_err(input);
-		ret = 1;
+		free(old_path);
+		free(new_path);
+		return (cd_err(input));
 	}
 	else
-	{
 		cd_set_env(envp, old_path);
-		ret = 0;
-	}
 	free(old_path);
 	free(new_path);
-	return (ret);
+	return (CMD_SUCCESS);
 }
 
 static char	*get_new_path(t_cmd *input, t_envp *envp)

@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 11:30:28 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 18:48:58 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/24 17:11:15 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,13 @@ static int	have_equal(const char *s);
 int	env(t_cmd *input, t_envp *envp)
 {
 	int	argc;
-	int	ret;
 
-	ret = 0;
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		print_env(input, envp);
 	else
-	{
-		ft_putendl_fd("env: too many arguments", STDERR_FILENO);
-		ret = 1;
-	}
-	return (ret);
+		return (too_many_args_err("env"));
+	return (CMD_SUCCESS);
 }
 
 static void	print_env(t_cmd *input, t_envp *envp)

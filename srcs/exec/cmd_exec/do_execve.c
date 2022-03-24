@@ -6,11 +6,11 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 03:37:34 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/24 23:59:27 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 static char	*get_path(t_envp *envp);
 static char	**get_exec_args(t_cmd *input);
@@ -24,17 +24,15 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 
 	if (get_path(envp) == NULL)
 	{
-		printf("minishell: %s: No such file or directory\n", input->name);
-		exit(1);
+		no_file_dir_err(input->name);
+		exit(CMD_ERR);
 	}
 	path_env = ft_split(get_path(envp), ':');
 	search_from_path_and_execute(path_env, input, envp);
 	free_strs(path_env);
 	path_env = NULL;
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(input->name, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	exit(1);
+	cmd_not_found_err(input->name);
+	exit(CMD_ERR);
 }
 
 static void	search_from_path_and_execute(

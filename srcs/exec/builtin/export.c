@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 15:48:13 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/24 19:41:14 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int	add_env(t_envp **env_list, char *content);
 
 int	export(t_cmd *input, t_envp *envp)
 {
+	int		fg_err;
 	int		argc;
 	t_list	*p_args;
-	int		ret;
 
-	ret = 0;
+	fg_err = 0;
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		print_envp(input, envp);
@@ -32,25 +32,19 @@ int	export(t_cmd *input, t_envp *envp)
 		p_args = input->args;
 		while (p_args != NULL)
 		{
-			ret = add_env(&envp, p_args->content);
+			fg_err += add_env(&envp, p_args->content);
 			p_args = p_args->next;
 		}
 	}
-	return (ret);
+	if (fg_err)
+		return (CMD_ERR);
+	return (CMD_SUCCESS);
 }
 
 static int	add_env(t_envp **env_list, char *content)
 {
-	int	ret;
-
-	ret = 0;
 	if (forbidden_char_is_exist_in_envp(content))
-	{
-		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-		ft_putstr_fd(content, STDERR_FILENO);
-		ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-		ret = 1;
-	}
+		return (identifier_err("export", content));
 	else if (is_exist_env(*env_list, content) == 1)
 	{
 		delete_env(env_list, content);
@@ -58,31 +52,31 @@ static int	add_env(t_envp **env_list, char *content)
 	}
 	else if (is_exist_env(*env_list, content) != 2)
 		addback_envp_list(env_list, content);
-	return (ret);
+	return (CMD_SUCCESS);
 }
 
 static void	sort_envp(t_envp *envp)
 {
-	t_envp	*p1;
-	t_envp	*p2;
+	t_envp	*cmp_standard;
+	t_envp	*p_envp;
 
-	p1 = envp;
-	while (p1 != NULL)
+	p_envp = envp;
+	while (p_envp != NULL)
 	{
-		p1->rank = 0;
-		p1 = p1->next;
+		p_envp->rank = 0;
+		p_envp = p_envp->next;
 	}
-	p1 = envp;
-	while (p1 != NULL)
+	cmp_standard = envp;
+	while (cmp_standard != NULL)
 	{
-		p2 = envp;
-		while (p2 != NULL)
+		p_envp = envp;
+		while (p_envp != NULL)
 		{
-			if (ft_strcmp(p1->content, p2->content) < 0)
-				p2->rank += 1;
-			p2 = p2->next;
+			if (ft_strcmp(cmp_standard->content, p_envp->content) < 0)
+				p_envp->rank += 1;
+			p_envp = p_envp->next;
 		}
-		p1 = p1->next;
+		cmp_standard = cmp_standard->next;
 	}
 }
 
@@ -137,20 +131,3 @@ static void	print_envp_content(t_cmd *input, char *content)
 		ft_putstr_fd("\"", input->fd_out);
 	ft_putstr_fd("\n", input->fd_out);
 }
-/* 
-//debug
-int	main(int ac, char **av, char **envp)
-{
-	t_cmd	*res;
-	t_envp	*envp_list;
-	char	now_path[512];
-
-	res = parser(av[1]);
-	envp_list = get_envp_list(envp);
-	exec(res, &envp_list);
-	//system("export");
-	print_envp(envp_list);
-	//system("leaks -q a.out");
-	return (0);
-}
- */
