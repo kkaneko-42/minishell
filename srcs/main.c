@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/24 23:58:54 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/25 00:06:28 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <readline/history.h>
 
 static void		validate_args(int ac, char **av, char **envp);
-static void		sig_handler(sig_atomic_t sig);
 static void		prompt(t_envp **env_list);
 static void		parse_and_execute(const char *input, t_envp **env_list);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:33:30 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 16:55:54 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/25 00:08:10 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ int	waitpid_and_err(pid_t pid)
 pid_t	fork_and_waitpid(void)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork_and_err();
 	if (pid != 0)
-		status = waitpid_and_err(pid);
+		waitpid_and_err(pid);
 	return (pid);
 }
