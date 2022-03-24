@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 23:17:06 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/24 22:27:46 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/25 00:16:41 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int ac, char **av, char **envp)
 	t_envp	*env_list;
 
 	validate_args(ac, av, envp);
-	receiver(sig_handler);
 	env_list = get_envp_list(envp);
 	put_title();
 	prompt(&env_list);
@@ -39,6 +38,7 @@ static void	prompt(t_envp **env_list)
 	input = NULL;
 	while (1)
 	{
+		receiver_for_readline();
 		input = readline(SHELL_NAME);
 		if (input == NULL)
 		{
@@ -59,6 +59,7 @@ static void	parse_and_execute(const char *input, t_envp **env_list)
 	cmd = parser(input, *env_list);
 	if (cmd != NULL)
 	{
+		receiver_for_exec();
 		exec(cmd, env_list);
 		free_cmds(cmd);
 	}
@@ -70,21 +71,4 @@ static void	validate_args(int ac, char **av, char **envp)
 	(void)av;
 	if (envp == NULL)
 		exit(1);
-}
-
-static void	sig_handler(sig_atomic_t sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_putstr_fd("\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	return ;
 }
