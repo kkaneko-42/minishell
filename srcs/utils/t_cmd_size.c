@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_cmd_last.c                                       :+:      :+:    :+:   */
+/*   t_cmd_size.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 22:34:36 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 22:55:05 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/23 22:36:42 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/03/24 00:41:59 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_cmd	*t_cmd_last(t_cmd *input)
+int	t_cmd_size(t_cmd *input)
 {
+	int		i;
 	t_cmd	*now;
 
+	i = 0;
 	now = input;
-	while (now->next != NULL)
+	while (now != NULL)
+	{
+		++i;
 		now = now->next;
-	return (now);
+	}
+	return (i);
 }

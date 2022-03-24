@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:31:17 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 22:11:56 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/24 19:53:40 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 static void	set_old_pwd_env_from_old_path(
 				t_envp *envp, char *old_path, int fg_pwd_is_existed);

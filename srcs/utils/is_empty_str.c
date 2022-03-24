@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_err.c                                           :+:      :+:    :+:   */
+/*   is_empty_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 12:50:47 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 22:11:48 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/22 12:42:18 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/03/24 19:53:26 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	cd_err(t_cmd *input)
+int	is_empty_str(const char *s)
 {
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	if (input->args != NULL)
-	{
-		ft_putstr_fd(input->args->content, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-	}
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	if (s == NULL)
+		return (0);
+	if (s[0] == '\0')
+		return (1);
+	return (0);
 }

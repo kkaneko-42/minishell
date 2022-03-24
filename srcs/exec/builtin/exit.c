@@ -3,44 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:28:22 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 01:03:58 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/03/24 17:10:59 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include <limits.h>
 
-static char	*get_exit_num(char *content);
-static int	is_number(const char *exit_num);
-static int	is_valid_size(const char *exit_num);
+static char	*get_exit_status(char *content);
+static int	is_number(const char *exit_status);
+static int	is_valid_size(const char *exit_status);
 
-void	exit_builtin(t_cmd *input)
+int	exit_builtin(t_cmd *input)
 {
-	int				argc;
-	char			*exit_num;
+	int		argc;
+	char	*exit_status;
 
 	ft_putstr_fd(EXIT_MSG, STDERR_FILENO);
 	argc = ft_lstsize(input->args);
 	if (argc == 0)
-		exit(0);
-	exit_num = get_exit_num(input->args->content);
-	if (!is_number(exit_num) || !is_valid_size(exit_num))
+		exit(CMD_SUCCESS);
+	exit_status = get_exit_status(input->args->content);
+	if (!is_number(exit_status) || !is_valid_size(exit_status))
 	{
-		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd(exit_num, STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
+		num_arg_required_err(exit_status);
 		exit(UCHAR_MAX);
 	}
 	else if (argc >= 2)
-		ft_putendl_fd("minishell: exit:  too many arguments", STDERR_FILENO);
+		return (too_many_args_err("exit"));
 	else
-		exit((unsigned char)ft_atoi(exit_num));
+		exit((unsigned char)ft_atoi(exit_status));
 }
 
-static char	*get_exit_num(char *content)
+static char	*get_exit_status(char *content)
 {
 	size_t	i;
 
@@ -52,37 +50,35 @@ static char	*get_exit_num(char *content)
 	return (&content[i]);
 }
 
-static int	is_number(const char *exit_num)
+static int	is_number(const char *exit_status)
 {
 	size_t	i;
 
 	i = 0;
-	if (exit_num[0] == '-')
+	if (exit_status[0] == '-')
 		++i;
-	while (exit_num[i] != '\0')
+	while (exit_status[i] != '\0')
 	{
-		if (!ft_isdigit(exit_num[i]))
+		if (!ft_isdigit(exit_status[i]))
 			return (0);
 		++i;
 	}
 	return (1);
 }
 
-static int	is_valid_size(const char *exit_num)
+static int	is_valid_size(const char *exit_status)
 {
-	if (exit_num[0] == '-')
+	if (exit_status[0] == '-')
 	{
-		if (ft_strlen(exit_num) > ft_strlen(LLONG_MIN_STR)
-			|| ft_atoi(exit_num) > 0)
+		if (ft_strlen(exit_status) > ft_strlen(LLONG_MIN_STR)
+			|| ft_atoi(exit_status) > 0)
 			return (0);
 	}
 	else
 	{
-		if (ft_strlen(exit_num) > ft_strlen(LLONG_MAX_STR)
-			|| ft_atoi(exit_num) < 0)
+		if (ft_strlen(exit_status) > ft_strlen(LLONG_MAX_STR)
+			|| ft_atoi(exit_status) < 0)
 			return (0);
 	}
 	return (1);
 }
-
-//+42みたいなとき

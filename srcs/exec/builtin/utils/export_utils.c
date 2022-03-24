@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/22 13:49:39 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/24 19:53:52 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../../../includes/minishell.h"
 
 int	first_char_is_equal(const char *s)
 {
@@ -88,27 +88,3 @@ int	get_max_rank(t_envp *envp)
 	}
 	return (max_rank);
 }
-
-/* 
-//debug
-int main(int ac, char **av, char **envp)
-{
-	t_cmd	*res;
-	t_envp	*envp_list;
-	char	now_path[512];
-
-	res = parser(av[1]);
-	envp_list = get_envp_list(envp);
-	for (t_cmd *now = res; now != NULL; now = now->next)
-	{
-		printf("cmd name:@%s@\n", now->name);
-		printf("args:\n");
-		for (t_list *arg_now = now->args; arg_now != NULL; arg_now = arg_now->next)
-			printf("@%s@\n", arg_now->content);
-	}
-	exec(res, envp_list);
-	//system("export");
-	print_envp(envp_list);
-	system("leaks -q a.out");
-	return (0);
-} */
