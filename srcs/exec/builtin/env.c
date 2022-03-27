@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 11:30:28 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/25 00:12:44 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/27 11:29:29 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ static int	have_equal(const char *s);
 
 int	env(t_cmd *input, t_envp *envp)
 {
-	int	argc;
+	const int	argc = ft_lstsize(input->args);
 
-	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		print_env(input, envp);
 	else
