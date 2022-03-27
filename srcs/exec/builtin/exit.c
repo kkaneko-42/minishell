@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:28:22 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 17:10:59 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/27 11:29:24 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ static int	is_valid_size(const char *exit_status);
 
 int	exit_builtin(t_cmd *input)
 {
-	int		argc;
-	char	*exit_status;
+	const int	argc = ft_lstsize(input->args);
+	char		*exit_status;
 
 	ft_putstr_fd(EXIT_MSG, STDERR_FILENO);
-	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		exit(CMD_SUCCESS);
 	exit_status = get_exit_status(input->args->content);

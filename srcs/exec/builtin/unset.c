@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 15:07:40 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 19:59:10 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/27 11:34:44 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	unset(t_cmd *input, t_envp **envp)
 {
-	int		argc;
-	t_list	*p_args;
+	const int	argc = ft_lstsize(input->args);
+	t_list		*p_args;
 
-	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		return (CMD_SUCCESS);
 	p_args = input->args;

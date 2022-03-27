@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 19:41:14 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/27 11:33:46 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 static void	sort_envp(t_envp *envp);
 static void	print_envp(t_cmd *input, t_envp *envp);
-static void	print_envp_content(t_cmd *input, char *content);
+static void	print_envp_content(t_cmd *input, const char *content);
 static int	add_env(t_envp **env_list, char *content);
 
 int	export(t_cmd *input, t_envp *envp)
 {
-	int		fg_err;
-	int		argc;
-	t_list	*p_args;
+	const int	argc = ft_lstsize(input->args);
+	t_list		*p_args;
+	int			fg_err;
 
 	fg_err = 0;
-	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		print_envp(input, envp);
 	else
@@ -109,25 +108,25 @@ static void	print_envp(t_cmd *input, t_envp *envp)
 	}
 }
 
-static void	print_envp_content(t_cmd *input, char *content)
+static void	print_envp_content(t_cmd *input, const char *content)
 {
-	int		is_first_equal;
+	int		fg_first_equal;
 	size_t	i;
 
 	ft_putstr_fd("declare -x ", input->fd_out);
-	is_first_equal = 1;
+	fg_first_equal = 1;
 	i = 0;
 	while (content[i] != '\0')
 	{
 		ft_putchar_fd(content[i], input->fd_out);
-		if (content[i] == '=' && is_first_equal)
+		if (content[i] == '=' && fg_first_equal)
 		{
 			ft_putstr_fd("\"", input->fd_out);
-			is_first_equal = 0;
+			fg_first_equal = 0;
 		}
 		++i;
 	}
-	if (content[i] == '\0' && !is_first_equal)
+	if (content[i] == '\0' && !fg_first_equal)
 		ft_putstr_fd("\"", input->fd_out);
 	ft_putstr_fd("\n", input->fd_out);
 }
