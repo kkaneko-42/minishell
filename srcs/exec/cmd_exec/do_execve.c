@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+#include <limits.h>
 
 static char	*get_path(t_envp *envp);
 static char	**get_exec_args(t_cmd *input);
@@ -32,7 +33,7 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 	free_strs(path_env);
 	path_env = NULL;
 	cmd_not_found_err(input->name);
-	exit(CMD_NOT_FOUND);
+	exit(CHAR_MAX);
 }
 
 static void	search_from_path_and_execute(
