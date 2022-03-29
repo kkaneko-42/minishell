@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:47:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/27 11:23:08 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/29 23:38:03 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	is_only_option_n(const char *content)
 			++count_n;
 		++i;
 	}
-	if (count_n == ft_strlen(content) - 1)
+	if (count_n == ft_strlen(content) - 1 && count_n != 0)
 		return (1);
 	return (0);
 }
