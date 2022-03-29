@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/25 00:25:54 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/30 00:00:21 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		pwd_err(void);
 void	do_exexve(t_cmd *input, t_envp *envp);
 void	no_file_dir_err(char *cmd_name);
 void	cmd_not_found_err(char *cmd_name);
+int		no_old_pwd_err(void);
 char	*three_strjoin(char *s1, char *s2, char *s3);
 t_cmd	*t_cmd_last(t_cmd *input);
 int		t_cmd_size(t_cmd *input);
