@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 11:30:28 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/27 11:29:29 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/03/30 00:51:04 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ static void	print_env(t_cmd *input, t_envp *envp)
 	{
 		if (have_equal(p_envp->content)
 			&& !forbidden_char_is_exist_in_envp(p_envp->content))
+		{
 			ft_putstr_fd(p_envp->content, input->fd_out);
-		ft_putstr_fd("\n", input->fd_out);
+			ft_putstr_fd("\n", input->fd_out);
+		}
 		p_envp = p_envp->next;
 	}
 }
