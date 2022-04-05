@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:49:10 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 00:56:47 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:35:16 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 int	do_cmd(t_cmd *input, t_envp **envp)
 {

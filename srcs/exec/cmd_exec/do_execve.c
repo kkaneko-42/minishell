@@ -6,12 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/25 00:25:07 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:37:48 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include <limits.h>
+#include "minishell.h"
 
 static char	*get_path(t_envp *envp);
 static char	**get_exec_args(t_cmd *input);
