@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 00:04:43 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 19:53:56 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:38:01 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 char	*get_now_path(void)
 {

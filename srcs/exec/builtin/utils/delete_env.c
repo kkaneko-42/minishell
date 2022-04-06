@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:06:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 19:53:44 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:38:27 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 static void	delete_node(t_envp **envp, t_envp **p_envp);
 static void	delete_first_node(t_envp **envp, t_envp **p_envp);

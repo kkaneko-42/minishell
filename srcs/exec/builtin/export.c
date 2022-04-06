@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/27 11:33:46 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:36:42 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 static void	sort_envp(t_envp *envp);
 static void	print_envp(t_cmd *input, t_envp *envp);

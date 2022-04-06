@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:47:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/29 23:38:03 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:37:03 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 static int	is_only_option_n(const char *content);
 
@@ -21,7 +21,7 @@ void	echo(t_cmd *input)
 
 	p_args = input->args;
 	fg_new_line = 1;
-	if (p_args != NULL && is_only_option_n(p_args->content))
+	while (p_args != NULL && is_only_option_n(p_args->content))
 	{
 		fg_new_line = 0;
 		p_args = p_args->next;

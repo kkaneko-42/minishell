@@ -6,12 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:28:22 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/27 11:29:24 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:37:16 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include <limits.h>
+#include "minishell.h"
 
 static char	*get_exit_status(char *content);
 static int	is_number(const char *exit_status);
