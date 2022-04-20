@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:06:30 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/27 11:37:24 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:36:36 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 int	pwd(t_cmd *input)
 {

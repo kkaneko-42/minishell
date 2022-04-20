@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 22:19:04 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/30 00:00:37 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:38:15 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 int	no_old_pwd_err(void)
 {
