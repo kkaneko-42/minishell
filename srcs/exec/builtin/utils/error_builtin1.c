@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_builtin.c                                    :+:      :+:    :+:   */
+/*   error_builtin1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 22:19:04 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 19:57:07 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:38:21 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../includes/minishell.h"
+#include "minishell.h"
 
 int	too_many_args_err(char *cmd_name)
 {
@@ -34,19 +34,6 @@ int	identifier_err(char *cmd_name, char *content)
 	ft_putstr_fd(": `", STDERR_FILENO);
 	ft_putstr_fd(content, STDERR_FILENO);
 	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-	return (CMD_ERR);
-}
-
-int	cd_err(t_cmd *input)
-{
-	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-	if (input->args != NULL)
-	{
-		ft_putstr_fd(input->args->content, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-	}
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
-	errno = 0;
 	return (CMD_ERR);
 }
 

@@ -6,11 +6,13 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 14:47:26 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/23 22:16:54 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:37:03 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
+
+static int	is_only_option_n(const char *content);
 
 void	echo(t_cmd *input)
 {
@@ -19,7 +21,7 @@ void	echo(t_cmd *input)
 
 	p_args = input->args;
 	fg_new_line = 1;
-	if (p_args != NULL && ft_strncmp(p_args->content, "-n", 3) == 0)
+	while (p_args != NULL && is_only_option_n(p_args->content))
 	{
 		fg_new_line = 0;
 		p_args = p_args->next;
@@ -33,4 +35,24 @@ void	echo(t_cmd *input)
 	}
 	if (fg_new_line)
 		ft_putstr_fd("\n", input->fd_out);
+}
+
+static int	is_only_option_n(const char *content)
+{
+	size_t	i;
+	size_t	count_n;
+
+	if (content[0] != '-')
+		return (0);
+	i = 0;
+	count_n = 0;
+	while (content[i] != '\0')
+	{
+		if (content[i] == 'n')
+			++count_n;
+		++i;
+	}
+	if (count_n == ft_strlen(content) - 1 && count_n != 0)
+		return (1);
+	return (0);
 }

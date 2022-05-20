@@ -34,7 +34,8 @@ SRCS	:=	main.c \
 			delete_env.c \
 			get_now_path.c \
 			is_empty_str.c \
-			error_builtin.c \
+			error_builtin1.c \
+			error_builtin2.c \
 			t_cmd_last.c \
 			t_cmd_size.c \
 			pipe_io.c \

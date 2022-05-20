@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:43:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 19:59:25 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:35:10 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 static t_cmd	*should_be_done_cmd(t_cmd *input, int from_right);
 

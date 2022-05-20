@@ -6,12 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:28:22 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 17:10:59 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:37:16 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include <limits.h>
+#include "minishell.h"
 
 static char	*get_exit_status(char *content);
 static int	is_number(const char *exit_status);
@@ -19,11 +18,10 @@ static int	is_valid_size(const char *exit_status);
 
 int	exit_builtin(t_cmd *input)
 {
-	int		argc;
-	char	*exit_status;
+	const int	argc = ft_lstsize(input->args);
+	char		*exit_status;
 
 	ft_putstr_fd(EXIT_MSG, STDERR_FILENO);
-	argc = ft_lstsize(input->args);
 	if (argc == 0)
 		exit(CMD_SUCCESS);
 	exit_status = get_exit_status(input->args->content);

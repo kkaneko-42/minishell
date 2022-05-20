@@ -6,11 +6,11 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 08:39:05 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/24 16:05:35 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/04/05 23:37:56 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 static char	*get_new_path(t_cmd *input, t_envp *envp);
 
@@ -22,7 +22,12 @@ int	cd(t_cmd *input, t_envp *envp)
 	old_path = get_now_path();
 	new_path = get_new_path(input, envp);
 	errno = 0;
-	if (chdir(new_path))
+	if (new_path == NULL)
+	{
+		free(old_path);
+		return (no_old_pwd_err());
+	}
+	else if (chdir(new_path))
 	{
 		free(old_path);
 		free(new_path);
@@ -51,6 +56,14 @@ static char	*get_new_path(t_cmd *input, t_envp *envp)
 					getenv("HOME"), "/", &(input->args->content)[2]));
 		return (three_strjoin(
 				ft_getenv("HOME", envp), "/", &(input->args->content)[2]));
+	}
+	else if (ft_strncmp(input->args->content, "-", 2) == 0)
+	{
+		if (ft_getenv("OLDPWD", envp) == NULL
+			|| is_empty_str(ft_getenv("OLDPWD", envp)))
+			return (NULL);
+		else
+			return (ft_strdup(ft_getenv("OLDPWD", envp)));
 	}
 	return (ft_strdup(input->args->content));
 }

@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   error_builtin2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 17:06:30 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/04/05 23:36:36 by okumurahyu       ###   ########.fr       */
+/*   Created: 2022/03/23 22:19:04 by okumurahyu        #+#    #+#             */
+/*   Updated: 2022/04/05 23:38:15 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd(t_cmd *input)
+int	no_old_pwd_err(void)
 {
-	char	*now_path;
+	ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR_FILENO);
+	return (CMD_ERR);
+}
 
-	now_path = get_now_path();
-	if (now_path == NULL)
-		return (pwd_err());
-	else
+int	cd_err(t_cmd *input)
+{
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+	if (input->args != NULL)
 	{
-		ft_putstr_fd(now_path, input->fd_out);
-		ft_putstr_fd("\n", input->fd_out);
-		free(now_path);
+		ft_putstr_fd(input->args->content, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	return (CMD_SUCCESS);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	errno = 0;
+	return (CMD_ERR);
 }
