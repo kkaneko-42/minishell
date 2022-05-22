@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/04/05 23:37:30 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/05/22 00:33:16 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int		waitpid_and_err(pid_t pid);
 pid_t	fork_and_waitpid(void);
 void	do_pipe(t_cmd *input, t_envp **envp, int n);
 int		do_cmd(t_cmd *input, t_envp **envp);
+int		have_slash_symbol(char *s);
 int		is_snakecase(char c, size_t i);
 char	*ft_getenv(const char *name, t_envp *env_list);
 size_t	ft_strreplace(
