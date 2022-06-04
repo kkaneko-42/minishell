@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 16:38:14 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/04/05 23:36:42 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/04 12:23:45 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	sort_envp(t_envp *envp)
 		p_envp = envp;
 		while (p_envp != NULL)
 		{
-			if (ft_strcmp(cmp_standard->content, p_envp->content) < 0)
+			if (ft_envcmp(cmp_standard->content, p_envp->content) < 0)
 				p_envp->rank += 1;
 			p_envp = p_envp->next;
 		}

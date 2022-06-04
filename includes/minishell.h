@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/05/22 00:33:16 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/04 12:04:06 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		first_char_is_equal(const char *s);
 int		forbidden_char_is_exist_in_envp(const char *s);
 int		addback_envp_list(t_envp **envp_list, char *s);
 int		ft_strcmp(char *s1, char *s2);
+int		ft_envcmp(char *s1, char *s2);
 int		get_max_rank(t_envp *envp);
 void	free_strs(char **strs);
 int		too_many_args_err(char *cmd_name);
