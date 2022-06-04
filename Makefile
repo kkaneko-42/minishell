@@ -43,6 +43,8 @@ SRCS	:=	main.c \
 			do_pipe.c \
 			do_cmd.c \
 			error_execve.c \
+			have_slash_symbol.c \
+			ft_envcmp.c \
 			free_strs.c \
 			ft_getenv.c \
 			ft_strreplace.c \

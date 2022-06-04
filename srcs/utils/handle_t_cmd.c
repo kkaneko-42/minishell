@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 void	parse_metachar(t_cmd *cmd, t_list **token);
-void	get_cmd_name(t_cmd *cmd, t_list **token);
+static void	get_cmd_name(t_cmd *cmd, t_list **token);
 
 void	get_cmd_info(t_cmd *cmd, t_list **token)
 {
@@ -31,7 +31,7 @@ void	get_cmd_info(t_cmd *cmd, t_list **token)
 	}
 }
 
-void	get_cmd_name(t_cmd *cmd, t_list **token)
+static void	get_cmd_name(t_cmd *cmd, t_list **token)
 {
 	cmd->name = ft_strdup((*token)->content);
 	(*token) = (*token)->next;
