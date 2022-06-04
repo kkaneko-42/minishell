@@ -6,37 +6,37 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/04/05 23:37:48 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/05/22 18:06:52 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_path(t_envp *envp);
 static char	**get_exec_args(t_cmd *input);
 static char	**get_exec_envp(t_envp *envp);
-static void	search_from_path_and_execute(
-				char **path_env, t_cmd *input, t_envp *envp);
+static void	execute_from_path(char **path_env, t_cmd *input, t_envp *envp);
+static void	execute_relative_absolute(t_cmd *input, t_envp *envp);
 
 void	do_exexve(t_cmd *input, t_envp *envp)
 {
 	char	**path_env;
 
-	if (get_path(envp) == NULL)
+	path_env = ft_split(ft_getenv("PATH", envp), ':');
+	if (path_env == NULL)
 	{
 		no_file_dir_err(input->name);
 		exit(CMD_ERR);
 	}
-	path_env = ft_split(get_path(envp), ':');
-	search_from_path_and_execute(path_env, input, envp);
+	if (have_slash_symbol(input->name))
+		execute_relative_absolute(input, envp);
+	execute_from_path(path_env, input, envp);
 	free_strs(path_env);
 	path_env = NULL;
 	cmd_not_found_err(input->name);
 	exit(CHAR_MAX);
 }
 
-static void	search_from_path_and_execute(
-				char **path_env, t_cmd *input, t_envp *envp)
+static void	execute_from_path(char **path_env, t_cmd *input, t_envp *envp)
 {
 	size_t	i;
 	char	*path_cmd_search;
@@ -49,10 +49,7 @@ static void	search_from_path_and_execute(
 		path_cmd_search = three_strjoin(path_env[i], "/", input->name);
 		exec_args = get_exec_args(input);
 		exec_envp = get_exec_envp(envp);
-		if (input->name[0] == '/')
-			execve(input->name, exec_args, exec_envp);
-		else
-			execve(path_cmd_search, exec_args, exec_envp);
+		execve(path_cmd_search, exec_args, exec_envp);
 		free(path_cmd_search);
 		free_strs(exec_args);
 		free_strs(exec_envp);
@@ -60,18 +57,16 @@ static void	search_from_path_and_execute(
 	}
 }
 
-static char	*get_path(t_envp *envp)
+static void	execute_relative_absolute(t_cmd *input, t_envp *envp)
 {
-	t_envp	*p;
+	char	**exec_args;
+	char	**exec_envp;
 
-	p = envp;
-	while (p != NULL)
-	{
-		if (!ft_strncmp(p->content, "PATH=", 5))
-			return (&(p->content)[5]);
-		p = p->next;
-	}
-	return (NULL);
+	exec_args = get_exec_args(input);
+	exec_envp = get_exec_envp(envp);
+	execve(input->name, exec_args, exec_envp);
+	free_strs(exec_args);
+	free_strs(exec_envp);
 }
 
 static char	**get_exec_args(t_cmd *input)
