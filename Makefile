@@ -1,6 +1,6 @@
 NAME	:=	minishell
 CC		:=	gcc
-CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP #-fsanitize=address -g
+CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP -fsanitize=address -g
 WITH_RL :=	-lreadline -L$(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
 INCLUDE := -I ./includes -I $(shell brew --prefix readline)/include
 OBJ_DIR	:= ./objs
@@ -74,7 +74,8 @@ SRCS	:=	main.c \
 			free_envp_list.c \
 			count_env_lstsize.c \
 			three_str_join.c \
-			put_title.c
+			put_title.c \
+			signal_utils.c
 OBJS	:= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS	:= $(OBJS:.o=.d)
 LIBFT_DIR := ./libft
