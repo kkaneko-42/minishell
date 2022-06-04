@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 14:16:56 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/23 22:58:27 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/04 12:01:02 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ static t_cmd	*set_cmd_info(t_list *token)
 	now_cmd = INIT;
 	while (now_token != NULL)
 	{
-		cmdadd_back(&cmd_lst, cmd_new(ft_strdup(now_token->content)));
+		cmdadd_back(&cmd_lst, cmd_new(NULL));
 		if (now_cmd == INIT)
 			now_cmd = cmd_lst;
 		else
 			now_cmd = now_cmd->next;
-		now_token = now_token->next;
 		get_cmd_info(now_cmd, &now_token);
 	}
 	remove_quotes_from_cmds(cmd_lst);
