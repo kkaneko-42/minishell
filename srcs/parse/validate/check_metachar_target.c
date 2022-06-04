@@ -6,25 +6,26 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 02:58:35 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/04 12:37:15 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/04 15:50:30 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	has_no_target(t_list *metachar_node);
-static int	pipe_has_left(t_list *top_token);
+static int	is_pipe(t_list *token);
 
 int	check_metachar_target(const t_list *token)
 {
 	t_list	*now;
 
 	now = (t_list *)token;
-	if (!pipe_has_left(now))
+	if (is_pipe(now))
 		return (1);
 	while (now != NULL)
 	{
-		if (is_metachar(now->content) && has_no_target(now))
+		if ((is_metachar(now->content) && !is_pipe(now) && has_no_target(now))
+			|| (is_pipe(now) && is_pipe(now->next)))
 			return (1);
 		now = now->next;
 	}
@@ -46,9 +47,11 @@ static int	has_no_target(t_list *metachar_node)
 	return (res);
 }
 
-static int	pipe_has_left(t_list *top_token)
+static int	is_pipe(t_list *token)
 {
-	if (ft_strncmp(top_token->content, "|", 2) == 0)
-		return (0);
-	return (1);
+	if (token == NULL)
+		return (1);
+	else if (ft_strncmp(token->content, "|", 2) == 0)
+		return (1);
+	return (0);
 }

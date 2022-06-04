@@ -6,13 +6,13 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:10:29 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/04 12:25:35 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/04 15:57:00 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_metachar(t_cmd *cmd, t_list **token);
+void		parse_metachar(t_cmd *cmd, t_list **token);
 static void	get_cmd_name(t_cmd *cmd, t_list **token);
 
 void	get_cmd_info(t_cmd *cmd, t_list **token)
