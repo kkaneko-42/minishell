@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 17:32:35 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/16 15:07:59 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/04 16:49:27 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	remove_quotes(char **str)
 	char	*res;
 	size_t	i;
 
+	if (*str == NULL)
+		return ;
 	res = NULL;
 	i = 0;
 	while (42)
