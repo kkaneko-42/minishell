@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 16:39:29 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/05/22 18:06:52 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/05 22:22:24 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	do_exexve(t_cmd *input, t_envp *envp)
 		no_file_dir_err(input->name);
 		exit(CMD_ERR);
 	}
+	if (input->name == NULL)
+		exit(0);
 	if (have_slash_symbol(input->name))
 		execute_relative_absolute(input, envp);
 	execute_from_path(path_env, input, envp);
