@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handle_metachar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:06:13 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/04 18:49:27 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/05 18:08:36 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_heredoc_input(const char *end_text);
 char	*get_file_content_all(int fd);
 int		open_output_file(const char *file_name, int fg_append);
 
