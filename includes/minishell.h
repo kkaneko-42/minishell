@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/04 17:59:04 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/05 18:08:01 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,9 @@ int		count_env_lstsize(t_envp *env_list);
 void	put_title(void);
 void	receiver_for_readline(void);
 void	receiver_for_exec(void);
+void	sig_handler_rl(sig_atomic_t sig);
+void	sig_handler_exec(sig_atomic_t sig);
+char	*get_heredoc_input(t_list *heredoc_end);
 
 //debug
 void	put_all_tokens(t_list *tokens);

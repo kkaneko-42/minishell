@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:43:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/04/05 23:35:10 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/05 18:10:43 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	do_pipe(t_cmd *input, t_envp **envp, int from_right)
 
 	if (from_right == t_cmd_size(input))
 	{
+		input->stdin_str = get_heredoc_input(input->heredoc_end);
 		if (input->stdin_str != NULL)
 			set_input_from_redirection(input->stdin_str);
 		do_cmd(input, envp);

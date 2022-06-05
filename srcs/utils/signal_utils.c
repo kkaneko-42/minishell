@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:50:33 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/04 17:43:16 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/05 18:09:38 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 void	sig_handler_rl(sig_atomic_t sig)
 {

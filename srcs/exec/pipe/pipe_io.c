@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 00:15:46 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/04/05 23:35:06 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/05 18:04:02 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	set_input(t_cmd *input, int fd[2], int from_right)
 		now = now->next;
 		++i;
 	}
+	now->stdin_str = get_heredoc_input(now->heredoc_end);
 	if (now->stdin_str == NULL)
 	{
 		dup2(fd[0], 0);
