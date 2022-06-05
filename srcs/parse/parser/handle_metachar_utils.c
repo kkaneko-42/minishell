@@ -6,7 +6,7 @@
 /*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 00:01:18 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/05 18:33:04 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/05 19:40:22 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,23 @@ char	*get_heredoc_input(t_list *heredoc_end)
 	char	*line;
 	char	*res;
 
+	res = NULL;
 	line = NULL;
-	res = ft_strdup("");
 	while (heredoc_end != NULL)
 	{
+		free(res);
+		res = ft_strdup("");
 		line = readline(HEREDOC_PROMPT);
-		if (line == NULL)
-			break ;
-		else if (ft_strncmp(line, heredoc_end->content, ft_strlen(heredoc_end->content) + 1) == 0)
-		{
-			heredoc_end = heredoc_end->next;
-			if (heredoc_end != NULL)
-			{
-				free(res);
-				res = ft_strdup("");
-			}
-		}
-		else
+		while (line != NULL
+			&& ft_strncmp(line, heredoc_end->content,
+				ft_strlen(heredoc_end->content) + 1) != 0)
 		{
 			res = ft_stradd(&res, line);
 			res = ft_stradd(&res, "\n");
+			free(line);
+			line = readline(HEREDOC_PROMPT);
 		}
-		free(line);
-		line = NULL;
+		heredoc_end = heredoc_end->next;
 	}
 	free(line);
 	return (res);
