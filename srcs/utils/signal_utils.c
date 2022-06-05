@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 16:50:33 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/05 18:09:38 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/05 23:10:33 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	sig_handler_exec(sig_atomic_t sig)
 		ft_putnbr_fd(sig, STDERR_FILENO);
 	}
 	ft_putchar_fd('\n', STDERR_FILENO);
+}
+
+void	sig_handler_heredoc(sig_atomic_t sig)
+{
+	if (sig == SIGINT)
+		exit(130);
 }
 
 void	receiver(sig_atomic_t sig, void (*handler)(sig_atomic_t))

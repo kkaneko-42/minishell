@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/05 18:08:01 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/05 23:00:10 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ void	receiver_for_exec(void);
 void	sig_handler_rl(sig_atomic_t sig);
 void	sig_handler_exec(sig_atomic_t sig);
 char	*get_heredoc_input(t_list *heredoc_end);
+void	receiver_for_heredoc(void);
+void	sig_handler_heredoc(sig_atomic_t sig);
 
 //debug
 void	put_all_tokens(t_list *tokens);

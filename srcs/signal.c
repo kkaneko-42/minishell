@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 17:47:07 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/04 17:20:58 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/05 23:12:05 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,10 @@ void	receiver_for_exec(void)
 {
 	receiver(SIGINT, sig_handler_exec);
 	receiver(SIGQUIT, sig_handler_exec);
+}
+
+void	receiver_for_heredoc(void)
+{
+	receiver(SIGINT, sig_handler_heredoc);
+	receiver(SIGQUIT, SIG_IGN);
 }
