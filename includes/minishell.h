@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:50:37 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/06/05 23:00:10 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/06 01:12:30 by okumurahyu       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*three_strjoin(char *s1, char *s2, char *s3);
 t_cmd	*t_cmd_last(t_cmd *input);
 int		t_cmd_size(t_cmd *input);
 void	set_output(t_cmd *input, int fd[2], int from_right);
-void	set_input_from_redirection(const char *stdin_str);
+void	set_input_from_redirection(t_cmd *input);
 void	set_input(t_cmd *input, int fd[2], int from_right);
 pid_t	fork_and_err(void);
 int		waitpid_and_err(pid_t pid);
