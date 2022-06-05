@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: okumurahyu <okumurahyu@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 21:25:50 by okumurahyu        #+#    #+#             */
-/*   Updated: 2022/03/04 15:57:53 by okumurahyu       ###   ########.fr       */
+/*   Updated: 2022/06/04 18:03:31 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_list	*ft_lstnew(char *content)
 	t_list	*new;
 
 	new = (t_list *)ft_xmalloc(sizeof(t_list) * 1);
-	if (new == 0)
-		return (NULL);
 	new->content = content;
 	new->next = 0;
 	new->prev = 0;

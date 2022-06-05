@@ -6,7 +6,7 @@
 /*   By: kkaneko <kkaneko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:06:13 by kkaneko           #+#    #+#             */
-/*   Updated: 2022/03/20 00:01:17 by kkaneko          ###   ########.fr       */
+/*   Updated: 2022/06/04 18:49:27 by kkaneko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ void	input_file_specify(t_cmd *cmd, t_list **token)
 
 void	heredoc(t_cmd *cmd, t_list **token)
 {
-	char	*end_text;
+	// char	*end_text;
 
 	*token = (*token)->next;
 	remove_quotes(&((*token)->content));
-	end_text = (*token)->content;
-	free(cmd->stdin_str);
-	cmd->stdin_str = get_heredoc_input(end_text);
+	ft_lstadd_back(&(cmd->heredoc_end), ft_lstnew(ft_strdup((*token)->content)));
+	// end_text = (*token)->content;
+	// free(cmd->stdin_str);
+	// cmd->stdin_str = get_heredoc_input(end_text);
 }
 
 void	output_file_specify(t_cmd *cmd, t_list **token, int fg_append)
